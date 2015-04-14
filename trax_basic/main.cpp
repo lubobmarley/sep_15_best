@@ -3,18 +3,22 @@
 //
 // Group: Group 43, study assistant: Max Mustertutor
 //
-// Authors: Super Student 1 (0800001)
-// Super Student 2 (0800002)
-// Super Student 3 (0800003)
-// Super Student 4 (0800004)
+// Authors: Markus Gallacher ()
+// Philipp Feldner ()
+// Lukas Bodner (1431293)
 //------------------------------------------------------------------------------
 //
 
 #include <iostream>
+#include <string>
 #include "Game.h"
 #include "Position.h"
 #include "Color.h"
 #include "Tile.h"
+
+using std::cout;
+using std::cin;
+using std::endl;
  
 //------------------------------------------------------------------------------
 // main function
@@ -25,10 +29,20 @@
 //
 int main(int argc, char **argv)
 {
-
+  bool graphicon = false;
+  std::string graphicmode = "-g";
+  std::string filename; 
+  
+  if (argc == 3)
+    if (graphicmode == argv[1])
+    {
+      graphicon = true;
+      filename = argv[2];
+    }
+  
+  if (graphicon)
+    cout << "hi" << endl;
     
-    //hallo was geht
-    //nit viel danke
   
   return 0;
 }
