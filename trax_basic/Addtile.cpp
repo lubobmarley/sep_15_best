@@ -209,14 +209,31 @@ int Addtile::execute(Game& board, std::vector<std::string>& params)
         std::vector<Position> positions;
         
         Tile temptile(Tile::TYPE_CROSS,COLOR_WHITE);
-        Position temppositon(0,0);
+        Position tempposition(0,0);
         
+        tempposition.parse(params[0]);
+        temptile.setColor(board.getActivePlayer());
         
-        //temptile.setColor(Game::getActivePlayer());
-        /*if(checktile(temptile,tempposition, Tiles, Positions)
+        if(params.at(1) == "+")
+            temptile.setSide(Tile::TYPE_CROSS);
+        if(params.at(1) == "/")
+            temptile.setSide(Tile::TYPE_CURVE_1);
+        if(params.at(1) == "\\")
+            temptile.setSide(Tile::TYPE_CURVE_2); 
+        else
         {
-            addTile()
-        }*/
+            // Errorhandling
+        }
+        
+        if(checktile(temptile,tempposition, tiles, positions))
+        {
+            tiles.push_back(temptile);
+            positions.push_back(tempposition);
+            //filltile()
+            //sort()
+            //if(graphicon == true)
+            //  write.execute(tiles, positions);
+        }
         
        
         
