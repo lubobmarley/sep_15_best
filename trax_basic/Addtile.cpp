@@ -34,93 +34,154 @@ bool checktile(Tile temptile, Position tempposition, std::vector<Tile> Tiles,
     {
         case "top": 
         {
-            if(((Tiles[counter].getSide() == Tile::TYPE_CROSS   && 
-                Tiles[counter].getColor() == COLOR_WHITE) ||
-               (Tiles[counter].getSide()  == Tile::TYPE_CURVE_1 && 
-                Tiles[counter].getColor() == COLOR_WHITE) ||
-               (Tiles[counter].getSide()  == Tile::TYPE_CURVE_2 && 
-                Tiles[counter].getColor() == COLOR_WHITE) )     
-                    
+            if((((Tiles[counter].getSide()  == Tile::TYPE_CROSS   && 
+                  Tiles[counter].getColor() == COLOR_WHITE) ||
+                 (Tiles[counter].getSide()  == Tile::TYPE_CURVE_1 && 
+                  Tiles[counter].getColor() == COLOR_WHITE) ||
+                 (Tiles[counter].getSide()  == Tile::TYPE_CURVE_2 && 
+                  Tiles[counter].getColor() == COLOR_WHITE))                  
+                    && 
+                ((temptile.getSide()       == Tile::TYPE_CURVE_1  &&
+                  temptile.getColor()       == COLOR_RED)   ||
+                 (temptile.getSide()        == Tile::TYPE_CURVE_2 &&
+                  temptile.getColor()       == COLOR_RED)   ||
+                 (temptile.getSide()        == Tile::TYPE_CROSS   &&
+                  temptile.getColor()       == COLOR_WHITE))) 
+                    || 
+               (((Tiles[counter].getSide()  == Tile::TYPE_CROSS   && 
+                  Tiles[counter].getColor() == COLOR_RED)   ||
+                 (Tiles[counter].getSide()  == Tile::TYPE_CURVE_1 && 
+                  Tiles[counter].getColor() == COLOR_RED)   ||
+                 (Tiles[counter].getSide()  == Tile::TYPE_CURVE_2 && 
+                  Tiles[counter].getColor() == COLOR_RED) )       
                     &&
-                    
-                ((temptile.getSide()     == Tile::TYPE_CURVE_1 &&
-                  temptile.getColor()     == COLOR_RED)  ||
-                 (temptile.getSide()      == Tile::TYPE_CURVE_2 &&
-                  temptile.getColor()     == COLOR_RED)  ||
-                 (temptile.getSide()      == Tile::TYPE_CROSS &&
-                  temptile.getColor()     == COLOR_WHITE)) 
-                    
-                    ||
-                    
-                    
-                    
-               (((Tiles[counter].getSide() == Tile::TYPE_CROSS   && 
-                Tiles[counter].getColor() == COLOR_RED) ||
-               (Tiles[counter].getSide()  == Tile::TYPE_CURVE_1 && 
-                Tiles[counter].getColor() == COLOR_RED) ||
-               (Tiles[counter].getSide()  == Tile::TYPE_CURVE_2 && 
-                Tiles[counter].getColor() == COLOR_RED) )     
-                    
-                    &&
-                    
-                ((temptile.getSide()     == Tile::TYPE_CURVE_1 &&
-                  temptile.getColor()     == COLOR_WHITE)  ||
-                 (temptile.getSide()      == Tile::TYPE_CURVE_2 &&
-                  temptile.getColor()     == COLOR_WHITE)  ||
-                 (temptile.getSide()      == Tile::TYPE_CROSS &&
-                  temptile.getColor()     == COLOR_RED)))
+                ((temptile.getSide()        == Tile::TYPE_CURVE_1 &&
+                  temptile.getColor()       == COLOR_WHITE)  ||
+                 (temptile.getSide()        == Tile::TYPE_CURVE_2 &&
+                  temptile.getColor()       == COLOR_WHITE)  ||
+                 (temptile.getSide()        == Tile::TYPE_CROSS   &&
+                  temptile.getColor()       == COLOR_RED))))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         
         case "bot": 
         {
         
-               if(((Tiles[counter].getSide() == Tile::TYPE_CROSS   && 
-                Tiles[counter].getColor() == COLOR_WHITE) ||
-               (Tiles[counter].getSide()  == Tile::TYPE_CURVE_1 && 
-                Tiles[counter].getColor() == COLOR_WHITE) ||
-               (Tiles[counter].getSide()  == Tile::TYPE_CURVE_2 && 
-                Tiles[counter].getColor() == COLOR_WHITE) )     
-                    
+            if((((Tiles[counter].getSide()  == Tile::TYPE_CURVE_1 && 
+                  Tiles[counter].getColor() == COLOR_RED)     ||
+                 (Tiles[counter].getSide()  == Tile::TYPE_CURVE_2 && 
+                  Tiles[counter].getColor() == COLOR_RED)     ||
+                 (Tiles[counter].getSide()  == Tile::TYPE_CROSS   && 
+                  Tiles[counter].getColor() == COLOR_WHITE))     
+                    && 
+                ((temptile.getSide()        == Tile::TYPE_CROSS   &&
+                  temptile.getColor()       == COLOR_WHITE)    ||
+                 (temptile.getSide()        == Tile::TYPE_CURVE_1 &&
+                  temptile.getColor()       == COLOR_WHITE)    ||
+                 (temptile.getSide()        == Tile::TYPE_CURVE_2 &&
+                  temptile.getColor()       == COLOR_WHITE))) 
+                    ||   
+               (((Tiles[counter].getSide()  == Tile::TYPE_CURVE_1 &&
+                  Tiles[counter].getColor() == COLOR_WHITE)    ||
+                 (Tiles[counter].getSide()  == Tile::TYPE_CURVE_2 && 
+                  Tiles[counter].getColor() == COLOR_WHITE)    ||
+                 (Tiles[counter].getSide()  == Tile::TYPE_CROSS   && 
+                  Tiles[counter].getColor() == COLOR_RED) )     
                     &&
-                    
-                ((temptile.getSide()     == Tile::TYPE_CURVE_1 &&
-                  temptile.getColor()     == COLOR_RED)  ||
-                 (temptile.getSide()      == Tile::TYPE_CURVE_2 &&
-                  temptile.getColor()     == COLOR_RED)  ||
-                 (temptile.getSide()      == Tile::TYPE_CROSS &&
-                  temptile.getColor()     == COLOR_WHITE)) 
-                    
-                    ||
-                    
-                    
-                    
-               (((Tiles[counter].getSide() == Tile::TYPE_CROSS   && 
-                Tiles[counter].getColor() == COLOR_RED) ||
-               (Tiles[counter].getSide()  == Tile::TYPE_CURVE_1 && 
-                Tiles[counter].getColor() == COLOR_RED) ||
-               (Tiles[counter].getSide()  == Tile::TYPE_CURVE_2 && 
-                Tiles[counter].getColor() == COLOR_RED) )     
-                    
-                    &&
-                    
-                ((temptile.getSide()     == Tile::TYPE_CURVE_1 &&
-                  temptile.getColor()     == COLOR_WHITE)  ||
-                 (temptile.getSide()      == Tile::TYPE_CURVE_2 &&
-                  temptile.getColor()     == COLOR_WHITE)  ||
-                 (temptile.getSide()      == Tile::TYPE_CROSS &&
-                  temptile.getColor()     == COLOR_RED)))
+                ((temptile.getSide()        == Tile::TYPE_CROSS   &&
+                  temptile.getColor()       == COLOR_RED)      ||
+                 (temptile.getSide()        == Tile::TYPE_CURVE_1 &&
+                  temptile.getColor()       == COLOR_RED)      ||
+                 (temptile.getSide()        == Tile::TYPE_CURVE_2 &&
+                  temptile.getColor()       == COLOR_RED))))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         
         }
         case "right": 
         {
-        
-        
+            if((((Tiles[counter].getSide()  == Tile::TYPE_CROSS   && 
+                  Tiles[counter].getColor() == COLOR_WHITE) ||
+                 (Tiles[counter].getSide()  == Tile::TYPE_CURVE_1 && 
+                  Tiles[counter].getColor() == COLOR_WHITE) ||
+                 (Tiles[counter].getSide()  == Tile::TYPE_CURVE_2 && 
+                  Tiles[counter].getColor() == COLOR_RED))                  
+                    && 
+                ((temptile.getSide()       == Tile::TYPE_CURVE_1  &&
+                  temptile.getColor()       == COLOR_RED)   ||
+                 (temptile.getSide()        == Tile::TYPE_CURVE_2 &&
+                  temptile.getColor()       == COLOR_WHITE)   ||
+                 (temptile.getSide()        == Tile::TYPE_CROSS   &&
+                  temptile.getColor()       == COLOR_WHITE))) 
+                    || 
+               (((Tiles[counter].getSide()  == Tile::TYPE_CROSS   && 
+                  Tiles[counter].getColor() == COLOR_RED)   ||
+                 (Tiles[counter].getSide()  == Tile::TYPE_CURVE_1 && 
+                  Tiles[counter].getColor() == COLOR_RED)   ||
+                 (Tiles[counter].getSide()  == Tile::TYPE_CURVE_2 && 
+                  Tiles[counter].getColor() == COLOR_WHITE) )       
+                    &&
+                ((temptile.getSide()        == Tile::TYPE_CURVE_1 &&
+                  temptile.getColor()       == COLOR_WHITE)  ||
+                 (temptile.getSide()        == Tile::TYPE_CURVE_2 &&
+                  temptile.getColor()       == COLOR_RED)  ||
+                 (temptile.getSide()        == Tile::TYPE_CROSS   &&
+                  temptile.getColor()       == COLOR_RED))))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         case "left": 
-        {
-        
-        
-        }
+              {
+            if((((Tiles[counter].getSide()  == Tile::TYPE_CURVE_1 && 
+                  Tiles[counter].getColor() == COLOR_RED) ||
+                 (Tiles[counter].getSide()  == Tile::TYPE_CURVE_2 && 
+                  Tiles[counter].getColor() == COLOR_WHITE) ||
+                 (Tiles[counter].getSide()  == Tile::TYPE_CROSS   && 
+                  Tiles[counter].getColor() == COLOR_WHITE))                  
+                    && 
+                ((temptile.getSide()       == Tile::TYPE_CROSS    &&
+                  temptile.getColor()       == COLOR_WHITE)   ||
+                 (temptile.getSide()        == Tile::TYPE_CURVE_1 &&
+                  temptile.getColor()       == COLOR_WHITE)   ||
+                 (temptile.getSide()        == Tile::TYPE_CURVE_2 &&
+                  temptile.getColor()       == COLOR_RED))) 
+                    ||
+               (((Tiles[counter].getSide()  == Tile::TYPE_CURVE_1 && 
+                  Tiles[counter].getColor() == COLOR_WHITE)   ||
+                 (Tiles[counter].getSide()  == Tile::TYPE_CURVE_2 && 
+                  Tiles[counter].getColor() == COLOR_RED)   ||
+                 (Tiles[counter].getSide()  == Tile::TYPE_CROSS   && 
+                  Tiles[counter].getColor() == COLOR_RED) )       
+                    &&
+                ((temptile.getSide()        == Tile::TYPE_CROSS   &&
+                  temptile.getColor()       == COLOR_RED)  ||
+                 (temptile.getSide()        == Tile::TYPE_CURVE_1 &&
+                  temptile.getColor()       == COLOR_RED)  ||
+                 (temptile.getSide()        == Tile::TYPE_CURVE_2 &&
+                  temptile.getColor()       == COLOR_WHITE))))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         default:
             return false;
     }
@@ -152,8 +213,7 @@ Addtile::Addtile(std::string name) : Command(name) {}
             addTile()
         }*/
         
-        
-        
+       
         
         
         
