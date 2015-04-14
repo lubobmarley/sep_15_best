@@ -1,38 +1,46 @@
-#include "Addtile.h"
 #include "Position.h"
 #include "Tile.h"
 #include "Game.h"
+#include "Addtile.h"
 #include <iostream>
 #include <string>
 #include <vector>
 
 
+enum Orientation
+{
+    TOP = 1,
+    BOT = 2,
+    RIGHT = 3,
+    LEFT = 4          
+};
+
 bool checktile(Tile temptile, Position tempposition, std::vector<Tile> Tiles, 
                std::vector<Position> Positions)
 {
     
-    std::string identifier = "non";
+    int identifier = 0;
     int counter = 0;
     
     for(counter; counter<Tiles.size(); counter++)
     {
         if((tempposition.getX()   == Positions[counter].getX()) && 
            (tempposition.getY()+1 == Positions[counter].getX()))
-            { identifier = "top";}
+            { identifier = TOP;}
         if((tempposition.getX()   == Positions[counter].getX()) && 
            (tempposition.getY()-1 == Positions[counter].getX())) 
-            {identifier = "bot";}
+            {identifier = BOT;}
         if((tempposition.getX()+1 == Positions[counter].getX()) && 
            (tempposition.getY() == Positions[counter].getX()))
-            {identifier = "right";}
+            {identifier = LEFT;}
         if((tempposition.getX()-1 == Positions[counter].getX()) && 
            (tempposition.getY()   == Positions[counter].getX()))
-            {identifier = "left";}
+            {identifier = RIGHT;}
     }
 
     switch(identifier)
     {
-        case "top": 
+        case TOP: 
         {
             if((((Tiles[counter].getSide()  == Tile::TYPE_CROSS   && 
                   Tiles[counter].getColor() == COLOR_WHITE) ||
@@ -70,7 +78,7 @@ bool checktile(Tile temptile, Position tempposition, std::vector<Tile> Tiles,
             }
         }
         
-        case "bot": 
+        case BOT: 
         {
         
             if((((Tiles[counter].getSide()  == Tile::TYPE_CURVE_1 && 
@@ -109,7 +117,7 @@ bool checktile(Tile temptile, Position tempposition, std::vector<Tile> Tiles,
             }
         
         }
-        case "right": 
+        case RIGHT: 
         {
             if((((Tiles[counter].getSide()  == Tile::TYPE_CROSS   && 
                   Tiles[counter].getColor() == COLOR_WHITE) ||
@@ -146,7 +154,7 @@ bool checktile(Tile temptile, Position tempposition, std::vector<Tile> Tiles,
                 return false;
             }
         }
-        case "left": 
+        case LEFT: 
               {
             if((((Tiles[counter].getSide()  == Tile::TYPE_CURVE_1 && 
                   Tiles[counter].getColor() == COLOR_RED) ||
@@ -184,15 +192,12 @@ bool checktile(Tile temptile, Position tempposition, std::vector<Tile> Tiles,
             }
         default:
             return false;
+       }
     }
-    
-
-
-
-
-
-
 }
+
+
+
 
 
 Addtile::Addtile(std::string name) : Command(name) {}
