@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-    
+/*
 bool checktile(Tile temptile, Position tempposition, std::vector<Tile> Tiles, 
                std::vector<Position> Positions)
 {
@@ -78,7 +78,7 @@ bool checktile(Tile temptile, Position tempposition, std::vector<Tile> Tiles,
 
 }
 
-
+*/
 Addtile::Addtile(std::string name) : Command(name) {}
     Addtile::~Addtile() {}
 
@@ -91,7 +91,7 @@ Addtile::Addtile(std::string name) : Command(name) {}
         Position temppositon(0,0);
         
         
-        temptile.setColor(Game::getActivePlayer());
+        //temptile.setColor(Game::getActivePlayer());
         /*if(checktile(temptile,tempposition, Tiles, Positions)
         {
             addTile()
