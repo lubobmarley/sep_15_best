@@ -196,6 +196,56 @@ bool checktile(Tile temptile, Position tempposition, std::vector<Tile> Tiles,
     }
 }
 
+//Vielleicht als Methoden implementieren?
+std::vector<Position> swapposition(std::vector<Position> positions, int i, int j)
+{    
+    Position tempposition = positions.at(i);
+    positions.at(i) = positions.at(j);
+    positions.at(j) = tempposition;
+    return positions;
+}
+
+std::vector<Tile> swaptiles(std::vector<Tile> tiles, int i, int j)
+{    
+    Tile temptile = tiles.at(i);
+    tiles.at(i) = tiles.at(j);
+    tiles.at(j) = temptile;
+    return tiles;
+}
+
+
+
+void sort(std::vector<Tile> tiles, std::vector<Position> positions)
+{
+    int counter = 0;
+    for(;;) 
+    {
+        if(positions.at(counter).getX() > positions.at(counter+1).getX())
+        {
+            swaptiles(tiles,counter,counter+1);
+            swapposition(positions, counter, counter+1);
+        }
+        if(positions.at(counter).getX() < positions.at(counter-1).getX())
+        {
+            swaptiles(tiles,counter,counter-1);
+            swapposition(positions, counter, counter-1);
+    }
+       
+        
+        
+        
+    }
+     
+    
+}
+
+
+void filltile(std::vector<Tile> tiles, std::vector<Position> positions)
+{
+    
+    
+    
+}
 
 
 
@@ -236,7 +286,7 @@ int Addtile::execute(Game& board, std::vector<std::string>& params)
         }
         
        
-        
+        swaptiles(tiles, 1, 4);
         
         
         return 0;
