@@ -15,6 +15,8 @@
 #include "Position.h"
 #include "Color.h"
 #include "Tile.h"
+#include "Addtile.h"
+#include "Write.h"
 
 using std::cout;
 using std::cin;
@@ -44,7 +46,9 @@ int main(int argc, char **argv)
     cout << "hi" << endl;
     
   Game trax;
+  Write schreiben("write");
   trax.run();
+  
   
   return 0;
 }
