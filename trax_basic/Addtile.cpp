@@ -135,9 +135,9 @@ bool checktile(Tile temptile, Position tempposition, std::vector<Tile> Tiles,
 
 
 Addtile::Addtile(std::string name) : Command(name) {}
-    Addtile::~Addtile() {}
+Addtile::~Addtile() {}
 
-    int Addtile::execute(Game& board, std::vector<std::string>& params)
+int Addtile::execute(Game& board, std::vector<std::string>& params)
     {        
         std::vector<Tile> tiles;
         std::vector<Position> positions;

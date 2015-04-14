@@ -43,6 +43,8 @@ int main(int argc, char **argv)
   if (graphicon)
     cout << "hi" << endl;
     
+  Game trax;
+  trax.run();
   
   return 0;
 }
