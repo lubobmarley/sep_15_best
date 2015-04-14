@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-/*
+
 bool checktile(Tile temptile, Position tempposition, std::vector<Tile> Tiles, 
                std::vector<Position> Positions)
 {
@@ -48,12 +48,67 @@ bool checktile(Tile temptile, Position tempposition, std::vector<Tile> Tiles,
                  (temptile.getSide()      == Tile::TYPE_CURVE_2 &&
                   temptile.getColor()     == COLOR_RED)  ||
                  (temptile.getSide()      == Tile::TYPE_CROSS &&
-                  temptile.getColor()     == COLOR_WHITE))
+                  temptile.getColor()     == COLOR_WHITE)) 
+                    
+                    ||
+                    
+                    
+                    
+               (((Tiles[counter].getSide() == Tile::TYPE_CROSS   && 
+                Tiles[counter].getColor() == COLOR_RED) ||
+               (Tiles[counter].getSide()  == Tile::TYPE_CURVE_1 && 
+                Tiles[counter].getColor() == COLOR_RED) ||
+               (Tiles[counter].getSide()  == Tile::TYPE_CURVE_2 && 
+                Tiles[counter].getColor() == COLOR_RED) )     
+                    
+                    &&
+                    
+                ((temptile.getSide()     == Tile::TYPE_CURVE_1 &&
+                  temptile.getColor()     == COLOR_WHITE)  ||
+                 (temptile.getSide()      == Tile::TYPE_CURVE_2 &&
+                  temptile.getColor()     == COLOR_WHITE)  ||
+                 (temptile.getSide()      == Tile::TYPE_CROSS &&
+                  temptile.getColor()     == COLOR_RED)))
         }
         
         case "bot": 
         {
         
+               if(((Tiles[counter].getSide() == Tile::TYPE_CROSS   && 
+                Tiles[counter].getColor() == COLOR_WHITE) ||
+               (Tiles[counter].getSide()  == Tile::TYPE_CURVE_1 && 
+                Tiles[counter].getColor() == COLOR_WHITE) ||
+               (Tiles[counter].getSide()  == Tile::TYPE_CURVE_2 && 
+                Tiles[counter].getColor() == COLOR_WHITE) )     
+                    
+                    &&
+                    
+                ((temptile.getSide()     == Tile::TYPE_CURVE_1 &&
+                  temptile.getColor()     == COLOR_RED)  ||
+                 (temptile.getSide()      == Tile::TYPE_CURVE_2 &&
+                  temptile.getColor()     == COLOR_RED)  ||
+                 (temptile.getSide()      == Tile::TYPE_CROSS &&
+                  temptile.getColor()     == COLOR_WHITE)) 
+                    
+                    ||
+                    
+                    
+                    
+               (((Tiles[counter].getSide() == Tile::TYPE_CROSS   && 
+                Tiles[counter].getColor() == COLOR_RED) ||
+               (Tiles[counter].getSide()  == Tile::TYPE_CURVE_1 && 
+                Tiles[counter].getColor() == COLOR_RED) ||
+               (Tiles[counter].getSide()  == Tile::TYPE_CURVE_2 && 
+                Tiles[counter].getColor() == COLOR_RED) )     
+                    
+                    &&
+                    
+                ((temptile.getSide()     == Tile::TYPE_CURVE_1 &&
+                  temptile.getColor()     == COLOR_WHITE)  ||
+                 (temptile.getSide()      == Tile::TYPE_CURVE_2 &&
+                  temptile.getColor()     == COLOR_WHITE)  ||
+                 (temptile.getSide()      == Tile::TYPE_CROSS &&
+                  temptile.getColor()     == COLOR_RED)))
         
         }
         case "right": 
@@ -78,7 +133,7 @@ bool checktile(Tile temptile, Position tempposition, std::vector<Tile> Tiles,
 
 }
 
-*/
+
 Addtile::Addtile(std::string name) : Command(name) {}
     Addtile::~Addtile() {}
 
