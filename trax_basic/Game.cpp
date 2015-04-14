@@ -68,11 +68,12 @@ void Game::run()
         else
           cout << "par1 wrong!" << endl;
         
-        Write schreiben("Write");
+        //Write schreiben("Write");
+
         
         param.push_back(part2);
         param.push_back(part3);
-        
+        //schreiben.execute();
         if (str == "quit" || str == "Quit" || str == "QUIT")
             running_ = false;
     }
