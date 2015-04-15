@@ -73,7 +73,7 @@ void Game::run()
         
         param.push_back(part2);
         param.push_back(part3);
-        //schreiben.execute();
+    //schreiben.execute();
         if (str == "quit" || str == "Quit" || str == "QUIT")
             running_ = false;
     }

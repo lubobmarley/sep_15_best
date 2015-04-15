@@ -11,10 +11,12 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 #include "Game.h"
 #include "Position.h"
 #include "Color.h"
 #include "Tile.h"
+#include "Command.h"
 #include "Addtile.h"
 #include "Write.h"
 
@@ -46,8 +48,44 @@ int main(int argc, char **argv)
     cout << "hi" << endl;
     
   Game trax;
-  Write schreiben("write");
-  trax.run();
+  //Command *c_ptr = new Write("Write");
+  
+  Write write("write");
+    
+  //test write function
+  std::vector<Tile> tiles;
+  std::vector<Position> positions;
+  
+  tiles.push_back(Tile(Tile::TYPE_CURVE_2, COLOR_WHITE));
+  tiles.push_back(Tile(Tile::TYPE_CROSS, COLOR_RED));
+  tiles.push_back(Tile(Tile::TYPE_CURVE_2, COLOR_RED));
+  tiles.push_back(Tile(Tile::TYPE_CURVE_2, COLOR_WHITE));
+  tiles.push_back(Tile(Tile::TYPE_CURVE_1, COLOR_RED));
+  tiles.push_back(Tile(Tile::TYPE_CURVE_2, COLOR_RED));
+  
+  positions.push_back(Position(-1,0));
+  positions.push_back(Position(0,0));
+  positions.push_back(Position(0,1));
+  positions.push_back(Position(1,1));
+  positions.push_back(Position(1,2));
+  positions.push_back(Position(2,2));
+  
+  write.execute(tiles, positions, trax.getActivePlayer());
+  
+  
+  /*cout << "tile " << tiles.size() << endl;
+  cout << "pos " << positions.size() << endl;
+  
+  cout << "C: " << tiles.at(2).getColor() << endl;
+  cout << "S: " << tiles.at(2).getSide() << endl;
+  cout << "PX: " << positions.at(2).getX() << endl;
+  cout << "PY " << positions.at(2).getY() << endl;*/
+  
+  
+  
+  
+  
+  //trax.run();
   
   
   return 0;

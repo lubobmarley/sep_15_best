@@ -1,7 +1,12 @@
+/*#include "Command.h"
 #include "Write.h"
-#include <iostream>
-#include <string>
-#include <fstream>
+#include "Tile.h"
+#include "Position.h"*/
+
+#include "Write.h"
+class Command;
+class Tile;
+class Position;
 
 using std::cout;
 using std::cin;
@@ -10,14 +15,17 @@ using std::endl;
 Write::Write(std::string name) : Command(name) {}
 Write::~Write() {}
 
-int Write::execute(Game& board, std::vector<std::string>& params) 
+
+ int Write::execute(Game& board, std::vector<std::string>& params) {}
+ 
+ int Write::execute(std::vector<Tile> tiles, std::vector<Position> positions, int active) 
 {
   char magic[4] = {'T', 'R', 'A', 'X'};
-  char active = 2;
-  signed char minx = -1;
-  signed char miny = -1;
-  signed char maxx = 1;
-  signed char maxy = 1;
+  char activep = active;
+  signed char minx = 0;
+  signed char miny = 0;
+  signed char maxx = 0;
+  signed char maxy = 0;
   char cross = 1;
   char slash = 2;
   char bslash = 3;
@@ -25,41 +33,55 @@ int Write::execute(Game& board, std::vector<std::string>& params)
   char red = 2;
   char empty = 0;
   
-  int size = 3;
-  int row = 0;
-  int column = 0;
+  //int size = 0;
+  //int row = 0;
+  //int column = 0;
+  int x = 0;
+  int y = 0;
+  int i = 0;
   
-  int side[3][3] = {{0,2,2},{2,1,2},{3,3,2}};
-  int color[3][3] = {{0,2,1},{1,1,2},{2,1,1}};
+  //int side[3][3] = {{0,2,2},{2,1,2},{3,3,2}};
+  //int color[3][3] = {{0,2,1},{1,1,2},{2,1,1}};
   
-  std::string filename = "test.trax";
+  minx = positions.at(0).getX();
+  miny = positions.at(0).getY();
+  maxx = positions.at(positions.size() - 1).getX();
+  maxy = positions.at(positions.size() - 1).getY();
+  
+  //open file
+  std::string filename = "test.trax"; // muss no geändert werden mit file param
   std::ofstream file(filename.c_str(), std::ios::out | std::ios::binary);
-  
-  cout << "Pos. beginn :" << file.tellp() << endl;
+    
+  //Binary Header
   file.write(magic, sizeof(magic));
-  cout << "Pos. nach magic :" << file.tellp() << endl;
-  file << active << minx << miny << maxx << maxy;
-  cout << "Pos. nach header :" << file.tellp() << endl;
-  cout << "Pos. ende :" << file.tellp() << endl;
+  file << activep << minx << miny << maxx << maxy;
   
-   for (row = 0; row < size; row++)
-    for (column = 0; column < size; column++)
-    {
-      switch(side[row][column])
+  //Binary Content
+  for (y = miny; y <= maxy; y++)
+      for (x = minx; x <= maxx; x++)
       {
-        case 0: file << empty; break;
-        case 1: file << cross; break;
-        case 2: file << slash; break;
-        case 3: file << bslash; break;
-        default: cout << "Wrong side!" << endl;
+          if (positions.at(i).getX() == x && positions.at(i).getY() == y)
+          {
+              switch(tiles.at(i).getSide())
+              {
+                  case 1: file << cross; break;
+                  case 2: file << slash; break;
+                  case 3: file << bslash; break;
+                  default: cout << "wrong side!" << endl; //kann weggelassen werden
+              }
+              
+              switch(tiles.at(i).getColor())
+              {
+                  case 1: file << white; break;
+                  case 2: file << red; break;
+                  default: cout << "wrong color!" << endl; //kann weggelassen werden
+              }
+              i++;
+          }
+          else
+          {
+              file << empty; // empty Side
+              file << empty; // empty Color
+          }
       }
-      
-      switch(color[row][column])
-      {
-        case 0: file << empty; break;
-        case 1: file << white; break;
-        case 2: file << red; break;
-        default: cout << "Wrong color!" << endl;
-      }
-    }
 }
