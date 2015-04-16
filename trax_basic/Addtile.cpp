@@ -24,16 +24,16 @@ int getOrientation(int& counter, Position tempposition, std::vector<Position> po
     for(counter; counter < positions.size(); counter++)
     {
         if((tempposition.getX()   == positions.at(counter).getX()) && 
-           (tempposition.getY()+1 == positions.at(counter).getX()))
+           (tempposition.getY()+1 == positions.at(counter).getY()))
             {return TOP;}
         if((tempposition.getX()   == positions.at(counter).getX()) && 
-           (tempposition.getY()-1 == positions.at(counter).getX())) 
+           (tempposition.getY()-1 == positions.at(counter).getY())) 
             {return BOT;}
         if((tempposition.getX()+1 == positions.at(counter).getX()) && 
-           (tempposition.getY()   == positions.at(counter).getX()))
+           (tempposition.getY()   == positions.at(counter).getY()))
             {return LEFT;}
         if((tempposition.getX()-1 == positions.at(counter).getX()) && 
-           (tempposition.getY()   == positions.at(counter).getX()))
+           (tempposition.getY()   == positions.at(counter).getY()))
             {return RIGHT;}
     }
     return 0;
@@ -297,7 +297,7 @@ int Addtile::execute(std::vector<std::string> params,
         Tile temptile(Tile::TYPE_CROSS,COLOR_WHITE);
         Position tempposition(0,0);
         
-        tempposition.parse(params.at(0));
+        tempposition.parse(params.at(0)); //!!
         //temptile.setColor(board.getActivePlayer());
         
         if(params.at(1) == "+")
