@@ -23,7 +23,8 @@ private:
     Game(const Game &);
     Game& operator= (const Game &);
     
-    bool correctPart1 (std::string part1);
+    bool correctAddtile (std::string part1);
+    bool correctWrite (std::string part1, std::string part2);
     
 public:
     Game();
