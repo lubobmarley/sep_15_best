@@ -51,7 +51,9 @@ Write::~Write() {}
   //open file
   std::string filename = "test.trax"; // muss no geändert werden mit file param
   std::ofstream file(filename.c_str(), std::ios::out | std::ios::binary);
-    
+  
+  //fehlerbehandlung \ tut3 folien
+  
   //Binary Header
   file.write(magic, sizeof(magic));
   file << activep << minx << miny << maxx << maxy;
@@ -84,4 +86,5 @@ Write::~Write() {}
               file << empty; // empty Color
           }
       }
+  //file schließen
 }

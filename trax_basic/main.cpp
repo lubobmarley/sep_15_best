@@ -69,7 +69,7 @@ int main(int argc, char **argv)
   positions.push_back(Position(1,1));
   positions.push_back(Position(1,2));
   positions.push_back(Position(2,2));
-  
+  trax.togglePlayer();
   write.execute(tiles, positions, trax.getActivePlayer());
   
   

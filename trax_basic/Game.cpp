@@ -11,7 +11,7 @@ using std::cout;
 using std::cin;
 using std::endl;
 
-bool correctPart1 (std::string part1)
+bool Game::correctPart1 (std::string part1)
 {
   int i = 0;
   int n = 7;
