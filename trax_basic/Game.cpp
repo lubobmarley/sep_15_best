@@ -5,7 +5,10 @@
 #include <vector>
 
 #include "Game.h"
+#include "Tile.h"
+#include "Position.h"
 #include "Write.h"
+#include "Addtile.h"
 
 
 using std::cout;
@@ -58,6 +61,10 @@ void Game::run()
     running_ = true;
     std::string str;
     std::vector<std::string> param;
+    std::vector<Tile> tiles;
+    std::vector<Position> positions;
+    Addtile addtile("addtile");
+    
     
     while (running_ == true)
     {
@@ -70,9 +77,15 @@ void Game::run()
         std::string part1, part2, part3;
         is >> part1 >> part2 >> part3;
         
+        param.push_back(part2);
+        param.push_back(part3);
+        
         //parse input
         if (correctAddtile(part1))
-          cout << "Addtile!" << endl;
+        {
+            addtile.execute(param, tiles, positions, getActivePlayer());
+            togglePlayer();
+        }
         else if (correctWrite(part1, part2))
           cout << "Write!" << endl;
         else if (correctQuit(str))
@@ -80,8 +93,6 @@ void Game::run()
         else
           cout << "par1 wrong!" << endl;
                
-        param.push_back(part2);
-        param.push_back(part3);
         
     }
 }

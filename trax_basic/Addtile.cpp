@@ -2,6 +2,7 @@
 #include "Tile.h"
 #include "Game.h"
 #include "Addtile.h"
+#include "Write.h"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -288,16 +289,16 @@ Addtile::~Addtile() {}
 
 int Addtile::execute(Game& board, std::vector<std::string>& params) {}
 
-int Addtile::execute(Game& board, std::vector<std::string>& params,
-        std::vector<Tile>& tiles, std::vector<Position>& positions )
-    {        
-        
+int Addtile::execute(std::vector<std::string> params,
+        std::vector<Tile>& tiles, std::vector<Position>& positions, int aplayer)
+    {  
+    Write write("write");
         
         Tile temptile(Tile::TYPE_CROSS,COLOR_WHITE);
         Position tempposition(0,0);
         
-        tempposition.parse(params[0]);
-        temptile.setColor(board.getActivePlayer());
+        tempposition.parse(params.at(0));
+        //temptile.setColor(board.getActivePlayer());
         
         if(params.at(1) == "+")
             temptile.setSide(Tile::TYPE_CROSS);
@@ -317,11 +318,11 @@ int Addtile::execute(Game& board, std::vector<std::string>& params,
             //filltile()
             sort(tiles, positions);
             //if(graphicon == true)
-            //  write.execute(tiles, positions);
+            write.execute(tiles, positions, aplayer);
         }
         
        
-        swaptiles(tiles, 1, 4);
+        //swaptiles(tiles, 1, 4);
         
         
         

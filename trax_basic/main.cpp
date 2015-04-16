@@ -48,12 +48,16 @@ int main(int argc, char **argv)
     cout << "hi" << endl;
     
   Game trax;
+  trax.run();
   //Command *c_ptr = new Write("Write");
   
   Write write("write");
     
   //test write function
-  std::vector<Tile> tiles;
+  
+  //text binary
+  
+  /*std::vector<Tile> tiles;
   std::vector<Position> positions;
   
   tiles.push_back(Tile(Tile::TYPE_CURVE_2, COLOR_WHITE));
@@ -70,7 +74,7 @@ int main(int argc, char **argv)
   positions.push_back(Position(1,2));
   positions.push_back(Position(2,2));
   trax.togglePlayer();
-  write.execute(tiles, positions, trax.getActivePlayer());
+  write.execute(tiles, positions, trax.getActivePlayer());*/
   
   
   /*cout << "tile " << tiles.size() << endl;
@@ -82,11 +86,6 @@ int main(int argc, char **argv)
   cout << "PY " << positions.at(2).getY() << endl;*/
   
   
-  
-  
-  
-  //trax.run();
-  
-  
+    
   return 0;
 }

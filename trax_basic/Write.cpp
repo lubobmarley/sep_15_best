@@ -18,10 +18,10 @@ Write::~Write() {}
 
  int Write::execute(Game& board, std::vector<std::string>& params) {}
  
- int Write::execute(std::vector<Tile> tiles, std::vector<Position> positions, int active) 
+ int Write::execute(std::vector<Tile> tiles, std::vector<Position> positions, int aplayer) 
 {
   char magic[4] = {'T', 'R', 'A', 'X'};
-  char activep = active;
+  char activep = aplayer;
   signed char minx = 0;
   signed char miny = 0;
   signed char maxx = 0;
@@ -49,7 +49,7 @@ Write::~Write() {}
   maxy = positions.at(positions.size() - 1).getY();
   
   //open file
-  std::string filename = "test.trax"; // muss no geändert werden mit file param
+  std::string filename = "first.trax"; // muss no geändert werden mit file param
   std::ofstream file(filename.c_str(), std::ios::out | std::ios::binary);
   
   //fehlerbehandlung \ tut3 folien
