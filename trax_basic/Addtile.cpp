@@ -126,36 +126,52 @@ bool checktile(Tile& temptile, Position tempposition, std::vector<Tile> tiles,
        {           
             case TOP:
                 if (colorOutput(TOP, tiles.at(counter)) == colorOutput(BOT, temptile))
+                {
                     set_white++;
+                    break;
+                }
                 else
                 {
                     temptile.setColor(COLOR_RED);
                     set_red++;
+                    break;
                 }
                 
             case BOT:
                 if (colorOutput(BOT, tiles.at(counter)) == colorOutput(TOP, temptile))
+                {
                     set_white++;
+                    break;
+                }
                 else
                 {
                     temptile.setColor(COLOR_RED);
                     set_red++;
+                    break;
                 }
             case RIGHT:
                 if (colorOutput(RIGHT, tiles.at(counter)) == colorOutput(LEFT, temptile))
+                {
                     set_white++;
+                    break;
+                }
                 else
                 {
                     temptile.setColor(COLOR_RED);
                     set_red++;
+                    break;
                 }
             case LEFT:
                 if (colorOutput(LEFT, tiles.at(counter)) == colorOutput(RIGHT, temptile))
+                {
                     set_white++;
+                    break;
+                }
                 else
                 {
                     temptile.setColor(COLOR_RED);
                     set_red++;
+                    break;
                 }
             default:
                     return false; //wrong coords
@@ -163,7 +179,7 @@ bool checktile(Tile& temptile, Position tempposition, std::vector<Tile> tiles,
     }
   
     if(set_red > 0 && set_white > 0)
-        return false;
+        return false; //not matching colors
     else
         return true;
      
