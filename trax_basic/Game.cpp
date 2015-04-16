@@ -34,6 +34,17 @@ bool Game::correctWrite (std::string part1, std::string part2)
     return false;
 }
 
+bool Game::correctQuit (std::string str)
+{
+  std::string key_word = "quit";
+  std::transform(str.begin(), str.end(), str.begin(), ::tolower);
+  
+  if (key_word == str)
+    return true;
+  else
+    return false;
+}
+
 Game::Game()
 {
     activeplayer_ = COLOR_WHITE;
@@ -50,25 +61,28 @@ void Game::run()
     
     while (running_ == true)
     {
+        //waiting for input
         cout << "sep> ";
         std::getline(cin, str);
         
+        //extract input
         std::istringstream is(str);
         std::string part1, part2, part3;
         is >> part1 >> part2 >> part3;
         
+        //parse input
         if (correctAddtile(part1))
           cout << "Addtile!" << endl;
         else if (correctWrite(part1, part2))
           cout << "Write!" << endl;
+        else if (correctQuit(str))
+          running_ = false;
         else
           cout << "par1 wrong!" << endl;
                
         param.push_back(part2);
         param.push_back(part3);
         
-        if (str == "quit" || str == "Quit" || str == "QUIT")
-            running_ = false;
     }
 }
 

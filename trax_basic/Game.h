@@ -25,6 +25,7 @@ private:
     
     bool correctAddtile (std::string part1);
     bool correctWrite (std::string part1, std::string part2);
+    bool correctQuit (std::string str);
     
 public:
     Game();
