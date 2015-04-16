@@ -24,6 +24,8 @@ class Addtile : public Command
     ~Addtile();
     
     int execute(Game& board, std::vector<std::string>& params);
+    int execute(Game& board, std::vector<std::string>& params,
+        std::vector<Tile>& tiles, std::vector<Position>& positions );
     
 };
 

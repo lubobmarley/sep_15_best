@@ -112,15 +112,14 @@ bool checktile(Tile& temptile, Position tempposition, std::vector<Tile> tiles,
     int identifier = 0;
     int counter = 0;
     
-    
-
+    /*
     for(counter;counter < tiles.size();counter++)
     {
        int identifier = getOrientation(counter, tempposition, positions);
         
        switch(identifier)
             case TOP:
-                if()
+                if ()
                 
             case BOT:
                 
@@ -134,7 +133,7 @@ bool checktile(Tile& temptile, Position tempposition, std::vector<Tile> tiles,
     }
     
     
-    
+    */
    
     
     
@@ -240,6 +239,8 @@ void filltile(std::vector<Tile> tiles, std::vector<Position> positions)
 
 Addtile::Addtile(std::string name) : Command(name) {}
 Addtile::~Addtile() {}
+
+int Addtile::execute(Game& board, std::vector<std::string>& params) {}
 
 int Addtile::execute(Game& board, std::vector<std::string>& params,
         std::vector<Tile>& tiles, std::vector<Position>& positions )
