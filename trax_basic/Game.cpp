@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <algorithm>
 #include <sstream>
 #include <vector>
 
@@ -11,35 +12,28 @@ using std::cout;
 using std::cin;
 using std::endl;
 
-bool Game::correctPart1 (std::string part1)
+bool Game::correctAddtile (std::string part1)
 {
-  int i = 0;
-  int n = 7;
-  bool checkpart1 = true;
+  std::string key_word = "addtile";
+  std::transform(part1.begin(), part1.end(), part1.begin(), ::tolower);
   
-  while(i < n)
-        {
-          switch(i)
-          {
-            case 0: if(part1[i] != 'a' && part1[i] != 'A') checkpart1 = false;
-                    break;
-            case 1: if(part1[i] != 'd' && part1[i] != 'D') checkpart1 = false;
-                    break;
-            case 2: if(part1[i] != 'd' && part1[i] != 'D') checkpart1 = false;
-                    break;
-            case 3: if(part1[i] != 't' && part1[i] != 'T') checkpart1 = false;
-                    break;
-            case 4: if(part1[i] != 'i' && part1[i] != 'I') checkpart1 = false;
-                    break;
-            case 5: if(part1[i] != 'l' && part1[i] != 'L') checkpart1 = false;
-                    break;
-            case 6: if(part1[i] != 'e' && part1[i] != 'E') checkpart1 = false;
-                    break;
-          }
-          i++;
-        }
-    return checkpart1;
+  if (key_word == part1)
+    return true;
+  else
+    return false;
 }
+
+bool Game::correctWrite (std::string part1, std::string part2)
+{
+  std::string key_word = "write";
+  std::transform(part1.begin(), part1.end(), part1.begin(), ::tolower);
+  
+  if (key_word == part1 && part2 != "")
+    return true;
+  else
+    return false;
+}
+
 Game::Game()
 {
     activeplayer_ = COLOR_WHITE;
@@ -63,17 +57,16 @@ void Game::run()
         std::string part1, part2, part3;
         is >> part1 >> part2 >> part3;
         
-        if (correctPart1(part1))
-          cout << "par1 correct!" << endl;
+        if (correctAddtile(part1))
+          cout << "Addtile!" << endl;
+        else if (correctWrite(part1, part2))
+          cout << "Write!" << endl;
         else
           cout << "par1 wrong!" << endl;
-        
-        //Write schreiben("Write");
-
-        
+               
         param.push_back(part2);
         param.push_back(part3);
-    //schreiben.execute();
+        
         if (str == "quit" || str == "Quit" || str == "QUIT")
             running_ = false;
     }
