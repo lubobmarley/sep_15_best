@@ -15,188 +15,141 @@ enum Orientation
     LEFT = 4          
 };
 
-bool checktile(Tile temptile, Position tempposition, std::vector<Tile> Tiles, 
-               std::vector<Position> Positions)
+
+
+
+int getOrientation(int& counter, Position tempposition, std::vector<Position> positions)
 {
+    
+    for(counter; counter < positions.size(); counter++)
+    {
+        if((tempposition.getX()   == positions[counter].getX()) && 
+           (tempposition.getY()+1 == positions[counter].getX()))
+            {return TOP;}
+        if((tempposition.getX()   == positions[counter].getX()) && 
+           (tempposition.getY()-1 == positions[counter].getX())) 
+            {return BOT;}
+        if((tempposition.getX()+1 == positions[counter].getX()) && 
+           (tempposition.getY()   == positions[counter].getX()))
+            {return LEFT;}
+        if((tempposition.getX()-1 == positions[counter].getX()) && 
+           (tempposition.getY()   == positions[counter].getX()))
+            {return RIGHT;}
+    }
+}
+
+
+
+Color colorOutput(int direction, Tile temptile)
+{
+  switch(direction)
+    case TOP:
+    {
+      return temptile.getColor();
+    
+    case BOT:
+    
+      if((temptile.getColor()  == COLOR_RED          &&
+          temptile.getSide()    == Tile::TYPE_CROSS)  ||
+          
+          (temptile.getColor() == COLOR_WHITE        &&
+          (temptile.getSide()  == Tile::TYPE_CURVE_1 ||
+          temptile.getSide()   == Tile::TYPE_CURVE_2)))
+          return COLOR_RED;
+      else
+          return COLOR_WHITE;
+    
+    case RIGHT:
+    
+      if((temptile.getColor() == COLOR_WHITE          &&
+         (temptile.getSide()  == Tile::TYPE_CROSS     ||
+          temptile.getSide() == Tile::TYPE_CURVE_1)) ||
+        
+         (temptile.getColor() == COLOR_RED          &&
+         (temptile.getSide()  == Tile::TYPE_CURVE_2)))
+          return COLOR_RED;
+      else
+          return COLOR_WHITE;
+    
+    case LEFT:
+    
+      if((temptile.getColor() == COLOR_WHITE          &&
+         (temptile.getSide()  == Tile::TYPE_CROSS     ||
+          temptile.getSide() == Tile::TYPE_CURVE_2)) ||
+        
+         (temptile.getColor() == COLOR_RED          &&
+         (temptile.getSide()  == Tile::TYPE_CURVE_1)))
+          return COLOR_RED;
+      else
+          return COLOR_WHITE;
+        
+    }    
+    
+}
+
+
+//------------------------------------------------------------------------------
+// checktile()
+//
+// @param tiles, <vector> of all tiles from user input
+// @param positions, <vector> of all tiles from user input
+// @param temtile, Tile that is used to store userinput
+// @param tempposition, position of that temptile
+//
+// @return bool, returns if tile may be placed
+//
+bool checktile(Tile& temptile, Position tempposition, std::vector<Tile> tiles, 
+               std::vector<Position> positions)
+{
+    
+    temptile.setColor(COLOR_WHITE); //default color   
+    if(tiles.size() == 0 && tempposition.getX() == 0 && tempposition.getY() == 0)
+    {
+        temptile.setColor(COLOR_RED);
+        return true;
+    }
     
     int identifier = 0;
     int counter = 0;
     
-    for(counter; counter<Tiles.size(); counter++)
-    {
-        if((tempposition.getX()   == Positions[counter].getX()) && 
-           (tempposition.getY()+1 == Positions[counter].getX()))
-            { identifier = TOP;}
-        if((tempposition.getX()   == Positions[counter].getX()) && 
-           (tempposition.getY()-1 == Positions[counter].getX())) 
-            {identifier = BOT;}
-        if((tempposition.getX()+1 == Positions[counter].getX()) && 
-           (tempposition.getY() == Positions[counter].getX()))
-            {identifier = LEFT;}
-        if((tempposition.getX()-1 == Positions[counter].getX()) && 
-           (tempposition.getY()   == Positions[counter].getX()))
-            {identifier = RIGHT;}
-    }
+    
 
-    switch(identifier)
+    for(counter;counter < tiles.size();counter++)
     {
-        case TOP: 
-        {
-            if((((Tiles[counter].getSide()  == Tile::TYPE_CROSS   && 
-                  Tiles[counter].getColor() == COLOR_WHITE) ||
-                 (Tiles[counter].getSide()  == Tile::TYPE_CURVE_1 && 
-                  Tiles[counter].getColor() == COLOR_WHITE) ||
-                 (Tiles[counter].getSide()  == Tile::TYPE_CURVE_2 && 
-                  Tiles[counter].getColor() == COLOR_WHITE))                  
-                    && 
-                ((temptile.getSide()       == Tile::TYPE_CURVE_1  &&
-                  temptile.getColor()       == COLOR_RED)   ||
-                 (temptile.getSide()        == Tile::TYPE_CURVE_2 &&
-                  temptile.getColor()       == COLOR_RED)   ||
-                 (temptile.getSide()        == Tile::TYPE_CROSS   &&
-                  temptile.getColor()       == COLOR_WHITE))) 
-                    || 
-               (((Tiles[counter].getSide()  == Tile::TYPE_CROSS   && 
-                  Tiles[counter].getColor() == COLOR_RED)   ||
-                 (Tiles[counter].getSide()  == Tile::TYPE_CURVE_1 && 
-                  Tiles[counter].getColor() == COLOR_RED)   ||
-                 (Tiles[counter].getSide()  == Tile::TYPE_CURVE_2 && 
-                  Tiles[counter].getColor() == COLOR_RED) )       
-                    &&
-                ((temptile.getSide()        == Tile::TYPE_CURVE_1 &&
-                  temptile.getColor()       == COLOR_WHITE)  ||
-                 (temptile.getSide()        == Tile::TYPE_CURVE_2 &&
-                  temptile.getColor()       == COLOR_WHITE)  ||
-                 (temptile.getSide()        == Tile::TYPE_CROSS   &&
-                  temptile.getColor()       == COLOR_RED))))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+       int identifier = getOrientation(counter, tempposition, positions);
         
-        case BOT: 
-        {
-        
-            if((((Tiles[counter].getSide()  == Tile::TYPE_CURVE_1 && 
-                  Tiles[counter].getColor() == COLOR_RED)     ||
-                 (Tiles[counter].getSide()  == Tile::TYPE_CURVE_2 && 
-                  Tiles[counter].getColor() == COLOR_RED)     ||
-                 (Tiles[counter].getSide()  == Tile::TYPE_CROSS   && 
-                  Tiles[counter].getColor() == COLOR_WHITE))     
-                    && 
-                ((temptile.getSide()        == Tile::TYPE_CROSS   &&
-                  temptile.getColor()       == COLOR_WHITE)    ||
-                 (temptile.getSide()        == Tile::TYPE_CURVE_1 &&
-                  temptile.getColor()       == COLOR_WHITE)    ||
-                 (temptile.getSide()        == Tile::TYPE_CURVE_2 &&
-                  temptile.getColor()       == COLOR_WHITE))) 
-                    ||   
-               (((Tiles[counter].getSide()  == Tile::TYPE_CURVE_1 &&
-                  Tiles[counter].getColor() == COLOR_WHITE)    ||
-                 (Tiles[counter].getSide()  == Tile::TYPE_CURVE_2 && 
-                  Tiles[counter].getColor() == COLOR_WHITE)    ||
-                 (Tiles[counter].getSide()  == Tile::TYPE_CROSS   && 
-                  Tiles[counter].getColor() == COLOR_RED) )     
-                    &&
-                ((temptile.getSide()        == Tile::TYPE_CROSS   &&
-                  temptile.getColor()       == COLOR_RED)      ||
-                 (temptile.getSide()        == Tile::TYPE_CURVE_1 &&
-                  temptile.getColor()       == COLOR_RED)      ||
-                 (temptile.getSide()        == Tile::TYPE_CURVE_2 &&
-                  temptile.getColor()       == COLOR_RED))))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        
-        }
-        case RIGHT: 
-        {
-            if((((Tiles[counter].getSide()  == Tile::TYPE_CROSS   && 
-                  Tiles[counter].getColor() == COLOR_WHITE) ||
-                 (Tiles[counter].getSide()  == Tile::TYPE_CURVE_1 && 
-                  Tiles[counter].getColor() == COLOR_WHITE) ||
-                 (Tiles[counter].getSide()  == Tile::TYPE_CURVE_2 && 
-                  Tiles[counter].getColor() == COLOR_RED))                  
-                    && 
-                ((temptile.getSide()       == Tile::TYPE_CURVE_1  &&
-                  temptile.getColor()       == COLOR_RED)   ||
-                 (temptile.getSide()        == Tile::TYPE_CURVE_2 &&
-                  temptile.getColor()       == COLOR_WHITE)   ||
-                 (temptile.getSide()        == Tile::TYPE_CROSS   &&
-                  temptile.getColor()       == COLOR_WHITE))) 
-                    || 
-               (((Tiles[counter].getSide()  == Tile::TYPE_CROSS   && 
-                  Tiles[counter].getColor() == COLOR_RED)   ||
-                 (Tiles[counter].getSide()  == Tile::TYPE_CURVE_1 && 
-                  Tiles[counter].getColor() == COLOR_RED)   ||
-                 (Tiles[counter].getSide()  == Tile::TYPE_CURVE_2 && 
-                  Tiles[counter].getColor() == COLOR_WHITE) )       
-                    &&
-                ((temptile.getSide()        == Tile::TYPE_CURVE_1 &&
-                  temptile.getColor()       == COLOR_WHITE)  ||
-                 (temptile.getSide()        == Tile::TYPE_CURVE_2 &&
-                  temptile.getColor()       == COLOR_RED)  ||
-                 (temptile.getSide()        == Tile::TYPE_CROSS   &&
-                  temptile.getColor()       == COLOR_RED))))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        case LEFT: 
-              {
-            if((((Tiles[counter].getSide()  == Tile::TYPE_CURVE_1 && 
-                  Tiles[counter].getColor() == COLOR_RED) ||
-                 (Tiles[counter].getSide()  == Tile::TYPE_CURVE_2 && 
-                  Tiles[counter].getColor() == COLOR_WHITE) ||
-                 (Tiles[counter].getSide()  == Tile::TYPE_CROSS   && 
-                  Tiles[counter].getColor() == COLOR_WHITE))                  
-                    && 
-                ((temptile.getSide()       == Tile::TYPE_CROSS    &&
-                  temptile.getColor()       == COLOR_WHITE)   ||
-                 (temptile.getSide()        == Tile::TYPE_CURVE_1 &&
-                  temptile.getColor()       == COLOR_WHITE)   ||
-                 (temptile.getSide()        == Tile::TYPE_CURVE_2 &&
-                  temptile.getColor()       == COLOR_RED))) 
-                    ||
-               (((Tiles[counter].getSide()  == Tile::TYPE_CURVE_1 && 
-                  Tiles[counter].getColor() == COLOR_WHITE)   ||
-                 (Tiles[counter].getSide()  == Tile::TYPE_CURVE_2 && 
-                  Tiles[counter].getColor() == COLOR_RED)   ||
-                 (Tiles[counter].getSide()  == Tile::TYPE_CROSS   && 
-                  Tiles[counter].getColor() == COLOR_RED) )       
-                    &&
-                ((temptile.getSide()        == Tile::TYPE_CROSS   &&
-                  temptile.getColor()       == COLOR_RED)  ||
-                 (temptile.getSide()        == Tile::TYPE_CURVE_1 &&
-                  temptile.getColor()       == COLOR_RED)  ||
-                 (temptile.getSide()        == Tile::TYPE_CURVE_2 &&
-                  temptile.getColor()       == COLOR_WHITE))))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        default:
-            return false;
-       }
+       switch(identifier)
+            case TOP:
+                if()
+                
+            case BOT:
+                
+            case RIGHT:
+            
+            case LEFT:
+                    
+       
+                
+            
     }
+    
+    
+    
+   
+    
+    
 }
 
-//Vielleicht als Methoden implementieren?
+
+//------------------------------------------------------------------------------
+// swappositions()
+//
+// @param positions, <position> of all tiles from user input
+// @param int i, index to be swapped with j
+// @param int j, index to be swapped with i
+//
+// @return vector<Position> the new vector with swapped elements
+//
 std::vector<Position> swapposition(std::vector<Position> positions, int i, int j)
 {    
     Position tempposition = positions.at(i);
@@ -205,6 +158,15 @@ std::vector<Position> swapposition(std::vector<Position> positions, int i, int j
     return positions;
 }
 
+//------------------------------------------------------------------------------
+// swaptiles()
+//
+// @param tiles, <vector> of all tiles from user input
+// @param int i, index to be swapped with j
+// @param int j, index to be swapped with i
+//
+// @return vector<Tile> the new vector with swapped elements
+//
 std::vector<Tile> swaptiles(std::vector<Tile> tiles, int i, int j)
 {    
     Tile temptile = tiles.at(i);
@@ -214,30 +176,56 @@ std::vector<Tile> swaptiles(std::vector<Tile> tiles, int i, int j)
 }
 
 
-
-void sort(std::vector<Tile> tiles, std::vector<Position> positions)
+//------------------------------------------------------------------------------
+// sort()
+//
+// @param tiles, <vector> of all tiles from user input
+// @param positions, vector of all coordinates connected to tiles
+//        is not married. Should be 0 or 1 for example purposes
+//
+// @return bool returns true if sorted sucessfully
+//
+bool sort(std::vector<Tile>& tiles, std::vector<Position>& positions)
 {
-    int counter = 0;
+    int counter = positions.size();
+    
+    if(positions.size() == 0 || positions.size() == 1)
+        return true;
+    
+    
     for(;;) 
     {
-        if(positions.at(counter).getX() > positions.at(counter+1).getX())
+        if(positions.at(counter).getX() <  positions.at(counter-1).getX())
         {
-            swaptiles(tiles,counter,counter+1);
-            swapposition(positions, counter, counter+1);
+            swaptiles(tiles,counter,counter - 1);
+            swapposition(positions, counter, counter - 1);
+            counter--;
         }
-        if(positions.at(counter).getX() < positions.at(counter-1).getX())
-        {
-            swaptiles(tiles,counter,counter-1);
-            swapposition(positions, counter, counter-1);
+        for(;;)
+            if(positions.at(counter).getX() == positions.at(counter-1).getX())
+            {
+                if(positions.at(counter).getY() > positions.at(counter-1).getY())
+                    break;
+               
+                if(positions.at(counter).getY() < positions.at(counter-1).getY())
+                {
+                    swaptiles(tiles,counter,counter-1);
+                    swapposition(positions, counter, counter-1);
+                    counter--;
+                }
+            }
+        if(positions.at(counter).getX() >  positions.at(counter-1).getX())
+            break;
+            
     }
+        
+    return 0;
+}
        
         
         
         
-    }
-     
-    
-}
+
 
 
 void filltile(std::vector<Tile> tiles, std::vector<Position> positions)
@@ -253,10 +241,10 @@ void filltile(std::vector<Tile> tiles, std::vector<Position> positions)
 Addtile::Addtile(std::string name) : Command(name) {}
 Addtile::~Addtile() {}
 
-int Addtile::execute(Game& board, std::vector<std::string>& params)
+int Addtile::execute(Game& board, std::vector<std::string>& params,
+        std::vector<Tile>& tiles, std::vector<Position>& positions )
     {        
-        std::vector<Tile> tiles;
-        std::vector<Position> positions;
+        
         
         Tile temptile(Tile::TYPE_CROSS,COLOR_WHITE);
         Position tempposition(0,0);
@@ -280,13 +268,14 @@ int Addtile::execute(Game& board, std::vector<std::string>& params)
             tiles.push_back(temptile);
             positions.push_back(tempposition);
             //filltile()
-            //sort()
+            sort(tiles, positions);
             //if(graphicon == true)
             //  write.execute(tiles, positions);
         }
         
        
         swaptiles(tiles, 1, 4);
+        
         
         
         return 0;
