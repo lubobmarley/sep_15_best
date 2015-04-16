@@ -22,19 +22,20 @@ int getOrientation(int& counter, Position tempposition, std::vector<Position> po
     
     for(counter; counter < positions.size(); counter++)
     {
-        if((tempposition.getX()   == positions[counter].getX()) && 
-           (tempposition.getY()+1 == positions[counter].getX()))
+        if((tempposition.getX()   == positions.at(counter).getX()) && 
+           (tempposition.getY()+1 == positions.at(counter).getX()))
             {return TOP;}
-        if((tempposition.getX()   == positions[counter].getX()) && 
-           (tempposition.getY()-1 == positions[counter].getX())) 
+        if((tempposition.getX()   == positions.at(counter).getX()) && 
+           (tempposition.getY()-1 == positions.at(counter).getX())) 
             {return BOT;}
-        if((tempposition.getX()+1 == positions[counter].getX()) && 
-           (tempposition.getY()   == positions[counter].getX()))
+        if((tempposition.getX()+1 == positions.at(counter).getX()) && 
+           (tempposition.getY()   == positions.at(counter).getX()))
             {return LEFT;}
-        if((tempposition.getX()-1 == positions[counter].getX()) && 
-           (tempposition.getY()   == positions[counter].getX()))
+        if((tempposition.getX()-1 == positions.at(counter).getX()) && 
+           (tempposition.getY()   == positions.at(counter).getX()))
             {return RIGHT;}
     }
+    return 0;
 }
 
 
@@ -110,32 +111,62 @@ bool checktile(Tile& temptile, Position tempposition, std::vector<Tile> tiles,
     
     int identifier = 0;
     int counter = 0;
+
+    int set_red = 0;
+    int set_white = 0;
     
-    /*
-    for(counter;counter < tiles.size();counter++)
+    
+    for(counter ; counter < tiles.size() ; counter++)
     {
        int identifier = getOrientation(counter, tempposition, positions);
-        
+       
+
+       
        switch(identifier)
+       {           
             case TOP:
-                if ()
+                if (colorOutput(TOP, tiles.at(counter)) == colorOutput(BOT, temptile))
+                    set_white++;
+                else
+                {
+                    temptile.setColor(COLOR_RED);
+                    set_red++;
+                }
                 
             case BOT:
-                
+                if (colorOutput(BOT, tiles.at(counter)) == colorOutput(TOP, temptile))
+                    set_white++;
+                else
+                {
+                    temptile.setColor(COLOR_RED);
+                    set_red++;
+                }
             case RIGHT:
-            
+                if (colorOutput(RIGHT, tiles.at(counter)) == colorOutput(LEFT, temptile))
+                    set_white++;
+                else
+                {
+                    temptile.setColor(COLOR_RED);
+                    set_red++;
+                }
             case LEFT:
-                    
-       
-                
-            
+                if (colorOutput(LEFT, tiles.at(counter)) == colorOutput(RIGHT, temptile))
+                    set_white++;
+                else
+                {
+                    temptile.setColor(COLOR_RED);
+                    set_red++;
+                }
+            default:
+                    return false; //wrong coords
+       }
     }
-    
-    
-    */
-   
-    
-    
+  
+    if(set_red > 0 && set_white > 0)
+        return false;
+    else
+        return true;
+     
 }
 
 
