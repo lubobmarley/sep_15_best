@@ -316,7 +316,7 @@ int Addtile::execute(std::vector<std::string> params,
             tiles.push_back(temptile);
             positions.push_back(tempposition);
             //filltile()
-            sort(tiles, positions);
+            //sort(tiles, positions);
             //if(graphicon == true)
             write.execute(tiles, positions, aplayer);
         }
