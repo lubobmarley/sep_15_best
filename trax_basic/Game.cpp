@@ -83,8 +83,10 @@ void Game::run()
         //parse input
         if (correctAddtile(part1))
         {
-            addtile.execute(param, tiles, positions, getActivePlayer());
             togglePlayer();
+            addtile.execute(param, tiles, positions, getActivePlayer());
+            param.clear();
+
         }
         else if (correctWrite(part1, part2))
           cout << "Write!" << endl;

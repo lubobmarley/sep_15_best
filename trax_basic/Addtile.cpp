@@ -289,7 +289,7 @@ Addtile::~Addtile() {}
 
 int Addtile::execute(Game& board, std::vector<std::string>& params) {}
 
-int Addtile::execute(std::vector<std::string> params,
+int Addtile::execute(std::vector<std::string> param,
         std::vector<Tile>& tiles, std::vector<Position>& positions, int aplayer)
     {  
     Write write("write");
@@ -297,14 +297,14 @@ int Addtile::execute(std::vector<std::string> params,
         Tile temptile(Tile::TYPE_CROSS,COLOR_WHITE);
         Position tempposition(0,0);
         
-        tempposition.parse(params.at(0)); //!!
+        tempposition.parse(param.at(0)); //!!
         //temptile.setColor(board.getActivePlayer());
         
-        if(params.at(1) == "+")
+        if(param.at(1) == "+")
             temptile.setSide(Tile::TYPE_CROSS);
-        if(params.at(1) == "/")
+        if(param.at(1) == "/")
             temptile.setSide(Tile::TYPE_CURVE_1);
-        if(params.at(1) == "\\")
+        if(param.at(1) == "\\")
             temptile.setSide(Tile::TYPE_CURVE_2); 
         else
         {
