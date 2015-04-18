@@ -96,7 +96,7 @@ void Game::run(bool graphicon, std::string filename)
         }
         else if (correctWrite(part1))
             if (part2 != "" && part3 == "")
-                cout << "Write!" << endl; //write Befehl
+                write.execute(tiles, positions, getActivePlayer(), part2);
             else
                 cout << "Error: Wrong parameter count!" << endl;
         else if (correctQuit(str))

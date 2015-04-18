@@ -51,7 +51,6 @@ int main(int argc, char **argv)
   std::string graphicmode = "-g";
   Game trax;
   
-  
   if (argc == 1 || (argc == 3 && argv[1] == graphicmode))
   {
   graphicon = checkGraphikMode(argc, argv, filename);
@@ -62,7 +61,7 @@ int main(int argc, char **argv)
       cout << "Usage: " << argv[0] << endl;
       return 2;
   }
-
+ 
    
   return 0;
 }
