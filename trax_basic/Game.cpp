@@ -26,12 +26,12 @@ bool Game::correctAddtile (std::string part1)
     return false;
 }
 
-bool Game::correctWrite (std::string part1, std::string part2)
+bool Game::correctWrite (std::string part1)
 {
   std::string key_word = "write";
   std::transform(part1.begin(), part1.end(), part1.begin(), ::tolower);
   
-  if (key_word == part1 && part2 != "")
+  if (key_word == part1)
     return true;
   else
     return false;
@@ -56,7 +56,7 @@ Game::Game()
 
 Game::~Game() {}
 
-void Game::run()
+void Game::run(bool graphicon, std::string filename)
 {
     running_ = true;
     std::string str;
@@ -64,6 +64,7 @@ void Game::run()
     std::vector<Tile> tiles;
     std::vector<Position> positions;
     Addtile addtile("addtile");
+    Write write ("write");
     
     
     while (running_ == true)
@@ -83,17 +84,26 @@ void Game::run()
         //parse input
         if (correctAddtile(part1))
         {
+            if (part2 != "" && part3 != "")
+            {
             togglePlayer();
-            addtile.execute(param, tiles, positions, getActivePlayer());
+            addtile.execute(param, tiles, positions, getActivePlayer(),
+                            graphicon, filename);
             param.clear();
-
+            }
+            else 
+                cout << "Error: Wrong parameter count!" << endl;
         }
-        else if (correctWrite(part1, part2))
-          cout << "Write!" << endl;
+        else if (correctWrite(part1))
+            if (part2 != "" && part3 == "")
+                cout << "Write!" << endl; //write Befehl
+            else
+                cout << "Error: Wrong parameter count!" << endl;
         else if (correctQuit(str))
           running_ = false;
+        else if (str == "") {}
         else
-          cout << "par1 wrong!" << endl;
+          cout << "Error: Unknown command!" << endl;
                
         
     }

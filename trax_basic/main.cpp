@@ -24,6 +24,19 @@ using std::cout;
 using std::cin;
 using std::endl;
  
+bool checkGraphikMode(int argcounter, char** argvalues, std::string& filename)
+{
+    std::string graphicmode = "-g";
+      
+    if (argcounter == 3)
+        if (graphicmode == argvalues[1])
+        {
+            filename = argvalues[2];
+            return true;
+        }
+    return false;
+}
+
 //------------------------------------------------------------------------------
 // main function
 // entry point for execution
@@ -34,58 +47,22 @@ using std::endl;
 int main(int argc, char **argv)
 {
   bool graphicon = false;
+  std::string filename;
   std::string graphicmode = "-g";
-  std::string filename; 
-  
-  if (argc == 3)
-    if (graphicmode == argv[1])
-    {
-      graphicon = true;
-      filename = argv[2];
-    }
-  
-  if (graphicon)
-    cout << "hi" << endl;
-    
   Game trax;
-  trax.run();
-  //Command *c_ptr = new Write("Write");
-  
-  Write write("write");
-    
-  //test write function
-  
-  //text binary
-  
-  /*std::vector<Tile> tiles;
-  std::vector<Position> positions;
-  
-  tiles.push_back(Tile(Tile::TYPE_CURVE_2, COLOR_WHITE));
-  tiles.push_back(Tile(Tile::TYPE_CROSS, COLOR_RED));
-  tiles.push_back(Tile(Tile::TYPE_CURVE_2, COLOR_RED));
-  tiles.push_back(Tile(Tile::TYPE_CURVE_2, COLOR_WHITE));
-  tiles.push_back(Tile(Tile::TYPE_CURVE_1, COLOR_RED));
-  tiles.push_back(Tile(Tile::TYPE_CURVE_2, COLOR_RED));
-  
-  positions.push_back(Position(-1,0));
-  positions.push_back(Position(0,0));
-  positions.push_back(Position(0,1));
-  positions.push_back(Position(1,1));
-  positions.push_back(Position(1,2));
-  positions.push_back(Position(2,2));
-  trax.togglePlayer();
-  write.execute(tiles, positions, trax.getActivePlayer());*/
   
   
-  /*cout << "tile " << tiles.size() << endl;
-  cout << "pos " << positions.size() << endl;
-  
-  cout << "C: " << tiles.at(2).getColor() << endl;
-  cout << "S: " << tiles.at(2).getSide() << endl;
-  cout << "PX: " << positions.at(2).getX() << endl;
-  cout << "PY " << positions.at(2).getY() << endl;*/
-  
-  
-    
+  if (argc == 1 || (argc == 3 && argv[1] == graphicmode))
+  {
+  graphicon = checkGraphikMode(argc, argv, filename);
+  trax.run(graphicon, filename);
+  }
+  else
+  {
+      cout << "Usage: " << argv[0] << endl;
+      return 2;
+  }
+
+   
   return 0;
 }
