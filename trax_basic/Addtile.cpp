@@ -110,11 +110,18 @@ bool checktile(Tile& temptile, Position tempposition, std::vector<Tile> tiles,
         return true;
     }
     
-    int identifier = 0;
     int counter = 0;
-
+    
+    for(counter; counter < tiles.size(); counter++)
+    {
+        if(positions.at(counter).getX() == tempposition.getX() && positions.at(counter).getY() == tempposition.getY())
+            return false; // already used coords!
+    }
+    
+        counter = 0;
     int set_red = 0;
     int set_white = 0;
+    int identifier = 0;
     
     
     for(counter ; counter < tiles.size() ; counter++)
@@ -239,28 +246,28 @@ bool sort(std::vector<Tile>& tiles, std::vector<Position>& positions)
         return true;
     
     
-    for(;;) 
+    while(counter > 0 ) 
     {
-        if(positions.at(counter).getX() <  positions.at(counter-1).getX())
+        if(positions.at(counter).getX() >  positions.at(counter-1).getX())
         {
             swaptiles(tiles,counter,counter - 1);
             swapposition(positions, counter, counter - 1);
             counter--;
         }
-        for(;;)
-            if(positions.at(counter).getX() == positions.at(counter-1).getX())
+        
+        else if(positions.at(counter).getX() == positions.at(counter-1).getX())
             {
                 if(positions.at(counter).getY() > positions.at(counter-1).getY())
                     break;
                
-                if(positions.at(counter).getY() < positions.at(counter-1).getY())
+                else if(positions.at(counter).getY() < positions.at(counter-1).getY())
                 {
                     swaptiles(tiles,counter,counter-1);
                     swapposition(positions, counter, counter-1);
                     counter--;
                 }
             }
-        if(positions.at(counter).getX() >  positions.at(counter-1).getX())
+        else if(positions.at(counter).getX() <  positions.at(counter-1).getX())
             break;
             
     }
@@ -317,9 +324,9 @@ int Addtile::execute(std::vector<std::string> param,
             tiles.push_back(temptile);
             positions.push_back(tempposition);
             //filltile()
-            //sort(tiles, positions);
-            if(graphicon == true)
-                write.execute(tiles, positions, aplayer, filename);
+            sort(tiles, positions);
+            //if(graphicon == true)
+                write.execute(tiles, positions, aplayer, "test"); //filename);
         }
         
        
