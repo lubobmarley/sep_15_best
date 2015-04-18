@@ -305,8 +305,7 @@ int Addtile::execute(std::vector<std::string> param,
         Tile temptile(Tile::TYPE_CROSS,COLOR_WHITE);
         Position tempposition(0,0);
         
-        tempposition.parse(param.at(0)); //!!
-        //temptile.setColor(board.getActivePlayer());
+        tempposition.parse(param.at(0));
         
         if(param.at(1) == "+")
             temptile.setSide(Tile::TYPE_CROSS);
