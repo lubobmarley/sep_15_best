@@ -290,9 +290,10 @@ Addtile::~Addtile() {}
 int Addtile::execute(Game& board, std::vector<std::string>& params) {}
 
 int Addtile::execute(std::vector<std::string> param,
-        std::vector<Tile>& tiles, std::vector<Position>& positions, int aplayer)
+        std::vector<Tile>& tiles, std::vector<Position>& positions, 
+        int aplayer, bool graphicon, std::string filename)
     {  
-    Write write("write");
+        Write write("write");
         
         Tile temptile(Tile::TYPE_CROSS,COLOR_WHITE);
         Position tempposition(0,0);
@@ -317,8 +318,8 @@ int Addtile::execute(std::vector<std::string> param,
             positions.push_back(tempposition);
             //filltile()
             //sort(tiles, positions);
-            //if(graphicon == true)
-            write.execute(tiles, positions, aplayer);
+            if(graphicon == true)
+                write.execute(tiles, positions, aplayer, filename);
         }
         
        

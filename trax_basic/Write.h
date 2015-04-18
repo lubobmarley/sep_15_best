@@ -28,7 +28,8 @@ class Write : public Command
     Write(std::string name);
     ~Write();
     
-    int execute(std::vector<Tile> tiles, std::vector<Position> positions, int active);
+    int execute(std::vector<Tile> tiles, std::vector<Position> positions,
+                int active, std::string filename);
     int execute(Game& board, std::vector<std::string>& params);
     
     

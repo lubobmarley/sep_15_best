@@ -4,6 +4,7 @@
 #define	ADDTILE_H
 
 #include "Command.h"
+#include "Write.h"
 
 class Addtile : public Command
 {
@@ -24,8 +25,9 @@ class Addtile : public Command
     ~Addtile();
     
     int execute(Game& board, std::vector<std::string>& params);
-    int execute(std::vector<std::string> params,
-        std::vector<Tile>& tiles, std::vector<Position>& positions, int aplayer);
+    int execute(std::vector<std::string> param,
+        std::vector<Tile>& tiles, std::vector<Position>& positions, 
+        int aplayer, bool graphicon, std::string filename);
     
 };
 
