@@ -23,16 +23,16 @@ private:
     Game(const Game &);
     Game& operator= (const Game &);
     
-    bool correctAddtile (std::string part1);
-    bool correctWrite (std::string part1, std::string part2);
-    bool correctQuit (std::string str);
+    bool correctAddtile(std::string part1);
+    bool correctWrite(std::string part1);
+    bool correctQuit(std::string str);
     
 public:
     Game();
     ~Game();
     
     void setStartTile(Tile* starttile) { starttile_ = starttile; }
-    void run ();
+    void run (bool graphicon, std::string filename);
     void setRunning (bool running) { running_ = running; }
     void togglePlayer();
     Color getActivePlayer() { return activeplayer_; }
