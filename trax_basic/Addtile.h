@@ -28,7 +28,6 @@ class Addtile : public Command
     int execute(std::vector<std::string> param,
         std::vector<Tile>& tiles, std::vector<Position>& positions, 
         int aplayer, bool graphicon, std::string filename);
-    
 };
 
 

@@ -31,8 +31,6 @@ class Write : public Command
     int execute(std::vector<Tile> tiles, std::vector<Position> positions,
                 int active, std::string filename);
     int execute(Game& board, std::vector<std::string>& params);
-    
-    
 };
 
 
