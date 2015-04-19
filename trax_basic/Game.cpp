@@ -90,6 +90,6 @@ void Game::togglePlayer()
 int Game::quit()
 {
     std::cout << "Bye!" << std::endl;
-    running_ = false;
+    setRunning(false);
     return 0;
 }
