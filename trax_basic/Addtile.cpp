@@ -31,10 +31,10 @@ int getOrientation(int& counter, Position tempposition, std::vector<Position> po
             {return BOT;}
         if((tempposition.getX()+1 == positions.at(counter).getX()) && 
            (tempposition.getY()   == positions.at(counter).getY()))
-            {return LEFT;}
+            {return RIGHT;}
         if((tempposition.getX()-1 == positions.at(counter).getX()) && 
            (tempposition.getY()   == positions.at(counter).getY()))
-            {return RIGHT;}
+            {return LEFT;}
     }
     return 0;
 }
@@ -46,12 +46,13 @@ Color colorOutput(int direction, Tile temptile)
   switch(direction)
     case TOP:
     {
-      return temptile.getColor();
+        
+        return temptile.getColor();
     
     case BOT:
     
       if((temptile.getColor()  == COLOR_RED          &&
-          temptile.getSide()    == Tile::TYPE_CROSS)  ||
+          temptile.getSide()   == Tile::TYPE_CROSS)  ||
           
           (temptile.getColor() == COLOR_WHITE        &&
           (temptile.getSide()  == Tile::TYPE_CURVE_1 ||
@@ -115,16 +116,19 @@ bool checktile(Tile& temptile, Position tempposition, std::vector<Tile> tiles,
     for(counter; counter < tiles.size(); counter++)
     {
         if(positions.at(counter).getX() == tempposition.getX() && positions.at(counter).getY() == tempposition.getY())
-            return false; // already used coords!
+        {
+            std::cout << "Invalid coordinates - field not empty" << std::endl;
+            
+            return false;
+        }
     }
     
-        counter = 0;
     int set_red = 0;
     int set_white = 0;
     int identifier = 0;
     
     
-    for(counter ; counter < tiles.size() ; counter++)
+    for(counter = 0 ; counter < tiles.size() ; counter++)
     {
        int identifier = getOrientation(counter, tempposition, positions);
        
@@ -158,7 +162,7 @@ bool checktile(Tile& temptile, Position tempposition, std::vector<Tile> tiles,
                     break;
                 }
             case RIGHT:
-                if (colorOutput(RIGHT, tiles.at(counter)) == colorOutput(LEFT, temptile))
+                if (colorOutput(RIGHT, tiles.at(counter)) == colorOutput(RIGHT, temptile))
                 {
                     set_white++;
                     break;
@@ -170,7 +174,7 @@ bool checktile(Tile& temptile, Position tempposition, std::vector<Tile> tiles,
                     break;
                 }
             case LEFT:
-                if (colorOutput(LEFT, tiles.at(counter)) == colorOutput(RIGHT, temptile))
+                if (colorOutput(LEFT, tiles.at(counter)) == colorOutput(LEFT, temptile))
                 {
                     set_white++;
                     break;
@@ -182,12 +186,18 @@ bool checktile(Tile& temptile, Position tempposition, std::vector<Tile> tiles,
                     break;
                 }
             default:
-                    return false; //wrong coords
+            {
+                std::cout << "Invalid coordinates - field not connected to tile" << std::endl;    
+                return false;
+            }
        }
     }
   
     if(set_red > 0 && set_white > 0)
-        return false; //not matching colors
+    {
+        std::cout << "Invalid move - connected line colors mismatch" << std::endl;
+        return true;
+    }
     else
         return true;
      
@@ -234,45 +244,42 @@ std::vector<Tile> swaptiles(std::vector<Tile> tiles, int i, int j)
 //
 // @param tiles, <vector> of all tiles from user input
 // @param positions, vector of all coordinates connected to tiles
-//        is not married. Should be 0 or 1 for example purposes
 //
 // @return bool returns true if sorted sucessfully
 //
 bool sort(std::vector<Tile>& tiles, std::vector<Position>& positions)
 {
-    int counter = positions.size();
+    int counter = positions.size() - 1;
     
     if(positions.size() == 0 || positions.size() == 1)
         return true;
     
+
     
-    while(counter > 0 ) 
-    {
-        if(positions.at(counter).getX() >  positions.at(counter-1).getX())
-        {
-            swaptiles(tiles,counter,counter - 1);
-            swapposition(positions, counter, counter - 1);
+while(counter > 0)
+{
+	if(positions.at(counter).getX() >  positions.at(counter-1).getX())
             counter--;
-        }
-        
-        else if(positions.at(counter).getX() == positions.at(counter-1).getX())
-            {
-                if(positions.at(counter).getY() > positions.at(counter-1).getY())
-                    break;
-               
-                else if(positions.at(counter).getY() < positions.at(counter-1).getY())
-                {
-                    swaptiles(tiles,counter,counter-1);
-                    swapposition(positions, counter, counter-1);
-                    counter--;
+	else if (positions.at(counter).getX() <  positions.at(counter-1).getX())
+	{
+            tiles = swaptiles(tiles, counter,counter-1);
+            positions = swapposition(positions, counter, counter-1);
+            counter--;
+	}
+	else if(positions.at(counter).getX() == positions.at(counter-1).getX())
+	{
+		if(positions.at(counter).getY() <  positions.at(counter-1).getY())
+		{
+                    tiles = swaptiles(tiles,counter,counter - 1);
+                    positions = swapposition(positions, counter, counter-1);
+                    counter --;
                 }
-            }
-        else if(positions.at(counter).getX() <  positions.at(counter-1).getX())
-            break;
-            
-    }
+                else 
+                    counter--;
+        }	
+}
         
-    return 0;
+    return true;
 }
        
         
@@ -323,13 +330,21 @@ int Addtile::execute(std::vector<std::string> param,
             tiles.push_back(temptile);
             positions.push_back(tempposition);
             //filltile()
+            int counter;
+            /*for(counter = 0; counter < positions.size(); counter ++)
+            {
+                std::cout<<counter << ":  x= "<< positions.at(counter).getX()<<":  y="<< positions.at(counter).getY()<<std::endl;
+            }*/
             sort(tiles, positions);
+             for(counter = 0; counter < positions.size(); counter ++)
+            {
+                std::cout<<counter << ":  x= "<< positions.at(counter).getX()<<":  y="<< positions.at(counter).getY()<<std::endl;
+            }
             //if(graphicon == true)
                 write.execute(tiles, positions, aplayer, "test"); //filename);
         }
-        
+        else
        
-        //swaptiles(tiles, 1, 4);
         
         
         
