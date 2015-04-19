@@ -32,6 +32,7 @@ public:
     void setRunning (bool running) { running_ = running; }
     void togglePlayer();
     Color getActivePlayer() { return activeplayer_; }
+    int quit();
     
     
     
