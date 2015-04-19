@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "CheckVictory.h"
 
 enum Orientation
 {
@@ -24,15 +25,15 @@ int getOrientation(int& counter, Position tempposition, std::vector<Position> po
     for(counter; counter < positions.size(); counter++)
     {
         if((tempposition.getX()   == positions.at(counter).getX()) && 
-           (tempposition.getY()+1 == positions.at(counter).getY()))
+           (tempposition.getY()-1 == positions.at(counter).getY()))
             {return TOP;}
         if((tempposition.getX()   == positions.at(counter).getX()) && 
-           (tempposition.getY()-1 == positions.at(counter).getY())) 
+           (tempposition.getY()+1 == positions.at(counter).getY())) 
             {return BOT;}
-        if((tempposition.getX()+1 == positions.at(counter).getX()) && 
+        if((tempposition.getX()-1 == positions.at(counter).getX()) && 
            (tempposition.getY()   == positions.at(counter).getY()))
             {return RIGHT;}
-        if((tempposition.getX()-1 == positions.at(counter).getX()) && 
+        if((tempposition.getX()+1 == positions.at(counter).getX()) && 
            (tempposition.getY()   == positions.at(counter).getY()))
             {return LEFT;}
     }
@@ -65,9 +66,9 @@ Color colorOutput(int direction, Tile temptile)
     
       if((temptile.getColor() == COLOR_WHITE          &&
          (temptile.getSide()  == Tile::TYPE_CROSS     ||
-          temptile.getSide() == Tile::TYPE_CURVE_1)) ||
+          temptile.getSide()  == Tile::TYPE_CURVE_1)) ||
         
-         (temptile.getColor() == COLOR_RED          &&
+         (temptile.getColor() == COLOR_RED            &&
          (temptile.getSide()  == Tile::TYPE_CURVE_2)))
           return COLOR_RED;
       else
@@ -77,9 +78,9 @@ Color colorOutput(int direction, Tile temptile)
     
       if((temptile.getColor() == COLOR_WHITE          &&
          (temptile.getSide()  == Tile::TYPE_CROSS     ||
-          temptile.getSide() == Tile::TYPE_CURVE_2)) ||
+          temptile.getSide()  == Tile::TYPE_CURVE_2)) ||
         
-         (temptile.getColor() == COLOR_RED          &&
+         (temptile.getColor() == COLOR_RED            &&
          (temptile.getSide()  == Tile::TYPE_CURVE_1)))
           return COLOR_RED;
       else
@@ -88,6 +89,17 @@ Color colorOutput(int direction, Tile temptile)
     }    
     
 }
+
+bool checkempty(int x, int y, std::vector<Tile> tiles, std::vector<Position> positions)
+{
+    int counter;
+    for(counter = 0; counter < tiles.size(); counter++)
+        {
+            if(positions.at(counter).getX() == x && positions.at(counter).getY() == y)
+               return false;
+        }
+ return true;
+ }
 
 
 //------------------------------------------------------------------------------
@@ -113,15 +125,14 @@ bool checktile(Tile& temptile, Position tempposition, std::vector<Tile> tiles,
     
     int counter = 0;
     
-    for(counter; counter < tiles.size(); counter++)
+
+    if(!checkempty(tempposition.getX(), tempposition.getY(), tiles, positions))
     {
-        if(positions.at(counter).getX() == tempposition.getX() && positions.at(counter).getY() == tempposition.getY())
-        {
-            std::cout << "Invalid coordinates - field not empty" << std::endl;
-            
-            return false;
-        }
+        std::cout << "Invalid coordinates - field not empty" << std::endl;
+        return false;
     }
+        
+            
     
     int set_red = 0;
     int set_white = 0;
@@ -162,7 +173,7 @@ bool checktile(Tile& temptile, Position tempposition, std::vector<Tile> tiles,
                     break;
                 }
             case RIGHT:
-                if (colorOutput(RIGHT, tiles.at(counter)) == colorOutput(RIGHT, temptile))
+                if (colorOutput(RIGHT, tiles.at(counter)) == colorOutput(LEFT, temptile))
                 {
                     set_white++;
                     break;
@@ -174,7 +185,7 @@ bool checktile(Tile& temptile, Position tempposition, std::vector<Tile> tiles,
                     break;
                 }
             case LEFT:
-                if (colorOutput(LEFT, tiles.at(counter)) == colorOutput(LEFT, temptile))
+                if (colorOutput(LEFT, tiles.at(counter)) == colorOutput(RIGHT, temptile))
                 {
                     set_white++;
                     break;
@@ -187,8 +198,14 @@ bool checktile(Tile& temptile, Position tempposition, std::vector<Tile> tiles,
                 }
             default:
             {
-                std::cout << "Invalid coordinates - field not connected to tile" << std::endl;    
-                return false;
+                if(counter == tiles.size()-1 && set_red == 0 && set_white == 0)
+                {
+                    std::cout << "Invalid coordinates - field not connected to tile" << std::endl;    
+                    return false;
+                }
+                else
+                    break;
+                
             }
        }
     }
@@ -281,17 +298,192 @@ while(counter > 0)
         
     return true;
 }
-       
-        
-        
-        
 
+int getCorner(int& counter, Position tempposition, std::vector<Position> positions)
+{
+    
+    for(counter; counter < positions.size(); counter++)
+    {
+        if((tempposition.getX() == positions.at(counter).getX() +1) && 
+           (tempposition.getY() == positions.at(counter).getY() -1))
+            {return 1;}	//NW
+        if((tempposition.getX() == positions.at(counter).getX() -1) && 
+           (tempposition.getY() == positions.at(counter).getY() -1)) 
+            {return 2;} //NO
+        if((tempposition.getX() == positions.at(counter).getX() +1) && 
+           (tempposition.getY() == positions.at(counter).getY() +1))
+            {return 3;} //SW
+        if((tempposition.getX() == positions.at(counter).getX() -1) && 
+           (tempposition.getY() == positions.at(counter).getY() +1))
+            {return 4;} //SO
+    }
+    return 0;
+}
+        
+        
+void fillin(int counter, int direction, int corner, std::vector<Tile> tiles, std::vector<Position> positions, Tile& temptile, Position& tempposition)
+{
+	Tile filltile();
+	Position fillposition(0,0);
+	if(corner == 1)
+	{
+		if(direction == TOP)
+		{
+			fillposition.setX(tempposition.getX());
+			fillposition.setY(tempposition.getY()+1);
+			filltile.setColor();
+			filltile.setSide();
+		}
+		else if(direction == LEFT)
+		{
+			fillposition.setX(tempposition.getX()-1);
+			fillposition.setY(tempposition.getY());
+			filltile.setColor();
+			filltile.setSide();
+		}
+	}
+	else if(corner == 2)
+	{
+		if(direction == TOP)
+		{
+			fillposition.setX(tempposition.getX());
+			fillposition.setY(tempposition.getY()+1);
+			filltile.setColor();
+			filltile.setSide();
+		}
+		if(direction == RIGHT)
+		{
+			fillposition.setX(tempposition.getX()+1);
+			fillposition.setY(tempposition.getY());
+			filltile.setColor();
+			filltile.setSide();
+		}
+	}
+	else if(corner == 3)
+	{
+		if(direction == BOT)
+		{
+			fillposition.setX(tempposition.getX());
+			fillposition.setY(tempposition.getY()-1);
+			filltile.setColor();
+			filltile.setSide();
+		}
+		else if(direction == LEFT)
+		{
+			fillposition.setX(tempposition.getX()-1);
+			fillposition.setY(tempposition.getY());
+			filltile.setColor();
+			filltile.setSide();
+		}
+	}
+	else if(corner == 4)
+	{
+		if(direction == BOT)
+		{
+			fillposition.setX(tempposition.getX());
+			fillposition.setY(tempposition.getY()-1);
+			filltile.setColor();
+			filltile.setSide();
+		}
+		else if(direction == RIGHT)
+		{
+			fillposition.setX(tempposition.getX());
+			fillposition.setY(tempposition.getY()-1);
+			filltile.setColor();
+			filltile.setSide();
+		}
+	}
+//pushback
+}
 
 
 void filltile(std::vector<Tile> tiles, std::vector<Position> positions)
 {
-    
-    
+   
+int counter = 0;
+Position tempposition(0,0);
+Tile temptile(Tile::TYPE_CROSS,COLOR_WHITE);
+while(counter < tiles.size())
+{
+	tempposition = positions.at(counter);
+        temptile = tiles.at(counter);
+	if(getCorner(counter, tempposition, positions) == 0)
+		counter ++;
+	else if(getCorner(counter, tempposition, positions) == 1)
+	{
+
+		if(checkempty(tempposition.getX()-1, tempposition.getY(), tiles, positions) &&
+		  (colorOutput(BOT, tiles.at(counter)) == colorOutput(LEFT, temptile) ))
+		{
+			fillin(counter, LEFT , 1, tiles, positions, temptile, tempposition);
+			counter++;
+		}
+		else if(checkempty(tempposition.getX(), tempposition.getY()+1, tiles, positions) &&
+		 	   (colorOutput(RIGHT, tiles.at(counter)) == colorOutput(TOP, temptile) ))
+		{
+			fillin(counter, TOP , 1, tiles, positions, temptile, tempposition);
+			counter ++;
+		}
+		else
+			counter++;
+	}
+	else if(getCorner(counter, tempposition, positions) == 2)
+	{
+		
+		if(checkempty(tempposition.getX()+1, tempposition.getY(), tiles, positions) &&
+		  (colorOutput(BOT, tiles.at(counter)) == colorOutput(RIGHT, temptile) ))
+		{
+			fillin(counter, RIGHT , 2, tiles, positions, temptile, tempposition);
+			counter++;
+		}
+		else if(checkempty(tempposition.getX(), tempposition.getY()+1, tiles, positions) &&
+		 	   (colorOutput(LEFT, tiles.at(counter)) == colorOutput(TOP, temptile) ))
+		{
+			fillin(counter, TOP , 2, tiles, positions, temptile, tempposition);
+			counter ++;
+		}
+		else
+			counter++;
+	}
+	
+	else if(getCorner(counter, tempposition, positions) == 3)
+	{
+		
+		if(checkempty(tempposition.getX()-1, tempposition.getY(), tiles, positions) &&
+		  (colorOutput(TOP, tiles.at(counter)) == colorOutput(LEFT, temptile) ))
+		{
+			fillin(counter, LEFT , 3, tiles, positions, temptile, tempposition);
+			counter++;
+		}
+		else if(checkempty(tempposition.getX(), tempposition.getY()-1, tiles, positions) &&
+		 	   (colorOutput(BOT, tiles.at(counter)) == colorOutput(RIGHT, temptile) ))
+		{
+			fillin(counter, BOT , 3, tiles, positions, temptile, tempposition);
+			counter ++;
+		}
+		else
+			counter++;
+
+	}
+	else if(getCorner(counter, tempposition, positions) == 4)
+	{
+		
+		if(checkempty(tempposition.getX()+1, tempposition.getY(), tiles, positions) &&
+		  (colorOutput(TOP, tiles.at(counter)) == colorOutput(RIGHT, temptile) ))
+		{
+			fillin(counter, RIGHT , 4, tiles, positions, temptile, tempposition);
+			counter++;
+		}
+		else if(checkempty(tempposition.getX(), tempposition.getY()-1, tiles, positions) &&
+		 	   (colorOutput(LEFT, tiles.at(counter)) == colorOutput(BOT, temptile) ))
+		{
+			fillin(counter, BOT , 4, tiles, positions, temptile, tempposition);
+			counter ++;
+		}
+		else
+			counter++;
+	}
+}
     
 }
 
@@ -309,6 +501,7 @@ int Addtile::execute(std::vector<std::string> param,
     {  
         Write write("write");
         
+        CheckVictory checkvictory;
         Tile temptile(Tile::TYPE_CROSS,COLOR_WHITE);
         Position tempposition(0,0);
         
@@ -340,11 +533,14 @@ int Addtile::execute(std::vector<std::string> param,
             {
                 std::cout<<counter << ":  x= "<< positions.at(counter).getX()<<":  y="<< positions.at(counter).getY()<<std::endl;
             }
+            
             //if(graphicon == true)
                 write.execute(tiles, positions, aplayer, "test"); //filename);
+                //checkvictory.sieg(tiles, positions, temptile, tempposition, aplayer);
         }
         else
        
+            
         
         
         
