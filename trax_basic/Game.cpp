@@ -75,7 +75,7 @@ void Game::run()
         param.push_back(part3);
         //schreiben.execute();
         if (str == "quit" || str == "Quit" || str == "QUIT")
-            running_ = false;
+            quit();
     }
 }
 
@@ -87,3 +87,9 @@ void Game::togglePlayer()
         activeplayer_ = COLOR_WHITE;
 }
 
+int Game::quit()
+{
+    std::cout << "Bye!" << std::endl;
+    running_ = false;
+    return 0;
+}
