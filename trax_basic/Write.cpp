@@ -64,7 +64,8 @@ int Write::execute(std::vector<Tile> tiles, std::vector<Position> positions,
   for (y = miny; y <= maxy; y++)
       for (x = minx; x <= maxx; x++)
       {
-          if (positions.at(i).getX() == x && positions.at(i).getY() == y) //vl ohne switchcase
+          if (i < positions.size() && positions.at(i).getX() == x && 
+                  positions.at(i).getY() == y) //vl ohne switchcase
           {
               switch(tiles.at(i).getSide())
               {
