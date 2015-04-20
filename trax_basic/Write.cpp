@@ -37,10 +37,18 @@ int Write::execute(std::vector<Tile> tiles, std::vector<Position> positions,
   int x = 0;
   int y = 0;
   int i = 0;
+  int counter = 0;
     
+  while(counter < positions.size())
+  {
+    if(maxx < positions.at(counter).getX())
+      maxx = positions.at(counter).getX();
+    
+    counter++;
+  }
+  
   minx = positions.at(0).getX();
   miny = positions.at(0).getY();
-  maxx = positions.at(positions.size() - 1).getX();
   maxy = positions.at(positions.size() - 1).getY();
   
   //open file
@@ -56,7 +64,8 @@ int Write::execute(std::vector<Tile> tiles, std::vector<Position> positions,
   for (y = miny; y <= maxy; y++)
       for (x = minx; x <= maxx; x++)
       {
-          if (positions.at(i).getX() == x && positions.at(i).getY() == y) //vl ohne switchcase
+          if (i < positions.size() && positions.at(i).getX() == x && 
+                  positions.at(i).getY() == y) //vl ohne switchcase
           {
               switch(tiles.at(i).getSide())
               {
