@@ -1,7 +1,6 @@
 #include "CheckVictory.h"
 
-CheckVictory::CheckVictory(int x, int y, int v, int w):
-    red_counter_row_(x), red_counter_column_(y), white_counter_row_(v), white_counter_column_(w)
+CheckVictory::CheckVictory(): red_counter_column_(1), red_counter_row_(1), white_counter_column_(1),white_counter_row_(1)
 {
 
 }
