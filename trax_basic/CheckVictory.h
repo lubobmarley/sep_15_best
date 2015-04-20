@@ -31,7 +31,7 @@ private:
     int white_counter_column_;
 
 public:
-    CheckVictory(int x, int y, int v, int w);
+    CheckVictory();
     ~CheckVictory();
    
     std::string getPlayerColor();
