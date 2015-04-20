@@ -155,7 +155,6 @@ bool checktile(Tile& temptile, Position tempposition, std::vector<Tile> tiles,
                 }
                 else
                 {
-                    temptile.setColor(COLOR_RED);
                     set_red++;
                     break;
                 }
@@ -168,7 +167,6 @@ bool checktile(Tile& temptile, Position tempposition, std::vector<Tile> tiles,
                 }
                 else
                 {
-                    temptile.setColor(COLOR_RED);
                     set_red++;
                     break;
                 }
@@ -180,7 +178,6 @@ bool checktile(Tile& temptile, Position tempposition, std::vector<Tile> tiles,
                 }
                 else
                 {
-                    temptile.setColor(COLOR_RED);
                     set_red++;
                     break;
                 }
@@ -192,7 +189,6 @@ bool checktile(Tile& temptile, Position tempposition, std::vector<Tile> tiles,
                 }
                 else
                 {
-                    temptile.setColor(COLOR_RED);
                     set_red++;
                     break;
                 }
@@ -215,8 +211,12 @@ bool checktile(Tile& temptile, Position tempposition, std::vector<Tile> tiles,
         std::cout << "Invalid move - connected line colors mismatch" << std::endl;
         return true;
     }
-    else
-        return true;
+    else if(set_red > 0)
+        temptile.setColor(COLOR_RED);
+    else if(set_white > 0)
+        temptile.setColor(COLOR_RED);
+    
+    return true;
      
 }
 
@@ -531,7 +531,8 @@ int Addtile::execute(std::vector<std::string> param,
         {
             tiles.push_back(temptile);
             positions.push_back(tempposition);
-            //filltile(tiles, positions);
+            filltile(tiles, positions);
+            std::cout<<"marker"<<std::endl;
             int counter;
             /*for(counter = 0; counter < positions.size(); counter ++)
             {
