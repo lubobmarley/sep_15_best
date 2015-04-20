@@ -308,13 +308,13 @@ int getCorner(int& counter, Position tempposition, std::vector<Position> positio
            (tempposition.getY() == positions.at(counter).getY() -1))
             {return 1;}	//NW
         if((tempposition.getX() == positions.at(counter).getX() -1) && 
-           (tempposition.getY() == positions.at(counter).getY() -1)) 
+           (tempposition.getY() == positions.at(counter).getY() +1)) 
             {return 2;} //NO
         if((tempposition.getX() == positions.at(counter).getX() +1) && 
            (tempposition.getY() == positions.at(counter).getY() +1))
             {return 3;} //SW
         if((tempposition.getX() == positions.at(counter).getX() -1) && 
-           (tempposition.getY() == positions.at(counter).getY() +1))
+           (tempposition.getY() == positions.at(counter).getY() -1))
             {return 4;} //SO
     }
     return 0;
@@ -531,7 +531,7 @@ int Addtile::execute(std::vector<std::string> param,
         {
             tiles.push_back(temptile);
             positions.push_back(tempposition);
-            filltile(tiles, positions);
+            //filltile(tiles, positions);
             std::cout<<"marker"<<std::endl;
             int counter;
             /*for(counter = 0; counter < positions.size(); counter ++)
