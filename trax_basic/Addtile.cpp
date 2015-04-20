@@ -321,7 +321,7 @@ int getCorner(int& counter, Position tempposition, std::vector<Position> positio
 }
         
       
-void fillin(int counter, int direction, int corner, std::vector<Tile> tiles, std::vector<Position> positions, Tile& temptile, Position& tempposition)
+void fillin(int counter, int direction, int corner, std::vector<Tile>& tiles, std::vector<Position>& positions, Tile& temptile, Position& tempposition)
 {
 	Tile filltile(Tile::TYPE_CROSS,COLOR_WHITE);
 	Position fillposition(0,0);
@@ -406,7 +406,7 @@ void fillin(int counter, int direction, int corner, std::vector<Tile> tiles, std
 }
 
 
-void filltile(std::vector<Tile> tiles, std::vector<Position> positions)
+void filltile(std::vector<Tile>& tiles, std::vector<Position>& positions)
 {
    
 int counter = 0;
@@ -531,7 +531,7 @@ int Addtile::execute(std::vector<std::string> param,
         {
             tiles.push_back(temptile);
             positions.push_back(tempposition);
-            //filltile()
+            //filltile(tiles, positions);
             int counter;
             /*for(counter = 0; counter < positions.size(); counter ++)
             {
