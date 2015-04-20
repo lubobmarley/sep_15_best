@@ -302,7 +302,7 @@ while(counter > 0)
 int getCorner(int& counter, Position tempposition, std::vector<Position> positions)
 {
     
-    for(counter; counter < positions.size(); counter++)
+    for(counter = 0; counter < positions.size(); counter++)
     {
         if((tempposition.getX() == positions.at(counter).getX() +1) && 
            (tempposition.getY() == positions.at(counter).getY() +1))
@@ -330,7 +330,7 @@ void fillin(int counter, int direction, int corner, std::vector<Tile>& tiles, st
 		if(direction == TOP)
 		{
 			fillposition.setX(tempposition.getX());
-			fillposition.setY(tempposition.getY()-1);
+			fillposition.setY(tempposition.getY()-1);//?
 			if(colorOutput(RIGHT, tiles.at(counter)) == COLOR_WHITE)
                             filltile.setColor(COLOR_RED);
 			filltile.setSide(Tile::TYPE_CURVE_2);
@@ -409,15 +409,16 @@ void fillin(int counter, int direction, int corner, std::vector<Tile>& tiles, st
 void filltile(std::vector<Tile>& tiles, std::vector<Position>& positions)
 {
    
+int current = 0;
 int counter = 0;
 Position tempposition(0,0);
 Tile temptile(Tile::TYPE_CROSS,COLOR_WHITE);
-while(counter < tiles.size())
+while(current < tiles.size())
 {
-	tempposition = positions.at(counter);
-        temptile = tiles.at(counter);
+	tempposition = positions.at(current);
+        temptile = tiles.at(current);
 	if(getCorner(counter, tempposition, positions) == 0)
-		counter ++;
+		current ++;
 	else if(getCorner(counter, tempposition, positions) == 1)
 	{
 
@@ -425,16 +426,16 @@ while(counter < tiles.size())
 		  (colorOutput(BOT, tiles.at(counter)) == colorOutput(LEFT, temptile) ))
 		{
 			fillin(counter, LEFT , 1, tiles, positions, temptile, tempposition);
-			counter++;
+			current++;
 		}
-		else if(checkempty(tempposition.getX(), tempposition.getY()+1, tiles, positions) &&
+		else if(checkempty(tempposition.getX(), tempposition.getY()-1, tiles, positions) &&
 		 	   (colorOutput(RIGHT, tiles.at(counter)) == colorOutput(TOP, temptile) ))
 		{
 			fillin(counter, TOP , 1, tiles, positions, temptile, tempposition);
-			counter ++;
+			current ++;
 		}
 		else
-			counter++;
+			current++;
 	}
 	else if(getCorner(counter, tempposition, positions) == 2)
 	{
@@ -443,16 +444,16 @@ while(counter < tiles.size())
 		  (colorOutput(BOT, tiles.at(counter)) == colorOutput(RIGHT, temptile) ))
 		{
 			fillin(counter, RIGHT , 2, tiles, positions, temptile, tempposition);
-			counter++;
+			current++;
 		}
-		else if(checkempty(tempposition.getX(), tempposition.getY()+1, tiles, positions) &&
+		else if(checkempty(tempposition.getX(), tempposition.getY()-1, tiles, positions) &&
 		 	   (colorOutput(LEFT, tiles.at(counter)) == colorOutput(TOP, temptile) ))
 		{
 			fillin(counter, TOP , 2, tiles, positions, temptile, tempposition);
-			counter ++;
+			current ++;
 		}
 		else
-			counter++;
+			current++;
 	}
 	
 	else if(getCorner(counter, tempposition, positions) == 3)
@@ -462,16 +463,16 @@ while(counter < tiles.size())
 		  (colorOutput(TOP, tiles.at(counter)) == colorOutput(LEFT, temptile) ))
 		{
 			fillin(counter, LEFT , 3, tiles, positions, temptile, tempposition);
-			counter++;
+			current++;
 		}
-		else if(checkempty(tempposition.getX(), tempposition.getY()-1, tiles, positions) &&
+		else if(checkempty(tempposition.getX(), tempposition.getY()+1, tiles, positions) &&
 		 	   (colorOutput(BOT, tiles.at(counter)) == colorOutput(RIGHT, temptile) ))
 		{
 			fillin(counter, BOT , 3, tiles, positions, temptile, tempposition);
-			counter ++;
+			current ++;
 		}
 		else
-			counter++;
+			current++;
 
 	}
 	else if(getCorner(counter, tempposition, positions) == 4)
@@ -481,16 +482,16 @@ while(counter < tiles.size())
 		  (colorOutput(TOP, tiles.at(counter)) == colorOutput(RIGHT, temptile) ))
 		{
 			fillin(counter, RIGHT , 4, tiles, positions, temptile, tempposition);
-			counter++;
+			current++;
 		}
-		else if(checkempty(tempposition.getX(), tempposition.getY()-1, tiles, positions) &&
+		else if(checkempty(tempposition.getX(), tempposition.getY()+1, tiles, positions) &&
 		 	   (colorOutput(LEFT, tiles.at(counter)) == colorOutput(BOT, temptile) ))
 		{
 			fillin(counter, BOT , 4, tiles, positions, temptile, tempposition);
-			counter ++;
+			current ++;
 		}
 		else
-			counter++;
+			current++;
 	}
 }
     
@@ -531,8 +532,7 @@ int Addtile::execute(std::vector<std::string> param,
         {
             tiles.push_back(temptile);
             positions.push_back(tempposition);
-            //filltile(tiles, positions);
-            std::cout<<"marker"<<std::endl;
+            filltile(tiles, positions);
             int counter;
             /*for(counter = 0; counter < positions.size(); counter ++)
             {
