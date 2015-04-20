@@ -20,6 +20,8 @@
 #include "Position.h"
 #include "Game.h"
 
+Game game;
+
 class CheckVictory
 {
 private:
@@ -29,20 +31,20 @@ private:
     int white_counter_column_;
 
 public:
-    CheckVictory();
+    CheckVictory(int x, int y, int v, int w);
     ~CheckVictory();
    
-    std::string getPlayerColor(Game game);
+    std::string getPlayerColor();
     
     void setCounters();
-    
-    int siegLoop(std::vector<Position> &coord, int counter, int increment, Game game);
-    void sieg(std::vector<Tile> &tile, std::vector<Position> &coord, Position position, Game game);
-    int tileTop(std::vector<Tile> &tile, std::vector<Position> &coord, Position position, int counter, int increment, Game game);
-    int tileBottom(std::vector<Tile> &tile, std::vector<Position> &coord, Position position, int counter, int increment, Game game);
-    int tileLeft(std::vector<Tile> &tile, std::vector<Position> &coord, Position position, int counter, int increment, Game game);
-    int tileRight(std::vector<Tile> &tile, std::vector<Position> &coord, Position position, int counter, int increment, Game game);
-    int unentschieden(Game game);
+    void sieg();
+    void siegLoop(std::vector<Position> &coord, int counter, int increment);
+    void checkSurrounding(std::vector<Tile> &tile, std::vector<Position> &coord);
+    void tileTop(std::vector<Tile> &tile, std::vector<Position> &coord, int counter, int increment);
+    void tileBottom(std::vector<Tile> &tile, std::vector<Position> &coord, int counter, int increment);
+    void tileLeft(std::vector<Tile> &tile, std::vector<Position> &coord, int counter, int increment);
+    void tileRight(std::vector<Tile> &tile, std::vector<Position> &coord, int counter, int increment);
+    void unentschieden();
 };
 #endif
 
