@@ -275,17 +275,17 @@ bool sort(std::vector<Tile>& tiles, std::vector<Position>& positions)
     
 while(counter > 0)
 {
-	if(positions.at(counter).getX() >  positions.at(counter-1).getX())
+	if(positions.at(counter).getY() >  positions.at(counter-1).getY())
             counter--;
-	else if (positions.at(counter).getX() <  positions.at(counter-1).getX())
+	else if (positions.at(counter).getY() <  positions.at(counter-1).getY())
 	{
             tiles = swaptiles(tiles, counter,counter-1);
             positions = swapposition(positions, counter, counter-1);
             counter--;
 	}
-	else if(positions.at(counter).getX() == positions.at(counter-1).getX())
+	else if(positions.at(counter).getY() == positions.at(counter-1).getY())
 	{
-		if(positions.at(counter).getY() <  positions.at(counter-1).getY())
+		if(positions.at(counter).getX() <  positions.at(counter-1).getX())
 		{
                     tiles = swaptiles(tiles,counter,counter - 1);
                     positions = swapposition(positions, counter, counter-1);
@@ -320,10 +320,10 @@ int getCorner(int& counter, Position tempposition, std::vector<Position> positio
     return 0;
 }
         
-        
+      
 void fillin(int counter, int direction, int corner, std::vector<Tile> tiles, std::vector<Position> positions, Tile& temptile, Position& tempposition)
 {
-	Tile filltile();
+	Tile filltile(Tile::TYPE_CROSS,COLOR_WHITE);
 	Position fillposition(0,0);
 	if(corner == 1)
 	{
@@ -331,15 +331,17 @@ void fillin(int counter, int direction, int corner, std::vector<Tile> tiles, std
 		{
 			fillposition.setX(tempposition.getX());
 			fillposition.setY(tempposition.getY()+1);
-			filltile.setColor();
-			filltile.setSide();
+			if(colorOutput(RIGHT, tiles.at(counter)) == COLOR_WHITE)
+                            filltile.setColor(COLOR_RED);
+			filltile.setSide(Tile::TYPE_CURVE_2);
 		}
 		else if(direction == LEFT)
 		{
 			fillposition.setX(tempposition.getX()-1);
 			fillposition.setY(tempposition.getY());
-			filltile.setColor();
-			filltile.setSide();
+			if(colorOutput(BOT, tiles.at(counter)) == COLOR_RED)
+                            filltile.setColor(COLOR_RED);
+			filltile.setSide(Tile::TYPE_CURVE_2);
 		}
 	}
 	else if(corner == 2)
@@ -348,15 +350,17 @@ void fillin(int counter, int direction, int corner, std::vector<Tile> tiles, std
 		{
 			fillposition.setX(tempposition.getX());
 			fillposition.setY(tempposition.getY()+1);
-			filltile.setColor();
-			filltile.setSide();
+			if(colorOutput(LEFT, tiles.at(counter)) == COLOR_WHITE)
+                            filltile.setColor(COLOR_RED);
+			filltile.setSide(Tile::TYPE_CURVE_1);
 		}
 		if(direction == RIGHT)
 		{
 			fillposition.setX(tempposition.getX()+1);
 			fillposition.setY(tempposition.getY());
-			filltile.setColor();
-			filltile.setSide();
+			if(colorOutput(BOT, tiles.at(counter)) == COLOR_RED)
+                            filltile.setColor(COLOR_RED);
+			filltile.setSide(Tile::TYPE_CURVE_1);
 		}
 	}
 	else if(corner == 3)
@@ -365,15 +369,17 @@ void fillin(int counter, int direction, int corner, std::vector<Tile> tiles, std
 		{
 			fillposition.setX(tempposition.getX());
 			fillposition.setY(tempposition.getY()-1);
-			filltile.setColor();
-			filltile.setSide();
+			if(colorOutput(RIGHT, tiles.at(counter)) == COLOR_RED)
+                            filltile.setColor(COLOR_RED);
+			filltile.setSide(Tile::TYPE_CURVE_1);
 		}
 		else if(direction == LEFT)
 		{
 			fillposition.setX(tempposition.getX()-1);
 			fillposition.setY(tempposition.getY());
-			filltile.setColor();
-			filltile.setSide();
+			if(colorOutput(TOP, tiles.at(counter)) == COLOR_WHITE)
+                            filltile.setColor(COLOR_RED);
+			filltile.setSide(Tile::TYPE_CURVE_1);
 		}
 	}
 	else if(corner == 4)
@@ -382,18 +388,21 @@ void fillin(int counter, int direction, int corner, std::vector<Tile> tiles, std
 		{
 			fillposition.setX(tempposition.getX());
 			fillposition.setY(tempposition.getY()-1);
-			filltile.setColor();
-			filltile.setSide();
+			if(colorOutput(LEFT, tiles.at(counter)) == COLOR_RED)
+                            filltile.setColor(COLOR_RED);
+			filltile.setSide(Tile::TYPE_CURVE_2);
 		}
 		else if(direction == RIGHT)
 		{
 			fillposition.setX(tempposition.getX());
 			fillposition.setY(tempposition.getY()-1);
-			filltile.setColor();
-			filltile.setSide();
+			if(colorOutput(TOP, tiles.at(counter)) == COLOR_WHITE)
+                            filltile.setColor(COLOR_RED);
+			filltile.setSide(Tile::TYPE_CURVE_2);
 		}
 	}
-//pushback
+            tiles.push_back(filltile);
+            positions.push_back(fillposition);
 }
 
 
