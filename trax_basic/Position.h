@@ -31,6 +31,8 @@ public:
     
     int getX () const { return x_; }
     int getY () const { return y_; }
+    void setX (int x) {x_ = x;} 
+    void setY (int y) {y_ = y;}
     
 };
 
