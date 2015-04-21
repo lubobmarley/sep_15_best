@@ -36,13 +36,13 @@ public:
     std::string getPlayerColor(int active_player);
     
     void setCounters();
-    bool sieg(int active_player);
+    bool sieg(std::vector<Tile> &tile, std::vector<Position> &coord, int active_player);
     bool siegLoop(std::vector<Position> &coord, int counter, int increment, int acrive_player);
     void checkSurrounding(std::vector<Tile> &tile, std::vector<Position> &coord, int active_player);
-    void tileTop(std::vector<Tile> &tile, std::vector<Position> &coord, int counter, int increment, int active_player);
-    void tileBottom(std::vector<Tile> &tile, std::vector<Position> &coord, int counter, int increment, int active_player);
-    void tileLeft(std::vector<Tile> &tile, std::vector<Position> &coord, int counter, int increment, int active_player);
-    void tileRight(std::vector<Tile> &tile, std::vector<Position> &coord, int counter, int increment, int active_player);
+    bool tileTop(std::vector<Tile> &tile, std::vector<Position> &coord, int counter, int increment, int active_player);
+    bool tileBottom(std::vector<Tile> &tile, std::vector<Position> &coord, int counter, int increment, int active_player);
+    bool tileLeft(std::vector<Tile> &tile, std::vector<Position> &coord, int counter, int increment, int active_player);
+    bool tileRight(std::vector<Tile> &tile, std::vector<Position> &coord, int counter, int increment, int active_player);
     bool unentschieden(std::vector<Tile> &tile);
 };
 #endif
