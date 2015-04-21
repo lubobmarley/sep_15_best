@@ -132,8 +132,6 @@ bool checktile(Tile& temptile, Position tempposition, std::vector<Tile> tiles,
         return false;
     }
         
-            
-    
     int set_red = 0;
     int set_white = 0;
     int identifier = 0;
@@ -142,8 +140,6 @@ bool checktile(Tile& temptile, Position tempposition, std::vector<Tile> tiles,
     for(counter = 0 ; counter < tiles.size() ; counter++)
     {
        int identifier = getOrientation(counter, tempposition, positions);
-       
-
        
        switch(identifier)
        {           
@@ -503,9 +499,9 @@ while(current < tiles.size())
 Addtile::Addtile(std::string name) : Command(name) {}
 Addtile::~Addtile() {}
 
-int Addtile::execute(Game& board, std::vector<std::string>& params) {}
+bool Addtile::execute(Game& board, std::vector<std::string>& params) {}
 
-int Addtile::execute(std::vector<std::string> param,
+bool Addtile::execute(std::vector<std::string> param,
         std::vector<Tile>& tiles, std::vector<Position>& positions, 
         int aplayer, bool graphicon, std::string filename)
     {  
@@ -525,6 +521,7 @@ int Addtile::execute(std::vector<std::string> param,
             temptile.setSide(Tile::TYPE_CURVE_2); 
         else
         {
+            std::cout << "Invalid parameters" << std::endl;
             return false;
         }
         
@@ -548,12 +545,11 @@ int Addtile::execute(std::vector<std::string> param,
             //if(graphicon == true)
                 write.execute(tiles, positions, aplayer, "test"); //filename);
                 //checkvictory.sieg(tiles, positions, temptile, tempposition, aplayer);
-        }
+                if(CheckVictory(tiles, positions, aplayer))
+                    return false;
+        }   
         else
        
             
-        
-        
-        
-        return 0;
+    return true;
     }
