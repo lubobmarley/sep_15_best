@@ -339,6 +339,11 @@ bool CheckVictory::tileTop(std::vector<Tile> &tile, std::vector<Position> &coord
 {
     int temp_counter = counter;
     
+    if(siegLoop(coord, counter, increment, active_player))
+    {
+        return true;
+    }
+    
     if((tile[temp_counter].getSide()   == Tile::TYPE_CROSS) && 
        (tile[temp_counter].getColor()  == COLOR_WHITE))
             { 
@@ -347,11 +352,7 @@ bool CheckVictory::tileTop(std::vector<Tile> &tile, std::vector<Position> &coord
 		            if((coord[temp_counter].getX()   == coord[counter].getX()) && 
 		         	  (coord[temp_counter].getY()+1 == coord[counter].getY()))
 		            	{ 
-                                        if(siegLoop(coord, counter, increment, active_player))
-                                        {
-                                            return true;
-                                        }
-		            		white_counter_row_++;
+                                        white_counter_row_++;
 		            		tileTop(tile, coord, counter, increment, active_player);
 		            	}
 			    }
@@ -364,10 +365,6 @@ bool CheckVictory::tileTop(std::vector<Tile> &tile, std::vector<Position> &coord
 		            if((coord[temp_counter].getX()   == coord[counter].getX()) && 
 		         	  (coord[temp_counter].getY()+1 == coord[counter].getY()))
 		            	{ 
-                                        if(siegLoop(coord, counter, increment, active_player))
-                                        {
-                                            return true;
-                                        }
 		            		red_counter_row_++;
 		            		tileTop(tile, coord, counter, increment, active_player);
 		            	}
@@ -381,10 +378,6 @@ bool CheckVictory::tileTop(std::vector<Tile> &tile, std::vector<Position> &coord
 			        if((coord[temp_counter].getX()+1 == coord[counter].getX()) && 
 			           (coord[temp_counter].getY() == coord[counter].getY()))
 			            {
-                                        if(siegLoop(coord, counter, increment, active_player))
-                                        {
-                                            return true;
-                                        }
 			            	red_counter_row_++;
 			            	tileRight(tile, coord, counter, increment, active_player);
 			            }
@@ -398,10 +391,6 @@ bool CheckVictory::tileTop(std::vector<Tile> &tile, std::vector<Position> &coord
 			        if((coord[temp_counter].getX()+1 == coord[counter].getX()) && 
 			           (coord[temp_counter].getY() == coord[counter].getY()))
 			            {
-                                        if(siegLoop(coord, counter, increment, active_player))
-                                        {
-                                            return true;
-                                        }
 			            	white_counter_row_++;
 			            	tileRight(tile, coord, counter, increment, active_player);
 			            }
@@ -414,10 +403,6 @@ bool CheckVictory::tileTop(std::vector<Tile> &tile, std::vector<Position> &coord
 			        if((coord[temp_counter].getX()-1 == coord[counter].getX()) && 
 			           (coord[temp_counter].getY()   == coord[counter].getY()))
 			            {
-                                        if(siegLoop(coord, counter, increment, active_player))
-                                        {
-                                            return true;
-                                        }
 			            	red_counter_row_++;
 			            	tileLeft(tile, coord, counter, increment, active_player);
 			            }
@@ -431,10 +416,6 @@ bool CheckVictory::tileTop(std::vector<Tile> &tile, std::vector<Position> &coord
 			        if((coord[temp_counter].getX()-1 == coord[counter].getX()) && 
 			           (coord[temp_counter].getY()   == coord[counter].getY()))
 			            {
-                                        if(siegLoop(coord, counter, increment, active_player))
-                                        {
-                                            return true;
-                                        }
 			            	white_counter_row_++;
 			            	tileLeft(tile, coord, counter, increment, active_player);
 			            }
@@ -454,6 +435,12 @@ bool CheckVictory::tileTop(std::vector<Tile> &tile, std::vector<Position> &coord
 bool CheckVictory::tileBottom(std::vector<Tile> &tile, std::vector<Position> &coord, int counter, int increment, int active_player)
 {
         int temp_counter = counter;
+        
+        if(siegLoop(coord, counter, increment, active_player))
+        {
+            return true;
+        }
+        
 	if((tile[temp_counter].getSide()   == Tile::TYPE_CROSS) && 
        (tile[temp_counter].getColor()  == COLOR_WHITE))
             { 
@@ -462,10 +449,6 @@ bool CheckVictory::tileBottom(std::vector<Tile> &tile, std::vector<Position> &co
 		            if((coord[temp_counter].getX()   == coord[counter].getX()) && 
 		         	  (coord[temp_counter].getY()+1 == coord[counter].getY()))
 		            	{ 
-                                        if(siegLoop(coord, counter, increment, active_player))
-                                        {
-                                            return true;
-                                        }
 		            		white_counter_row_--;
 		            		tileBottom(tile, coord, counter, increment, active_player);
 		            	}
@@ -479,10 +462,6 @@ bool CheckVictory::tileBottom(std::vector<Tile> &tile, std::vector<Position> &co
 		            if((coord[temp_counter].getX()   == coord[counter].getX()) && 
 		         	  (coord[temp_counter].getY()+1 == coord[counter].getY()))
 		            	{ 
-                                        if(siegLoop(coord, counter, increment, active_player))
-                                        {
-                                            return true;
-                                        }
 		            		red_counter_row_--;
 		            		tileBottom(tile, coord, counter, increment, active_player);
 		            	}
@@ -496,10 +475,6 @@ bool CheckVictory::tileBottom(std::vector<Tile> &tile, std::vector<Position> &co
 			        if((coord[temp_counter].getX()+1 == coord[counter].getX()) && 
 			           (coord[temp_counter].getY() == coord[counter].getY()))
 			            {
-                                        if(siegLoop(coord, counter, increment, active_player))
-                                        {
-                                            return true;
-                                        }
 			            	white_counter_row_--;
 			            	tileLeft(tile, coord, counter, increment, active_player);
 			            }
@@ -513,10 +488,6 @@ bool CheckVictory::tileBottom(std::vector<Tile> &tile, std::vector<Position> &co
 			        if((coord[temp_counter].getX()+1 == coord[counter].getX()) && 
 			           (coord[temp_counter].getY() == coord[counter].getY()))
 			            {
-                                        if(siegLoop(coord, counter, increment, active_player))
-                                        {
-                                            return true;
-                                        }
 			            	red_counter_row_--;
 			            	tileLeft(tile, coord, counter, increment, active_player);
 			            }
@@ -529,10 +500,6 @@ bool CheckVictory::tileBottom(std::vector<Tile> &tile, std::vector<Position> &co
 			        if((coord[temp_counter].getX()-1 == coord[counter].getX()) && 
 			           (coord[temp_counter].getY()   == coord[counter].getY()))
 			            {
-                                        if(siegLoop(coord, counter, increment, active_player))
-                                        {
-                                            return true;
-                                        }
 			            	white_counter_row_--;
 			            	tileRight(tile, coord, counter, increment, active_player);
 			            }
@@ -546,10 +513,6 @@ bool CheckVictory::tileBottom(std::vector<Tile> &tile, std::vector<Position> &co
 			        if((coord[temp_counter].getX()-1 == coord[counter].getX()) && 
 			           (coord[temp_counter].getY()   == coord[counter].getY()))
 			            {
-                                        if(siegLoop(coord, counter, increment, active_player))
-                                        {
-                                            return true;
-                                        }
 			            	red_counter_row_--;
 			            	tileRight(tile, coord, counter, increment, active_player);
 			            }
@@ -562,6 +525,12 @@ bool CheckVictory::tileBottom(std::vector<Tile> &tile, std::vector<Position> &co
 bool CheckVictory::tileLeft(std::vector<Tile> &tile, std::vector<Position> &coord, int counter, int increment, int active_player)
 {
             int temp_counter = counter;
+            
+            if(siegLoop(coord, counter, increment, active_player))
+        {
+            return true;
+        }
+            
 	if((tile[temp_counter].getSide()   == Tile::TYPE_CROSS) && 
        (tile[temp_counter].getColor()  == COLOR_WHITE))
             { 
@@ -570,10 +539,6 @@ bool CheckVictory::tileLeft(std::vector<Tile> &tile, std::vector<Position> &coor
 		            if((coord[temp_counter].getX()   == coord[counter].getX()) && 
 		         	  (coord[temp_counter].getY()+1 == coord[counter].getY()))
 		            	{ 
-                                        if(siegLoop(coord, counter, increment, active_player))
-                                        {
-                                            return true;
-                                        }
 		            		red_counter_column_--;
 		            		tileLeft(tile, coord, counter, increment, active_player);
 		            	}
@@ -587,10 +552,6 @@ bool CheckVictory::tileLeft(std::vector<Tile> &tile, std::vector<Position> &coor
 		            if((coord[temp_counter].getX()   == coord[counter].getX()) && 
 		         	  (coord[temp_counter].getY()+1 == coord[counter].getY()))
 		            	{ 
-                                        if(siegLoop(coord, counter, increment, active_player))
-                                        {
-                                            return true;
-                                        }
 		            		white_counter_column_--;
 		            		tileLeft(tile, coord, counter, increment, active_player);
 		            	}
@@ -604,10 +565,6 @@ bool CheckVictory::tileLeft(std::vector<Tile> &tile, std::vector<Position> &coor
 			        if((coord[temp_counter].getX()+1 == coord[counter].getX()) && 
 			           (coord[temp_counter].getY() == coord[counter].getY()))
 			            {
-                                        if(siegLoop(coord, counter, increment, active_player))
-                                        {
-                                            return true;
-                                        }
 			            	red_counter_column_--;
 			            	tileBottom(tile, coord, counter, increment, active_player);
 			            }
@@ -621,10 +578,6 @@ bool CheckVictory::tileLeft(std::vector<Tile> &tile, std::vector<Position> &coor
 			        if((coord[temp_counter].getX()+1 == coord[counter].getX()) && 
 			           (coord[temp_counter].getY() == coord[counter].getY()))
 			            {
-                                        if(siegLoop(coord, counter, increment, active_player))
-                                        {
-                                            return true;
-                                        }
 			            	white_counter_column_--;
 			            	tileBottom(tile, coord, counter, increment, active_player);
 			            }
@@ -637,10 +590,6 @@ bool CheckVictory::tileLeft(std::vector<Tile> &tile, std::vector<Position> &coor
 			        if((coord[temp_counter].getX()-1 == coord[counter].getX()) && 
 			           (coord[temp_counter].getY()   == coord[counter].getY()))
 			            {
-                                        if(siegLoop(coord, counter, increment, active_player))
-                                        {
-                                            return true;
-                                        }
 			            	white_counter_column_--;
 			            	tileTop(tile, coord, counter, increment, active_player);
 			            }
@@ -654,10 +603,6 @@ bool CheckVictory::tileLeft(std::vector<Tile> &tile, std::vector<Position> &coor
 			        if((coord[temp_counter].getX()-1 == coord[counter].getX()) && 
 			           (coord[temp_counter].getY()   == coord[counter].getY()))
 			            {
-                                        if(siegLoop(coord, counter, increment, active_player))
-                                        {
-                                            return true;
-                                        }
 			            	red_counter_column_--;
 			            	tileTop(tile, coord, counter, increment, active_player);
 			            }
@@ -670,6 +615,12 @@ bool CheckVictory::tileLeft(std::vector<Tile> &tile, std::vector<Position> &coor
 bool CheckVictory::tileRight(std::vector<Tile> &tile, std::vector<Position> &coord, int counter, int increment, int active_player)
 {
             int temp_counter = counter;
+            
+            if(siegLoop(coord, counter, increment, active_player))
+        {
+            return true;
+        }
+            
 	if((tile[temp_counter].getSide()   == Tile::TYPE_CROSS) && 
        (tile[temp_counter].getColor()  == COLOR_WHITE))
             { 
@@ -678,10 +629,6 @@ bool CheckVictory::tileRight(std::vector<Tile> &tile, std::vector<Position> &coo
 		            if((coord[temp_counter].getX()   == coord[counter].getX()) && 
 		         	  (coord[temp_counter].getY()+1 == coord[counter].getY()))
 		            	{ 
-                                        if(siegLoop(coord, counter, increment, active_player))
-                                        {
-                                            return true;
-                                        }
 		            		red_counter_column_++;
 		            		tileRight(tile, coord, counter, increment, active_player);
 		            	}
@@ -695,10 +642,6 @@ bool CheckVictory::tileRight(std::vector<Tile> &tile, std::vector<Position> &coo
 		            if((coord[temp_counter].getX()   == coord[counter].getX()) && 
 		         	  (coord[temp_counter].getY()+1 == coord[counter].getY()))
 		            	{ 
-                                        if(siegLoop(coord, counter, increment, active_player))
-                                        {
-                                            return true;
-                                        }
 		            		white_counter_column_++;
 		            		tileRight(tile, coord, counter, increment, active_player);
 		            	}
@@ -712,10 +655,6 @@ bool CheckVictory::tileRight(std::vector<Tile> &tile, std::vector<Position> &coo
 			        if((coord[temp_counter].getX()+1 == coord[counter].getX()) && 
 			           (coord[temp_counter].getY() == coord[counter].getY()))
 			            {
-                                        if(siegLoop(coord, counter, increment, active_player))
-                                        {
-                                            return true;
-                                        }
 			            	white_counter_column_++;
 			            	tileTop(tile, coord, counter, increment, active_player);
 			            }
@@ -729,10 +668,6 @@ bool CheckVictory::tileRight(std::vector<Tile> &tile, std::vector<Position> &coo
 			        if((coord[temp_counter].getX()+1 == coord[counter].getX()) && 
 			           (coord[temp_counter].getY() == coord[counter].getY()))
 			            {
-                                        if(siegLoop(coord, counter, increment, active_player))
-                                        {
-                                            return true;
-                                        }
 			            	red_counter_column_++;
 			            	tileTop(tile, coord, counter, increment, active_player);
 			            }
@@ -745,10 +680,6 @@ bool CheckVictory::tileRight(std::vector<Tile> &tile, std::vector<Position> &coo
 			        if((coord[temp_counter].getX()-1 == coord[counter].getX()) && 
 			           (coord[temp_counter].getY()   == coord[counter].getY()))
 			            {
-                                        if(siegLoop(coord, counter, increment, active_player))
-                                        {
-                                            return true;
-                                        }
 			            	red_counter_column_++;
 			            	tileBottom(tile, coord, counter, increment, active_player);
 			            }
@@ -762,10 +693,6 @@ bool CheckVictory::tileRight(std::vector<Tile> &tile, std::vector<Position> &coo
 			        if((coord[temp_counter].getX()-1 == coord[counter].getX()) && 
 			           (coord[temp_counter].getY()   == coord[counter].getY()))
 			            {
-                                        if(siegLoop(coord, counter, increment, active_player))
-                                        {
-                                            return true;
-                                        }
 			            	white_counter_column_++;
 			            	tileBottom(tile, coord, counter, increment, active_player);
 			            }
