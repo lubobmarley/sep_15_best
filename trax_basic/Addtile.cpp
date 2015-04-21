@@ -302,16 +302,16 @@ int getCorner(int& counter, Position tempposition, std::vector<Position> positio
     {
         if((tempposition.getX() == positions.at(counter).getX() +1) && 
            (tempposition.getY() == positions.at(counter).getY() +1))
-            {std::cout<< "NW"<<std::endl; return 1; }	//NW
+            return 1;	//NW
         if((tempposition.getX() == positions.at(counter).getX() -1) && 
            (tempposition.getY() == positions.at(counter).getY() +1)) 
-            {std::cout<< "NE"<<std::endl; return 2;} //NE
+            return 2; //NE
         if((tempposition.getX() == positions.at(counter).getX() +1) && 
            (tempposition.getY() == positions.at(counter).getY() -1))
-            {std::cout<< "SW"<<std::endl; return 3;} //SW
+            return 3; //SW
         if((tempposition.getX() == positions.at(counter).getX() -1) && 
            (tempposition.getY() == positions.at(counter).getY() -1))
-            {std::cout<< "SE"<<std::endl; return 4;} //SE
+            return 4; //SE
     }
     return 0;
 }
@@ -409,6 +409,10 @@ int current = 0;
 int counter = 0;
 Position tempposition(0,0);
 Tile temptile(Tile::TYPE_CROSS,COLOR_WHITE);
+
+if(tiles.size() == 64)
+    return false;
+
 while(current < tiles.size())
 {
 	tempposition = positions.at(current);
@@ -512,6 +516,11 @@ int Addtile::execute(std::vector<std::string> param,
         Position tempposition(0,0);
         
         tempposition.parse(param.at(0));
+        if(tiles.size() == 0 && tempposition.getX() != 0 && tempposition.getY() != 0)
+        {
+            std::cout<<"Invalid coordinates - first tile must be set on (0,0)"<<std::endl;
+            return 1;
+        }
         
         if(param.at(1) == "+")
             temptile.setSide(Tile::TYPE_CROSS);
@@ -522,7 +531,7 @@ int Addtile::execute(std::vector<std::string> param,
         else
         {
             std::cout << "Invalid parameters" << std::endl;
-            return false;
+            return 1;
         }
         
         if(checktile(temptile,tempposition, tiles, positions))
@@ -535,14 +544,13 @@ int Addtile::execute(std::vector<std::string> param,
             while(filltile(tiles, positions))
             {
                 sort(tiles, positions);
-                filltile(tiles, positions);
             }
             
             sort(tiles, positions);
             
             
-//            int counter;
-//           
+            int counter;
+           
 //            for(counter = 0; counter < positions.size(); counter ++)
 //            {
 //                std::cout<<counter << ":  x="<< positions.at(counter).getX()<<" : y="<< positions.at(counter).getY()<< 
@@ -551,9 +559,9 @@ int Addtile::execute(std::vector<std::string> param,
             
             //if(graphicon == true)
                 write.execute(tiles, positions, aplayer, "test"); //filename);
-                //checkvictory.sieg(tiles, positions, temptile, tempposition, aplayer);
-                //if(checkvictory.checkSurrounding(tiles, positions, aplayer))
-                    return false;
+                
+//               if(checkvictory.sieg(tiles, positions, aplayer))
+//                    return false;
         }   
         return 0;
     }
