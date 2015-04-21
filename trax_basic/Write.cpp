@@ -22,7 +22,7 @@ int Write::execute(std::vector<Tile> tiles, std::vector<Position> positions,
                    int active, std::string filename) 
 {
   char magic[4] = {'T', 'R', 'A', 'X'};
-  char activep = active; //cast?
+  char activep = active; //cast? static_cast<char>
   signed char minx = 0;
   signed char miny = 0;
   signed char maxx = 0;
@@ -47,14 +47,17 @@ int Write::execute(std::vector<Tile> tiles, std::vector<Position> positions,
     counter++;
   }
   
-  minx = positions.at(0).getX();
+  minx = positions.at(0).getX(); //cast?
   miny = positions.at(0).getY();
   maxy = positions.at(positions.size() - 1).getY();
   
   //open file
   std::ofstream file(filename.c_str(), std::ios::out | std::ios::binary);
   
-  //fehlerbehandlung \ tut3 folien
+  if (!file.is_open())
+  {
+      cout << "Cannot write file " << filename << endl;
+  }
   
   //Binary Header
   file.write(magic, sizeof(magic));
