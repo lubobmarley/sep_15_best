@@ -20,7 +20,6 @@
 #include "Position.h"
 #include "Game.h"
 
-Game game;
 
 class CheckVictory
 {
@@ -34,17 +33,17 @@ public:
     CheckVictory();
     ~CheckVictory();
    
-    std::string getPlayerColor();
+    std::string getPlayerColor(Color active_player);
     
     void setCounters();
-    void sieg();
-    void siegLoop(std::vector<Position> &coord, int counter, int increment);
-    void checkSurrounding(std::vector<Tile> &tile, std::vector<Position> &coord);
-    void tileTop(std::vector<Tile> &tile, std::vector<Position> &coord, int counter, int increment);
-    void tileBottom(std::vector<Tile> &tile, std::vector<Position> &coord, int counter, int increment);
-    void tileLeft(std::vector<Tile> &tile, std::vector<Position> &coord, int counter, int increment);
-    void tileRight(std::vector<Tile> &tile, std::vector<Position> &coord, int counter, int increment);
-    void unentschieden();
+    bool sieg(Color active_player);
+    bool siegLoop(std::vector<Position> &coord, int counter, int increment, Color acrive_player);
+    void checkSurrounding(std::vector<Tile> &tile, std::vector<Position> &coord, Color active_player);
+    void tileTop(std::vector<Tile> &tile, std::vector<Position> &coord, int counter, int increment, Color active_player);
+    void tileBottom(std::vector<Tile> &tile, std::vector<Position> &coord, int counter, int increment, Color active_player);
+    void tileLeft(std::vector<Tile> &tile, std::vector<Position> &coord, int counter, int increment, Color active_player);
+    void tileRight(std::vector<Tile> &tile, std::vector<Position> &coord, int counter, int increment, Color active_player);
+    bool unentschieden(std::vector<Tile> &tile);
 };
 #endif
 
