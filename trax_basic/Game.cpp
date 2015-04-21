@@ -88,13 +88,14 @@ void Game::run(bool graphicon, std::string filename)
             togglePlayer();
             addtile.execute(param, tiles, positions, getActivePlayer(),
                             graphicon, filename);
-            param.clear();
             }
             else 
                 cout << "Error: Wrong parameter count!" << endl;
         }
         else if (correctWrite(part1))
-            if (part2 != "" && part3 == "")
+            if (tiles.size() == 0)
+                cout << "Board is empty!" << endl;
+            else if (part2 != "" && part3 == "")
                 write.execute(tiles, positions, getActivePlayer(), part2);
             else
                 cout << "Error: Wrong parameter count!" << endl;
@@ -104,7 +105,7 @@ void Game::run(bool graphicon, std::string filename)
         else
           cout << "Error: Unknown command!" << endl;
                
-        
+        param.clear();
     }
 }
 
@@ -115,4 +116,3 @@ void Game::togglePlayer()
     else
         activeplayer_ = COLOR_WHITE;
 }
-
