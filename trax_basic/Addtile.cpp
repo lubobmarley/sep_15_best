@@ -499,9 +499,9 @@ while(current < tiles.size())
 Addtile::Addtile(std::string name) : Command(name) {}
 Addtile::~Addtile() {}
 
-bool Addtile::execute(Game& board, std::vector<std::string>& params) {}
+int Addtile::execute(Game& board, std::vector<std::string>& params) {}
 
-bool Addtile::execute(std::vector<std::string> param,
+int Addtile::execute(std::vector<std::string> param,
         std::vector<Tile>& tiles, std::vector<Position>& positions, 
         int aplayer, bool graphicon, std::string filename)
     {  
@@ -545,11 +545,8 @@ bool Addtile::execute(std::vector<std::string> param,
             //if(graphicon == true)
                 write.execute(tiles, positions, aplayer, "test"); //filename);
                 //checkvictory.sieg(tiles, positions, temptile, tempposition, aplayer);
-                if(CheckVictory(tiles, positions, aplayer))
+                if(checkvictory.checkSurrounding(tiles, positions, aplayer))
                     return false;
         }   
-        else
-       
-            
-    return true;
+        return 0;
     }

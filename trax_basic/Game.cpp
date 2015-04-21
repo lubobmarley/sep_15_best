@@ -10,7 +10,6 @@
 #include "Write.h"
 #include "Addtile.h"
 
-
 using std::cout;
 using std::cin;
 using std::endl;

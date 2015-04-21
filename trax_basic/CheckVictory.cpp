@@ -12,7 +12,7 @@ CheckVictory::~CheckVictory()
 }
 
 
-std::string CheckVictory::getPlayerColor(Color active_player)
+std::string CheckVictory::getPlayerColor(int active_player)
 {
     
     if(active_player == COLOR_WHITE)
@@ -35,7 +35,7 @@ void CheckVictory::setCounters()
 }
 
 
-bool CheckVictory::sieg(Color active_player)
+bool CheckVictory::sieg(int active_player)
 {
     
     switch(active_player)
@@ -74,7 +74,7 @@ bool CheckVictory::sieg(Color active_player)
 }
 
 
-bool CheckVictory::siegLoop(std::vector<Position> &coord, int counter, int increment, Color active_player)
+bool CheckVictory::siegLoop(std::vector<Position> &coord, int counter, int increment, int active_player)
 {
     
     if(coord[counter].getX() == coord[increment].getX() &&
@@ -87,7 +87,7 @@ bool CheckVictory::siegLoop(std::vector<Position> &coord, int counter, int incre
 }
 
 
-void CheckVictory::checkSurrounding(std::vector<Tile> &tile, std::vector<Position> &coord, Color active_player)
+void CheckVictory::checkSurrounding(std::vector<Tile> &tile, std::vector<Position> &coord, int active_player)
 {
     int increment;
     int counter;
@@ -276,7 +276,7 @@ void CheckVictory::checkSurrounding(std::vector<Tile> &tile, std::vector<Positio
 }
 
 
-void CheckVictory::tileTop(std::vector<Tile> &tile, std::vector<Position> &coord, int counter, int increment, Color active_player)
+void CheckVictory::tileTop(std::vector<Tile> &tile, std::vector<Position> &coord, int counter, int increment, int active_player)
 {
     int temp_counter = counter;
     
@@ -367,7 +367,7 @@ void CheckVictory::tileTop(std::vector<Tile> &tile, std::vector<Position> &coord
 }
 
 
-void CheckVictory::tileBottom(std::vector<Tile> &tile, std::vector<Position> &coord, int counter, int increment, Color active_player)
+void CheckVictory::tileBottom(std::vector<Tile> &tile, std::vector<Position> &coord, int counter, int increment, int active_player)
 {
             int temp_counter = counter;
 	if((tile[temp_counter].getSide()   == Tile::TYPE_CROSS) && 
@@ -457,7 +457,7 @@ void CheckVictory::tileBottom(std::vector<Tile> &tile, std::vector<Position> &co
 }
 
 
-void CheckVictory::tileLeft(std::vector<Tile> &tile, std::vector<Position> &coord, int counter, int increment, Color active_player)
+void CheckVictory::tileLeft(std::vector<Tile> &tile, std::vector<Position> &coord, int counter, int increment, int active_player)
 {
             int temp_counter = counter;
 	if((tile[temp_counter].getSide()   == Tile::TYPE_CROSS) && 
@@ -547,7 +547,7 @@ void CheckVictory::tileLeft(std::vector<Tile> &tile, std::vector<Position> &coor
 }
 
 
-void CheckVictory::tileRight(std::vector<Tile> &tile, std::vector<Position> &coord, int counter, int increment, Color active_player)
+void CheckVictory::tileRight(std::vector<Tile> &tile, std::vector<Position> &coord, int counter, int increment, int active_player)
 {
             int temp_counter = counter;
 	if((tile[temp_counter].getSide()   == Tile::TYPE_CROSS) && 
