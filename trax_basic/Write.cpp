@@ -44,11 +44,13 @@ int Write::execute(std::vector<Tile> tiles, std::vector<Position> positions,
     if(maxx < positions.at(counter).getX())
       maxx = positions.at(counter).getX();
     
+    if(minx > positions.at(counter).getX())
+      minx = positions.at(counter).getX();
+    
     counter++;
   }
   
-  minx = positions.at(0).getX(); //cast?
-  miny = positions.at(0).getY();
+  miny = positions.at(0).getY(); //cast?
   maxy = positions.at(positions.size() - 1).getY();
   
   //open file
