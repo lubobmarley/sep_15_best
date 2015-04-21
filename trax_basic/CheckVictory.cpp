@@ -138,7 +138,8 @@ bool CheckVictory::siegLoop(std::vector<Position> &coord, int counter, int incre
 {
     
     if(coord[counter].getX() == coord[increment].getX() &&
-       coord[counter].getY() == coord[increment].getY())
+       coord[counter].getY() == coord[increment].getY() &&
+        counter != increment)
     {
         return true;
     }
