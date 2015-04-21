@@ -402,7 +402,7 @@ void fillin(int counter, int direction, int corner, std::vector<Tile>& tiles, st
 }
 
 
-void filltile(std::vector<Tile>& tiles, std::vector<Position>& positions)
+bool filltile(std::vector<Tile>& tiles, std::vector<Position>& positions)
 {
    
 int current = 0;
@@ -422,13 +422,13 @@ while(current < tiles.size())
 		  (colorOutput(BOT, tiles.at(counter)) == colorOutput(LEFT, temptile) ))
 		{
 			fillin(counter, LEFT , 1, tiles, positions, temptile, tempposition);
-			current++;
+			return true;
 		}
 		else if(checkempty(tempposition.getX(), tempposition.getY()-1, tiles, positions) &&
 		 	   (colorOutput(RIGHT, tiles.at(counter)) == colorOutput(TOP, temptile) ))
 		{
 			fillin(counter, TOP , 1, tiles, positions, temptile, tempposition);
-			current ++;
+			return true;
 		}
 		else
 			current++;
@@ -440,13 +440,13 @@ while(current < tiles.size())
 		  (colorOutput(BOT, tiles.at(counter)) == colorOutput(RIGHT, temptile) ))
 		{
 			fillin(counter, RIGHT , 2, tiles, positions, temptile, tempposition);
-			current++;
+			return true;
 		}
 		else if(checkempty(tempposition.getX(), tempposition.getY()-1, tiles, positions) &&
 		 	   (colorOutput(LEFT, tiles.at(counter)) == colorOutput(TOP, temptile) ))
 		{
 			fillin(counter, TOP , 2, tiles, positions, temptile, tempposition);
-			current ++;
+			return true;
 		}
 		else
 			current++;
@@ -459,13 +459,13 @@ while(current < tiles.size())
 		  (colorOutput(TOP, tiles.at(counter)) == colorOutput(LEFT, temptile) ))
 		{
 			fillin(counter, LEFT , 3, tiles, positions, temptile, tempposition);
-			current++;
+			return true;
 		}
 		else if(checkempty(tempposition.getX(), tempposition.getY()+1, tiles, positions) &&
 		 	   (colorOutput(BOT, tiles.at(counter)) == colorOutput(RIGHT, temptile) ))
 		{
 			fillin(counter, BOT , 3, tiles, positions, temptile, tempposition);
-			current ++;
+			return true;
 		}
 		else
 			current++;
@@ -478,19 +478,19 @@ while(current < tiles.size())
 		  (colorOutput(TOP, tiles.at(counter)) == colorOutput(RIGHT, temptile) ))
 		{
 			fillin(counter, RIGHT , 4, tiles, positions, temptile, tempposition);
-			current++;
+			return true;
 		}
 		else if(checkempty(tempposition.getX(), tempposition.getY()+1, tiles, positions) &&
 		 	   (colorOutput(LEFT, tiles.at(counter)) == colorOutput(BOT, temptile) ))
 		{
 			fillin(counter, BOT , 4, tiles, positions, temptile, tempposition);
-			current ++;
+			return true;
 		}
 		else
 			current++;
 	}
 }
-    
+  return false;  
 }
 
 
@@ -529,23 +529,30 @@ int Addtile::execute(std::vector<std::string> param,
         {
             tiles.push_back(temptile);
             positions.push_back(tempposition);
-            //filltile(tiles, positions);
-            int counter;
-            /*for(counter = 0; counter < positions.size(); counter ++)
-            {
-                std::cout<<counter << ":  x= "<< positions.at(counter).getX()<<":  y="<< positions.at(counter).getY()<<std::endl;
-            }*/
             sort(tiles, positions);
-             for(counter = 0; counter < positions.size(); counter ++)
+            
+            
+            while(filltile(tiles, positions))
             {
-                std::cout<<counter << ":  x="<< positions.at(counter).getX()<<" : y="<< positions.at(counter).getY()<< 
-                           " side:"<< tiles.at(counter).getSide() <<" color:"<< tiles.at(counter).getColor() <<std::endl;
+                sort(tiles, positions);
+                filltile(tiles, positions);
             }
+            
+            sort(tiles, positions);
+            
+            
+//            int counter;
+//           
+//            for(counter = 0; counter < positions.size(); counter ++)
+//            {
+//                std::cout<<counter << ":  x="<< positions.at(counter).getX()<<" : y="<< positions.at(counter).getY()<< 
+//                           " side:"<< tiles.at(counter).getSide() <<" color:"<< tiles.at(counter).getColor() <<std::endl;
+//            }
             
             //if(graphicon == true)
                 write.execute(tiles, positions, aplayer, "test"); //filename);
                 //checkvictory.sieg(tiles, positions, temptile, tempposition, aplayer);
-                if(checkvictory.checkSurrounding(tiles, positions, aplayer))
+                //if(checkvictory.checkSurrounding(tiles, positions, aplayer))
                     return false;
         }   
         return 0;
