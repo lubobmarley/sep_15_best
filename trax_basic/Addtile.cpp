@@ -519,13 +519,13 @@ int Addtile::execute(std::vector<std::string> param,
         
         if(param.at(1) == "+")
             temptile.setSide(Tile::TYPE_CROSS);
-        if(param.at(1) == "/")
+        else if(param.at(1) == "/")
             temptile.setSide(Tile::TYPE_CURVE_1);
-        if(param.at(1) == "\\")
+        else if(param.at(1) == "\\")
             temptile.setSide(Tile::TYPE_CURVE_2); 
         else
         {
-            // Errorhandling
+            return false;
         }
         
         if(checktile(temptile,tempposition, tiles, positions))
