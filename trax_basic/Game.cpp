@@ -1,3 +1,13 @@
+//------------------------------------------------------------------------------
+// Game.cpp
+//
+// Group: Group 10, study assistant: Philipp Hafner
+//
+// Authors: Markus Gallacher (1430391)
+// Philipp Feldner (1216081)
+// Lukas Bodner (1431293)
+//------------------------------------------------------------------------------
+//
 #include <iostream>
 #include <string>
 #include <algorithm>
@@ -5,7 +15,6 @@
 #include <vector>
 
 #include "Game.h"
-#include "Tile.h"
 #include "Position.h"
 #include "Write.h"
 #include "Addtile.h"
@@ -14,6 +23,7 @@ using std::cout;
 using std::cin;
 using std::endl;
 
+//------------------------------------------------------------------------------
 bool Game::correctAddtile (std::string part1)
 {
   std::string key_word = "addtile";
@@ -25,6 +35,7 @@ bool Game::correctAddtile (std::string part1)
     return false;
 }
 
+//------------------------------------------------------------------------------
 bool Game::correctWrite (std::string part1)
 {
   std::string key_word = "write";
@@ -36,6 +47,7 @@ bool Game::correctWrite (std::string part1)
     return false;
 }
 
+//------------------------------------------------------------------------------
 bool Game::correctQuit (std::string str)
 {
   std::string key_word = "quit";
@@ -47,15 +59,11 @@ bool Game::correctQuit (std::string str)
     return false;
 }
 
-Game::Game()
-{
-    activeplayer_ = COLOR_WHITE;
-    starttile_ = NULL;
-}
-
+//------------------------------------------------------------------------------
 Game::~Game() {}
 
-void Game::run(bool graphicon, std::string filename)
+//------------------------------------------------------------------------------
+void Game::run(bool graphic_on, std::string filename)
 {
     running_ = true;
     std::string str;
@@ -64,7 +72,6 @@ void Game::run(bool graphicon, std::string filename)
     std::vector<Position> positions;
     Addtile addtile("addtile");
     Write write ("write");
-    
     
     while (running_ == true)
     {
@@ -87,7 +94,7 @@ void Game::run(bool graphicon, std::string filename)
             {
             togglePlayer();
             addtile.execute(param, tiles, positions, getActivePlayer(),
-                            graphicon, filename);
+                            graphic_on, filename);
             }
             else 
                 cout << "Error: Wrong parameter count!" << endl;
@@ -100,15 +107,22 @@ void Game::run(bool graphicon, std::string filename)
             else
                 cout << "Error: Wrong parameter count!" << endl;
         else if (correctQuit(str))
+        {
           running_ = false;
+          cout << "Bye!" << endl; // sep> Bye! ??
+        }
         else if (str == "") {}
         else
           cout << "Error: Unknown command!" << endl;
                
         param.clear();
+        
+//        if (blabla == false)
+//            running_ = false;
     }
 }
 
+//------------------------------------------------------------------------------
 void Game::togglePlayer()
 {
     if (activeplayer_ == COLOR_WHITE)

@@ -8,7 +8,6 @@
 // Lukas Bodner (1431293)
 //------------------------------------------------------------------------------
 //
-
 #include <iostream>
 #include <string>
 #include <vector>
@@ -24,14 +23,23 @@ using std::cout;
 using std::cin;
 using std::endl;
  
-bool checkGraphikMode(int argcounter, char** argvalues, std::string& filename)
+//------------------------------------------------------------------------------
+// checks if graphicmode is on or off
+//
+// @param argc argumentcounter
+// @param argv argumentvalue
+// @filename puts the filename if graphicmode is on
+//
+// @return true (graphicmode on) or false (graphicmode off)
+//
+bool checkGraphikMode(int argc, char** argv, std::string& filename)
 {
-    std::string graphicmode = "-g";
+    std::string graphic_mode = "-g";
       
-    if (argcounter == 3)
-        if (graphicmode == argvalues[1])
+    if (argc == 3)
+        if (graphic_mode == argv[1])
         {
-            filename = argvalues[2];
+            filename = argv[2];
             return true;
         }
     return false;
@@ -42,19 +50,20 @@ bool checkGraphikMode(int argcounter, char** argvalues, std::string& filename)
 // entry point for execution
 // @param argc argument count
 // @param **argv argument values
+
 // @return return value for the OS
 //
 int main(int argc, char **argv)
 {
-  bool graphicon = false;
+  bool graphic_on = false;
   std::string filename;
   std::string graphicmode = "-g";
   Game trax;
   
   if (argc == 1 || (argc == 3 && argv[1] == graphicmode))
   {
-  graphicon = checkGraphikMode(argc, argv, filename);
-  trax.run(graphicon, filename);
+  graphic_on = checkGraphikMode(argc, argv, filename);
+  trax.run(graphic_on, filename);
   }
   else
   {
@@ -62,8 +71,5 @@ int main(int argc, char **argv)
       return 2;
   }
   
-  
- 
-   
   return 0;
 }

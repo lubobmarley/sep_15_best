@@ -3,9 +3,8 @@
 
 #include <string>
 #include <vector>
-#include "Tile.h"
-#include "Position.h"
-
+class Position;
+class Tile;
 class Game;
 
 class Command
@@ -43,7 +42,8 @@ class Command
     // @return Integer representing the success of the action
 
     virtual int execute(Game& board, std::vector<std::string>& params) = 0;
-    int execute(std::vector<Tile> tiles, std::vector<Position> positions, int active);
+    int execute(std::vector<Tile> tiles, std::vector<Position> positions, 
+                int active);
     
     //--------------------------------------------------------------------------
     // Getter Methods
