@@ -1,10 +1,10 @@
 //------------------------------------------------------------------------------
 // main.cpp
 //
-// Group: Group 43, study assistant: Max Mustertutor
+// Group: Group 10, study assistant: Philipp Hafner
 //
-// Authors: Markus Gallacher ()
-// Philipp Feldner ()
+// Authors: Markus Gallacher (1430391)
+// Philipp Feldner (1216091)
 // Lukas Bodner (1431293)
 //------------------------------------------------------------------------------
 //
