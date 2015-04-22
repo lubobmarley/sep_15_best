@@ -1,3 +1,14 @@
+//------------------------------------------------------------------------------
+// Addtile.cpp
+//
+// Group: Group 10, study assistant: Philipp Hafner
+//
+// Authors: Markus Gallacher (1430391)
+// Philipp Feldner (1216081)
+// Lukas Bodner (1431293)
+//------------------------------------------------------------------------------
+//
+
 #include "Position.h"
 #include "Tile.h"
 #include "Game.h"
