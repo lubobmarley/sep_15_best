@@ -22,7 +22,7 @@ class Addtile : public Command
     //--------------------------------------------------------------------------
     int getOrientation(int& counter, Position tempposition, std::vector<Position> positions);
                         Color colorOutput(int direction, Tile temptile);
-    bool checkempty(int x, int y, std::vector<Tile> tiles, std::vector<Position> positions);
+    bool checkempty(int x, int y, std::vector<Position> positions);
     bool checktile(Tile& temptile, Position tempposition, std::vector<Tile> tiles, 
                    std::vector<Position> positions);
     std::vector<Position> swapposition(std::vector<Position> positions, int i, int j);
