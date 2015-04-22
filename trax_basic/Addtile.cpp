@@ -464,7 +464,7 @@ while(current < tiles.size())
 			return true;
 		}
 		else if(checkempty(tempposition.getX(), tempposition.getY()+1, tiles, positions) &&
-		 	   (colorOutput(BOT, tiles.at(counter)) == colorOutput(RIGHT, temptile) ))
+		 	   (colorOutput(RIGHT, tiles.at(counter)) == colorOutput(BOT, temptile) )) //switched dir
 		{
 			fillin(counter, BOT , 3, tiles, positions, temptile, tempposition);
 			return true;
