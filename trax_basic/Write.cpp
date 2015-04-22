@@ -59,6 +59,7 @@ int Write::execute(std::vector<Tile> tiles, std::vector<Position> positions,
   if (!file.is_open())
   {
       cout << "Cannot write file " << filename << endl;
+      return 1;
   }
   
   //Binary Header
@@ -74,17 +75,29 @@ int Write::execute(std::vector<Tile> tiles, std::vector<Position> positions,
           {
               switch(tiles.at(i).getSide())
               {
-                  case 1: file << cross; break;
-                  case 2: file << slash; break;
-                  case 3: file << bslash; break;
-                  default: cout << "wrong side!" << endl; //kann weggelassen werden
+                  case 1: 
+                      file << cross; 
+                      break;
+                  case 2: 
+                      file << slash; 
+                      break;
+                  case 3: 
+                      file << bslash; 
+                      break;
+                  default: 
+                      cout << "wrong side!" << endl; //kann weggelassen werden
               }
               
               switch(tiles.at(i).getColor())
               {
-                  case 1: file << white; break;
-                  case 2: file << red; break;
-                  default: cout << "wrong color!" << endl; //kann weggelassen werden
+                  case 1: 
+                      file << white; 
+                      break;
+                  case 2: 
+                      file << red; 
+                      break;
+                  default: 
+                      cout << "wrong color!" << endl; //kann weggelassen werden
               }
               i++;
           }
@@ -96,4 +109,5 @@ int Write::execute(std::vector<Tile> tiles, std::vector<Position> positions,
       }
   
   file.close();
+  return 0;
 }
