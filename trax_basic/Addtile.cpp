@@ -17,9 +17,7 @@ enum Orientation
 };
 
 
-
-
-int getOrientation(int& counter, Position tempposition, std::vector<Position> positions)
+int Addtile::getOrientation(int& counter, Position tempposition, std::vector<Position> positions)
 {
     
     for(counter; counter < positions.size(); counter++)
@@ -42,7 +40,7 @@ int getOrientation(int& counter, Position tempposition, std::vector<Position> po
 
 
 
-Color colorOutput(int direction, Tile temptile)
+Color Addtile::colorOutput(int direction, Tile temptile)
 {
   switch(direction)
     case TOP:
@@ -90,7 +88,7 @@ Color colorOutput(int direction, Tile temptile)
     
 }
 
-bool checkempty(int x, int y, std::vector<Tile> tiles, std::vector<Position> positions)
+bool Addtile::checkempty(int x, int y, std::vector<Tile> tiles, std::vector<Position> positions)
 {
     int counter;
     for(counter = 0; counter < tiles.size(); counter++)
@@ -112,7 +110,7 @@ bool checkempty(int x, int y, std::vector<Tile> tiles, std::vector<Position> pos
 //
 // @return bool, returns if tile may be placed
 //
-bool checktile(Tile& temptile, Position tempposition, std::vector<Tile> tiles, 
+bool Addtile::checktile(Tile& temptile, Position tempposition, std::vector<Tile> tiles, 
                std::vector<Position> positions)
 {
     
@@ -226,7 +224,7 @@ bool checktile(Tile& temptile, Position tempposition, std::vector<Tile> tiles,
 //
 // @return vector<Position> the new vector with swapped elements
 //
-std::vector<Position> swapposition(std::vector<Position> positions, int i, int j)
+std::vector<Position> Addtile::swapposition(std::vector<Position> positions, int i, int j)
 {    
     Position tempposition = positions.at(i);
     positions.at(i) = positions.at(j);
@@ -243,7 +241,7 @@ std::vector<Position> swapposition(std::vector<Position> positions, int i, int j
 //
 // @return vector<Tile> the new vector with swapped elements
 //
-std::vector<Tile> swaptiles(std::vector<Tile> tiles, int i, int j)
+std::vector<Tile> Addtile::swaptiles(std::vector<Tile> tiles, int i, int j)
 {    
     Tile temptile = tiles.at(i);
     tiles.at(i) = tiles.at(j);
@@ -260,7 +258,7 @@ std::vector<Tile> swaptiles(std::vector<Tile> tiles, int i, int j)
 //
 // @return bool returns true if sorted sucessfully
 //
-bool sort(std::vector<Tile>& tiles, std::vector<Position>& positions)
+bool Addtile::sort(std::vector<Tile>& tiles, std::vector<Position>& positions)
 {
     int counter = positions.size() - 1;
     
@@ -295,7 +293,7 @@ while(counter > 0)
     return true;
 }
 
-int getCorner(int& counter, Position tempposition, std::vector<Position> positions)
+int Addtile::getCorner(int& counter, Position tempposition, std::vector<Position> positions)
 {
     
     for(counter = 0; counter < positions.size(); counter++)
@@ -317,7 +315,7 @@ int getCorner(int& counter, Position tempposition, std::vector<Position> positio
 }
         
       
-void fillin(int counter, int direction, int corner, std::vector<Tile>& tiles, std::vector<Position>& positions, Tile& temptile, Position& tempposition)
+void Addtile::fillin(int counter, int direction, int corner, std::vector<Tile>& tiles, std::vector<Position>& positions, Tile& temptile, Position& tempposition)
 {
 	Tile filltile(Tile::TYPE_CROSS,COLOR_WHITE);
 	Position fillposition(0,0);
@@ -402,7 +400,7 @@ void fillin(int counter, int direction, int corner, std::vector<Tile>& tiles, st
 }
 
 
-bool filltile(std::vector<Tile>& tiles, std::vector<Position>& positions)
+bool Addtile::filltile(std::vector<Tile>& tiles, std::vector<Position>& positions)
 {
    
 int current = 0;
