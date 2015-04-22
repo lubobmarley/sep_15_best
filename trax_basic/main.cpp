@@ -3,8 +3,8 @@
 //
 // Group: Group 43, study assistant: Max Mustertutor
 //
-// Authors: Markus Gallacher ()
-// Philipp Feldner ()
+// Authors: Markus Gallacher (1430391)
+// Philipp Feldner (1216091)
 // Lukas Bodner (1431293)
 //------------------------------------------------------------------------------
 //
