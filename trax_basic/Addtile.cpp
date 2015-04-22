@@ -646,7 +646,7 @@ int Addtile::execute(std::vector<std::string> param,
 //    
 //    std::cout << testtiles.size() << std::endl;
     
-    if (!checkvictory.unentschieden(testtiles))
+    if (!checkvictory.unentschieden(tiles))
         return 1; //draw
 
     
