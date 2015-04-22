@@ -114,10 +114,21 @@ Color Addtile::colorOutput(int direction, Tile temptile)
     }    
 }
 
-bool Addtile::checkempty(int x, int y, std::vector<Tile> tiles, std::vector<Position> positions)
+//------------------------------------------------------------------------------
+// checkempty()
+//
+// @param int x, x coordinate that gets checked
+// @param int y, y coordinate that gets checked
+// @param vector<Position> positions, positions of all tiles that are currently
+//        on the board.
+//
+// @return returns true if the coordinates are unused
+//
+
+bool Addtile::checkempty(int x, int y, std::vector<Position> positions)
 {
     int counter;
-    for(counter = 0; counter < tiles.size(); counter++)
+    for(counter = 0; counter < positions.size(); counter++)
         {
             if(positions.at(counter).getX() == x && positions.at(counter).getY() == y)
                return false;
@@ -147,7 +158,7 @@ bool Addtile::checktile(Tile& temptile, Position tempposition, std::vector<Tile>
         return true;
     }
     int counter = 0;
-    if(!checkempty(tempposition.getX(), tempposition.getY(), tiles, positions))
+    if(!checkempty(tempposition.getX(), tempposition.getY(), positions))
     {
         std::cout << "Invalid coordinates - field not empty" << std::endl;
         return false;
@@ -468,13 +479,13 @@ while(current < tiles.size())
 	else if(getCorner(counter, tempposition, positions) == 1)
 	{
 
-		if(checkempty(tempposition.getX()-1, tempposition.getY(), tiles, positions) &&
+		if(checkempty(tempposition.getX()-1, tempposition.getY(), positions) &&
 		  (colorOutput(BOT, tiles.at(counter)) == colorOutput(LEFT, temptile) ))
 		{
                     fillin(counter,LEFT,1,tiles,positions,temptile,tempposition);
                     return true;
 		}
-		else if(checkempty(tempposition.getX(), tempposition.getY()-1, tiles, positions) &&
+		else if(checkempty(tempposition.getX(), tempposition.getY()-1, positions) &&
 		 	   (colorOutput(RIGHT, tiles.at(counter)) == colorOutput(TOP, temptile) ))
 		{
 			fillin(counter, TOP , 1, tiles, positions, temptile, tempposition);
@@ -486,13 +497,13 @@ while(current < tiles.size())
 	else if(getCorner(counter, tempposition, positions) == 2)
 	{
 		
-		if(checkempty(tempposition.getX()+1, tempposition.getY(), tiles, positions) &&
+		if(checkempty(tempposition.getX()+1, tempposition.getY(), positions) &&
 		  (colorOutput(BOT, tiles.at(counter)) == colorOutput(RIGHT, temptile) ))
 		{
 			fillin(counter, RIGHT , 2, tiles, positions, temptile, tempposition);
 			return true;
 		}
-		else if(checkempty(tempposition.getX(), tempposition.getY()-1, tiles, positions) &&
+		else if(checkempty(tempposition.getX(), tempposition.getY()-1, positions) &&
 		 	   (colorOutput(LEFT, tiles.at(counter)) == colorOutput(TOP, temptile) ))
 		{
 			fillin(counter, TOP , 2, tiles, positions, temptile, tempposition);
@@ -505,13 +516,13 @@ while(current < tiles.size())
 	else if(getCorner(counter, tempposition, positions) == 3)
 	{
 		
-		if(checkempty(tempposition.getX()-1, tempposition.getY(), tiles, positions) &&
+		if(checkempty(tempposition.getX()-1, tempposition.getY(), positions) &&
 		  (colorOutput(TOP, tiles.at(counter)) == colorOutput(LEFT, temptile) ))
 		{
 			fillin(counter, LEFT , 3, tiles, positions, temptile, tempposition);
 			return true;
 		}
-		else if(checkempty(tempposition.getX(), tempposition.getY()+1, tiles, positions) &&
+		else if(checkempty(tempposition.getX(), tempposition.getY()+1, positions) &&
 		 	   (colorOutput(RIGHT, tiles.at(counter)) == colorOutput(BOT, temptile) )) //switched dir
 		{
 			fillin(counter, BOT , 3, tiles, positions, temptile, tempposition);
@@ -524,13 +535,13 @@ while(current < tiles.size())
 	else if(getCorner(counter, tempposition, positions) == 4)
 	{
 		
-		if(checkempty(tempposition.getX()+1, tempposition.getY(), tiles, positions) &&
+		if(checkempty(tempposition.getX()+1, tempposition.getY(), positions) &&
 		  (colorOutput(TOP, tiles.at(counter)) == colorOutput(RIGHT, temptile) ))
 		{
 			fillin(counter, RIGHT , 4, tiles, positions, temptile, tempposition);
 			return true;
 		}
-		else if(checkempty(tempposition.getX(), tempposition.getY()+1, tiles, positions) &&
+		else if(checkempty(tempposition.getX(), tempposition.getY()+1, positions) &&
 		 	   (colorOutput(LEFT, tiles.at(counter)) == colorOutput(BOT, temptile) ))
 		{
 			fillin(counter, BOT , 4, tiles, positions, temptile, tempposition);
