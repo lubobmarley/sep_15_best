@@ -118,7 +118,7 @@ void Game::run(bool graphic_on, std::string filename)
                
         param.clear();
         
-        if (finished == 1)
+        if (finished == 2)
             running_ = false;
     }
 }

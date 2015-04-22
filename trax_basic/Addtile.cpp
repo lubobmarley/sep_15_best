@@ -631,9 +631,7 @@ int Addtile::execute(std::vector<std::string> param,
     write.execute(tiles, positions, aplayer, "test");             // filename);
 //
 //    if (checkvictory.sieg(tiles, positions, aplayer))
-//    {
-//      return false;
-//    }
+//      return 2;
 //    
 //    std::vector<Tile> testtiles;
 //    int zahler = 0;
@@ -647,7 +645,7 @@ int Addtile::execute(std::vector<std::string> param,
 //    std::cout << testtiles.size() << std::endl;
     
     if (!checkvictory.unentschieden(tiles))
-        return 1; //draw
+        return 2; //draw
 
     
   }
