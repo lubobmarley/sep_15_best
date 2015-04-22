@@ -562,7 +562,7 @@ bool Addtile::filltile(std::vector<Tile>&     tiles,
   return false;
 }
 
-
+// ------------------------------------------------------------------------------
 
 Addtile::Addtile(std::string name) : Command(name) {}
 Addtile::~Addtile() {}
