@@ -550,7 +550,12 @@ int Addtile::execute(std::vector<std::string> param,
         Tile temptile(Tile::TYPE_CROSS,COLOR_WHITE);
         Position tempposition(0,0);
         
-        tempposition.parse(param.at(0));
+        if(!tempposition.parse(param.at(0)))
+        {
+            std::cout<<"Invalid parameters"<<std::endl;
+            return 1;
+        }
+        
         if(tiles.size() == 0 && tempposition.getX() != 0 && tempposition.getY() != 0)
         {
             std::cout<<"Invalid coordinates - first tile must be set on (0,0)"<<std::endl;
@@ -598,5 +603,6 @@ int Addtile::execute(std::vector<std::string> param,
                if(checkvictory.sieg(tiles, positions, aplayer))
                     return false;
         }   
+        
         return 0;
     }
