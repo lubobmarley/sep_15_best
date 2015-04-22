@@ -66,6 +66,7 @@ Game::~Game() {}
 void Game::run(bool graphic_on, std::string filename)
 {
     running_ = true;
+    int finished = 0;
     std::string str;
     std::vector<std::string> param;
     std::vector<Tile> tiles;
@@ -93,8 +94,8 @@ void Game::run(bool graphic_on, std::string filename)
             if (part2 != "" && part3 != "")
             {
             togglePlayer();
-            addtile.execute(param, tiles, positions, getActivePlayer(),
-                            graphic_on, filename);
+            finished = addtile.execute(param, tiles, positions, 
+                    getActivePlayer(), graphic_on, filename);
             }
             else 
                 cout << "Error: Wrong parameter count!" << endl;
@@ -117,8 +118,8 @@ void Game::run(bool graphic_on, std::string filename)
                
         param.clear();
         
-//        if (blabla == false)
-//            running_ = false;
+        if (finished == 1)
+            running_ = false;
     }
 }
 

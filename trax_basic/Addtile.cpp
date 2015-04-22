@@ -629,12 +629,27 @@ int Addtile::execute(std::vector<std::string> param,
 
     // if(graphicon == true)
     write.execute(tiles, positions, aplayer, "test");             // filename);
+//
+//    if (checkvictory.sieg(tiles, positions, aplayer))
+//    {
+//      return false;
+//    }
+//    
+//    std::vector<Tile> testtiles;
+//    int zahler = 0;
+//    
+//    for (zahler = 0; zahler < 65; zahler ++)
+//    {
+//        Tile tileee(Tile::TYPE_CROSS, COLOR_WHITE);
+//        testtiles.push_back(tileee);
+//    }
+//    
+//    std::cout << testtiles.size() << std::endl;
+    
+    if (!checkvictory.unentschieden(testtiles))
+        return 1; //draw
 
-    if (checkvictory.sieg(tiles, positions, aplayer))
-    {
-      return false;
-    }
+    
   }
-
   return 0;
 }
