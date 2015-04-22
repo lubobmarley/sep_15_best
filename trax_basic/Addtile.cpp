@@ -16,7 +16,16 @@ enum Orientation
     LEFT = 4          
 };
 
-
+//------------------------------------------------------------------------------
+// getOrientation()
+//
+// @param int& counter, 
+// @param tempposition, positions to compare with elements from the positions
+//        vector
+// @param <>, of all tiles that are currently placed
+//
+// @return returns an enum of the facing direction
+//
 int Addtile::getOrientation(int& counter, Position tempposition, std::vector<Position> positions)
 {
     
@@ -43,12 +52,12 @@ int Addtile::getOrientation(int& counter, Position tempposition, std::vector<Pos
 Color Addtile::colorOutput(int direction, Tile temptile)
 {
   switch(direction)
-    case TOP:
-    {
+  {
+    case TOP:   
         
         return temptile.getColor();
     
-    case BOT:
+      case BOT:
     
       if((temptile.getColor()  == COLOR_RED          &&
           temptile.getSide()   == Tile::TYPE_CROSS)  ||
@@ -82,10 +91,8 @@ Color Addtile::colorOutput(int direction, Tile temptile)
          (temptile.getSide()  == Tile::TYPE_CURVE_1)))
           return COLOR_RED;
       else
-          return COLOR_WHITE;
-        
+          return COLOR_WHITE; 
     }    
-    
 }
 
 bool Addtile::checkempty(int x, int y, std::vector<Tile> tiles, std::vector<Position> positions)
@@ -120,20 +127,15 @@ bool Addtile::checktile(Tile& temptile, Position tempposition, std::vector<Tile>
         temptile.setColor(COLOR_RED);
         return true;
     }
-    
     int counter = 0;
-    
-
     if(!checkempty(tempposition.getX(), tempposition.getY(), tiles, positions))
     {
         std::cout << "Invalid coordinates - field not empty" << std::endl;
         return false;
-    }
-        
+    }    
     int set_red = 0;
     int set_white = 0;
     int identifier = 0;
-    
     
     for(counter = 0 ; counter < tiles.size() ; counter++)
     {
@@ -151,8 +153,7 @@ bool Addtile::checktile(Tile& temptile, Position tempposition, std::vector<Tile>
                 {
                     set_red++;
                     break;
-                }
-                
+                }    
             case BOT:
                 if (colorOutput(BOT, tiles.at(counter)) == colorOutput(TOP, temptile))
                 {
