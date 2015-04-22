@@ -3,8 +3,8 @@
 
 #include <string>
 #include <vector>
-class Position;
-class Tile;
+#include "Position.h"
+#include "Tile.h"
 class Game;
 
 class Command

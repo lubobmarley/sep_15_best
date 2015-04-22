@@ -3,6 +3,7 @@
 
 #include "Command.h"
 #include "Write.h"
+#include "Color.h"
 
 class Addtile : public Command
 {

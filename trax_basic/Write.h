@@ -35,4 +35,3 @@ class Write : public Command
 
 
 #endif	/* WRITE_H */
-
