@@ -1,3 +1,14 @@
+//------------------------------------------------------------------------------
+// Addtile.cpp
+//
+// Group: Group 10, study assistant: Philipp Hafner
+//
+// Authors: Markus Gallacher (1430391)
+// Philipp Feldner (1216081)
+// Lukas Bodner (1431293)
+//------------------------------------------------------------------------------
+//
+
 #include "Position.h"
 #include "Tile.h"
 #include "Game.h"
@@ -16,7 +27,17 @@ enum Orientation
     LEFT = 4          
 };
 
-
+//------------------------------------------------------------------------------
+// getOrientation()
+//
+// @param int& counter, steps through the elements of positions vector
+// @param tempposition, positions to compare with elements from the positions
+//        vector
+// @param vector<Position> positions, positions of all tiles that are 
+//        currently placed on the board
+//
+// @return returns an enum of the facing direction
+//
 int Addtile::getOrientation(int& counter, Position tempposition, std::vector<Position> positions)
 {
     
@@ -39,16 +60,23 @@ int Addtile::getOrientation(int& counter, Position tempposition, std::vector<Pos
 }
 
 
-
+//------------------------------------------------------------------------------
+// colorOutput()
+//
+// @param int direction, the direction of which you want to know the 
+//        color output.
+// @param temtile, the tile you want to look at.
+// @return returns the color of the direction.
+//
 Color Addtile::colorOutput(int direction, Tile temptile)
 {
   switch(direction)
-    case TOP:
-    {
+  {
+    case TOP:   
         
         return temptile.getColor();
     
-    case BOT:
+      case BOT:
     
       if((temptile.getColor()  == COLOR_RED          &&
           temptile.getSide()   == Tile::TYPE_CROSS)  ||
@@ -82,16 +110,25 @@ Color Addtile::colorOutput(int direction, Tile temptile)
          (temptile.getSide()  == Tile::TYPE_CURVE_1)))
           return COLOR_RED;
       else
-          return COLOR_WHITE;
-        
+          return COLOR_WHITE; 
     }    
-    
 }
 
-bool Addtile::checkempty(int x, int y, std::vector<Tile> tiles, std::vector<Position> positions)
+//------------------------------------------------------------------------------
+// checkempty()
+//
+// @param int x, x coordinate that gets checked
+// @param int y, y coordinate that gets checked
+// @param vector<Position> positions, positions of all tiles that are currently
+//        on the board.
+//
+// @return returns true if the coordinates are unused
+//
+
+bool Addtile::checkempty(int x, int y, std::vector<Position> positions)
 {
     int counter;
-    for(counter = 0; counter < tiles.size(); counter++)
+    for(counter = 0; counter < positions.size(); counter++)
         {
             if(positions.at(counter).getX() == x && positions.at(counter).getY() == y)
                return false;
@@ -103,8 +140,8 @@ bool Addtile::checkempty(int x, int y, std::vector<Tile> tiles, std::vector<Posi
 //------------------------------------------------------------------------------
 // checktile()
 //
-// @param tiles, <vector> of all tiles from user input
-// @param positions, <vector> of all tiles from user input
+// @param vector<Tile> tiles,  of all tiles from user input
+// @param vector<Position> positions, of all tiles from user input
 // @param temtile, Tile that is used to store userinput
 // @param tempposition, position of that temptile
 //
@@ -120,20 +157,15 @@ bool Addtile::checktile(Tile& temptile, Position tempposition, std::vector<Tile>
         temptile.setColor(COLOR_RED);
         return true;
     }
-    
     int counter = 0;
-    
-
-    if(!checkempty(tempposition.getX(), tempposition.getY(), tiles, positions))
+    if(!checkempty(tempposition.getX(), tempposition.getY(), positions))
     {
         std::cout << "Invalid coordinates - field not empty" << std::endl;
         return false;
-    }
-        
+    }    
     int set_red = 0;
     int set_white = 0;
     int identifier = 0;
-    
     
     for(counter = 0 ; counter < tiles.size() ; counter++)
     {
@@ -151,8 +183,7 @@ bool Addtile::checktile(Tile& temptile, Position tempposition, std::vector<Tile>
                 {
                     set_red++;
                     break;
-                }
-                
+                }    
             case BOT:
                 if (colorOutput(BOT, tiles.at(counter)) == colorOutput(TOP, temptile))
                 {
@@ -218,11 +249,11 @@ bool Addtile::checktile(Tile& temptile, Position tempposition, std::vector<Tile>
 //------------------------------------------------------------------------------
 // swappositions()
 //
-// @param positions, <position> of all tiles from user input
+// @param vector<Position> positions, of all tiles from user input
 // @param int i, index to be swapped with j
 // @param int j, index to be swapped with i
 //
-// @return vector<Position> the new vector with swapped elements
+// @return vector<Position> the vector with swapped elements
 //
 std::vector<Position> Addtile::swapposition(std::vector<Position> positions, int i, int j)
 {    
@@ -235,11 +266,11 @@ std::vector<Position> Addtile::swapposition(std::vector<Position> positions, int
 //------------------------------------------------------------------------------
 // swaptiles()
 //
-// @param tiles, <vector> of all tiles from user input
+// @param vector<Tile> tiles, of all tiles from user input
 // @param int i, index to be swapped with j
 // @param int j, index to be swapped with i
 //
-// @return vector<Tile> the new vector with swapped elements
+// @return vector<Tile> the vector with swapped elements
 //
 std::vector<Tile> Addtile::swaptiles(std::vector<Tile> tiles, int i, int j)
 {    
@@ -253,9 +284,9 @@ std::vector<Tile> Addtile::swaptiles(std::vector<Tile> tiles, int i, int j)
 //------------------------------------------------------------------------------
 // sort()
 //
-// @param tiles, <vector> of all tiles from user input
-// @param positions, vector of all coordinates connected to tiles
-//
+// @param vector<Tile> tiles,  of all tiles currently on the board
+// @param vector<Position> positions, of all tiles currently on the board
+
 // @return bool returns true if sorted sucessfully
 //
 bool Addtile::sort(std::vector<Tile>& tiles, std::vector<Position>& positions)
@@ -293,6 +324,17 @@ while(counter > 0)
     return true;
 }
 
+//------------------------------------------------------------------------------
+// getOrientation()
+//
+// @param int& counter, steps through the elements of positions vector
+// @param tempposition, positions to compare with elements from the positions
+//        vector
+// @param vector<Position> positions, positions of all tiles that are 
+//        currently placed on the board
+//
+// @return returns an int of the facing direction
+//
 int Addtile::getCorner(int& counter, Position tempposition, std::vector<Position> positions)
 {
     
@@ -300,21 +342,31 @@ int Addtile::getCorner(int& counter, Position tempposition, std::vector<Position
     {
         if((tempposition.getX() == positions.at(counter).getX() +1) && 
            (tempposition.getY() == positions.at(counter).getY() +1))
-            return 1;	//NW
+            return 1;
         if((tempposition.getX() == positions.at(counter).getX() -1) && 
            (tempposition.getY() == positions.at(counter).getY() +1)) 
-            return 2; //NE
+            return 2;
         if((tempposition.getX() == positions.at(counter).getX() +1) && 
            (tempposition.getY() == positions.at(counter).getY() -1))
-            return 3; //SW
+            return 3;
         if((tempposition.getX() == positions.at(counter).getX() -1) && 
            (tempposition.getY() == positions.at(counter).getY() -1))
-            return 4; //SE
+            return 4;
     }
     return 0;
 }
         
-      
+//------------------------------------------------------------------------------
+// fillin()
+//
+// @param int counter, the index of the matching element
+// @param int direction, the direction where the fill should take place
+// @param vector<Tile> tiles,  of all tiles currently on the board
+// @param vector<Position> positions, of all tiles currently on the board
+// @param temtile, Tile that is used to store the tile, that should be filled in
+// @param tempposition, position of that temptile
+//
+
 void Addtile::fillin(int counter, int direction, int corner, std::vector<Tile>& tiles, std::vector<Position>& positions, Tile& temptile, Position& tempposition)
 {
 	Tile filltile(Tile::TYPE_CROSS,COLOR_WHITE);
@@ -399,7 +451,14 @@ void Addtile::fillin(int counter, int direction, int corner, std::vector<Tile>& 
             positions.push_back(fillposition);
 }
 
-
+//------------------------------------------------------------------------------
+// filltile()
+//
+// @param vector<Tile> tiles,  of all tiles currently on the board
+// @param vector<Position> positions, of all tiles currently on the board
+//
+// @return returns true, if a tile was automatically filled in
+// 
 bool Addtile::filltile(std::vector<Tile>& tiles, std::vector<Position>& positions)
 {
    
@@ -420,13 +479,13 @@ while(current < tiles.size())
 	else if(getCorner(counter, tempposition, positions) == 1)
 	{
 
-		if(checkempty(tempposition.getX()-1, tempposition.getY(), tiles, positions) &&
+		if(checkempty(tempposition.getX()-1, tempposition.getY(), positions) &&
 		  (colorOutput(BOT, tiles.at(counter)) == colorOutput(LEFT, temptile) ))
 		{
-			fillin(counter, LEFT , 1, tiles, positions, temptile, tempposition);
-			return true;
+                    fillin(counter,LEFT,1,tiles,positions,temptile,tempposition);
+                    return true;
 		}
-		else if(checkempty(tempposition.getX(), tempposition.getY()-1, tiles, positions) &&
+		else if(checkempty(tempposition.getX(), tempposition.getY()-1, positions) &&
 		 	   (colorOutput(RIGHT, tiles.at(counter)) == colorOutput(TOP, temptile) ))
 		{
 			fillin(counter, TOP , 1, tiles, positions, temptile, tempposition);
@@ -438,13 +497,13 @@ while(current < tiles.size())
 	else if(getCorner(counter, tempposition, positions) == 2)
 	{
 		
-		if(checkempty(tempposition.getX()+1, tempposition.getY(), tiles, positions) &&
+		if(checkempty(tempposition.getX()+1, tempposition.getY(), positions) &&
 		  (colorOutput(BOT, tiles.at(counter)) == colorOutput(RIGHT, temptile) ))
 		{
 			fillin(counter, RIGHT , 2, tiles, positions, temptile, tempposition);
 			return true;
 		}
-		else if(checkempty(tempposition.getX(), tempposition.getY()-1, tiles, positions) &&
+		else if(checkempty(tempposition.getX(), tempposition.getY()-1, positions) &&
 		 	   (colorOutput(LEFT, tiles.at(counter)) == colorOutput(TOP, temptile) ))
 		{
 			fillin(counter, TOP , 2, tiles, positions, temptile, tempposition);
@@ -457,13 +516,13 @@ while(current < tiles.size())
 	else if(getCorner(counter, tempposition, positions) == 3)
 	{
 		
-		if(checkempty(tempposition.getX()-1, tempposition.getY(), tiles, positions) &&
+		if(checkempty(tempposition.getX()-1, tempposition.getY(), positions) &&
 		  (colorOutput(TOP, tiles.at(counter)) == colorOutput(LEFT, temptile) ))
 		{
 			fillin(counter, LEFT , 3, tiles, positions, temptile, tempposition);
 			return true;
 		}
-		else if(checkempty(tempposition.getX(), tempposition.getY()+1, tiles, positions) &&
+		else if(checkempty(tempposition.getX(), tempposition.getY()+1, positions) &&
 		 	   (colorOutput(RIGHT, tiles.at(counter)) == colorOutput(BOT, temptile) )) //switched dir
 		{
 			fillin(counter, BOT , 3, tiles, positions, temptile, tempposition);
@@ -476,13 +535,13 @@ while(current < tiles.size())
 	else if(getCorner(counter, tempposition, positions) == 4)
 	{
 		
-		if(checkempty(tempposition.getX()+1, tempposition.getY(), tiles, positions) &&
+		if(checkempty(tempposition.getX()+1, tempposition.getY(), positions) &&
 		  (colorOutput(TOP, tiles.at(counter)) == colorOutput(RIGHT, temptile) ))
 		{
 			fillin(counter, RIGHT , 4, tiles, positions, temptile, tempposition);
 			return true;
 		}
-		else if(checkempty(tempposition.getX(), tempposition.getY()+1, tiles, positions) &&
+		else if(checkempty(tempposition.getX(), tempposition.getY()+1, positions) &&
 		 	   (colorOutput(LEFT, tiles.at(counter)) == colorOutput(BOT, temptile) ))
 		{
 			fillin(counter, BOT , 4, tiles, positions, temptile, tempposition);
@@ -513,7 +572,12 @@ int Addtile::execute(std::vector<std::string> param,
         Tile temptile(Tile::TYPE_CROSS,COLOR_WHITE);
         Position tempposition(0,0);
         
-        tempposition.parse(param.at(0));
+        if(!tempposition.parse(param.at(0)))
+        {
+            std::cout<<"Invalid parameters"<<std::endl;
+            return 1;
+        }
+        
         if(tiles.size() == 0 && tempposition.getX() != 0 && tempposition.getY() != 0)
         {
             std::cout<<"Invalid coordinates - first tile must be set on (0,0)"<<std::endl;
@@ -558,8 +622,9 @@ int Addtile::execute(std::vector<std::string> param,
             //if(graphicon == true)
                 write.execute(tiles, positions, aplayer, "test"); //filename);
                 
-//               if(checkvictory.sieg(tiles, positions, aplayer))
-//                    return false;
+               if(checkvictory.sieg(tiles, positions, aplayer))
+                    return false;
         }   
+        
         return 0;
     }
