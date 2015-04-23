@@ -10,7 +10,6 @@
 //
 
 #include "Addtile.h"
-#include "CheckVictory.h"
 #include "Game.h"
 #include "Position.h"
 #include "Tile.h"
@@ -763,7 +762,7 @@ int Addtile::execute(std::vector<std::string> param,
 {
   Write write("write");
 
-  CheckVictory checkvictory;
+
   Tile         temptile(Tile::TYPE_CROSS, COLOR_WHITE);
   Position     tempposition(0, 0);
   std::cout<< tiles.size() << std::endl;
@@ -772,8 +771,6 @@ int Addtile::execute(std::vector<std::string> param,
     std::cout << "Invalid parameters" << std::endl;
     return 1;
   }
-
-
   if (param.at(1) == "+")
   {
     temptile.setSide(Tile::TYPE_CROSS);
@@ -805,49 +802,17 @@ int Addtile::execute(std::vector<std::string> param,
     positions.push_back(tempposition);
     sort(tiles, positions);
 
-
     while (filltile(tiles, positions))
     {
       sort(tiles, positions);
     }
-
     sort(tiles, positions);
 
-
-    int counter;
-
     if(graphicon == true)
-        write.execute(tiles, positions, aplayer, filename);             // filename);
+        write.execute(tiles, positions, aplayer, filename);
     
     if(checkVictory(tiles, positions, aplayer))
-        return 2;
-
-
-
-//    if (checkvictory.sieg(tiles, positions, aplayer))
-//      return 2;
-//    
-//    std::vector<Tile> testtiles;
-//    std::vector<Position> testposition;
-//    int zahler = 0;
-//    
-//    for (zahler = 0; zahler < 65; zahler ++)
-//    {
-//        Tile tileee(Tile::TYPE_CROSS, COLOR_WHITE);
-//        Position posiii(0, zahler);
-//        testtiles.push_back(tileee);
-//        testposition.push_back(posiii);
-//        
-//    }
-//    
-//    std::cout << testtiles.size() << std::endl;
-//    
-
-    
-//    if (!checkvictory.unentschieden(tiles))
-//        return 2; //draw
-
-    
+        return 2; 
   }
   return 0;
 }
