@@ -314,27 +314,27 @@ bool Addtile::sort(std::vector<Tile>& tiles, std::vector<Position>& positions)
 int Addtile::getCorner(int& counter, Position tempposition,
                        std::vector<Position> positions)
 {
-  for (counter = 0;counter < positions.size();counter++)
+  for (counter; counter < positions.size(); counter++)
   {
     if (( tempposition.getX() == positions.at(counter).getX() + 1 ) &&
         ( tempposition.getY() == positions.at(counter).getY() + 1 ))
     {
-      return 1;
+        return 1;
     }
     if (( tempposition.getX() == positions.at(counter).getX() - 1 ) &&
         ( tempposition.getY() == positions.at(counter).getY() + 1 ))
     {
-      return 2;
+        return 2;
     }
     if (( tempposition.getX() == positions.at(counter).getX() + 1 ) &&
         ( tempposition.getY() == positions.at(counter).getY() - 1 ))
     {
-      return 3;
+        return 3;
     }
     if (( tempposition.getX() == positions.at(counter).getX() - 1 ) &&
         ( tempposition.getY() == positions.at(counter).getY() - 1 ))
     {
-      return 4;
+        return 4;
     }
   }
   return 0;
@@ -454,23 +454,27 @@ bool Addtile::filltile(std::vector<Tile>&     tiles,
 {
   int      current = 0;
   int      counter = 0;
+  int       corner = 0;
   Position tempposition(0, 0);
   Tile     temptile(Tile::TYPE_CROSS, COLOR_WHITE);
+  int size = tiles.size();
+  int maxcorner = 0;
 
   if (tiles.size() == 64)
   {
     return false;
   }
 
-  while (current < tiles.size())
+  while (current < size)
   {
+    counter = 0;
     tempposition = positions.at(current);
     temptile     = tiles.at(current);
-    if (getCorner(counter, tempposition, positions) == 0)
+    for(maxcorner = 0; maxcorner < 4; maxcorner++)
     {
-      current++;
-    }
-    else if (getCorner(counter, tempposition, positions) == 1)
+    corner = getCorner(counter, tempposition, positions);
+        
+    if (corner == 1)
     {
       if (checkempty(tempposition.getX() - 1, tempposition.getY(),
                      positions) &&
@@ -488,11 +492,9 @@ bool Addtile::filltile(std::vector<Tile>&     tiles,
         return true;
       }
       else
-      {
-        current++;
-      }
+          counter++;
     }
-    else if (getCorner(counter, tempposition, positions) == 2)
+    if (corner == 2)
     {
       if (checkempty(tempposition.getX() + 1, tempposition.getY(),
                      positions) &&
@@ -510,11 +512,9 @@ bool Addtile::filltile(std::vector<Tile>&     tiles,
         return true;
       }
       else
-      {
-        current++;
-      }
+          counter++;
     }
-    else if (getCorner(counter, tempposition, positions) == 3)
+    if (corner == 3)
     {
       if (checkempty(tempposition.getX() - 1, tempposition.getY(),
                      positions) &&
@@ -532,11 +532,9 @@ bool Addtile::filltile(std::vector<Tile>&     tiles,
         return true;
       }
       else
-      {
-        current++;
-      }
+          counter++;
     }
-    else if (getCorner(counter, tempposition, positions) == 4)
+    if (corner == 4)
     {
       if (checkempty(tempposition.getX() + 1, tempposition.getY(),
                      positions) &&
@@ -554,13 +552,203 @@ bool Addtile::filltile(std::vector<Tile>&     tiles,
         return true;
       }
       else
-      {
-        current++;
-      }
+          counter++;
     }
+    }
+    current++;
   }
   return false;
 }
+
+
+void Addtile::getTileByPosition(int x, int y, std::vector<Tile>&  tiles, std::vector<Position>& positions, Tile& temptile)
+{
+int counter;
+
+  for (counter = 0;counter < positions.size();counter++)
+  {
+    if (positions.at(counter).getX() == x && positions.at(counter).getY() == y)
+    {
+        temptile.setSide(tiles.at(counter).getSide());
+        temptile.setColor(tiles.at(counter).getColor());
+    }
+  }
+}
+
+int Addtile::nextTile(std::vector<Tile>& tiles, std::vector<Position>& positions, Tile temptile, Position tempposition, int prevdirection, Color FOLLOW_COLOR)
+{
+	int direction;
+	if(colorOutput(TOP, temptile) == FOLLOW_COLOR && prevdirection != BOT)
+		direction = TOP;
+	else if(colorOutput(RIGHT, temptile) == FOLLOW_COLOR && prevdirection != LEFT)
+		direction = RIGHT;
+	else if(colorOutput(BOT, temptile) == FOLLOW_COLOR && prevdirection != TOP)
+		direction = BOT;
+	else
+		direction = LEFT;
+
+	
+	switch(direction)
+	{
+            case TOP:
+			if(!checkempty(tempposition.getX(), tempposition.getY()-1, positions))
+				return TOP;
+			else
+				return 0;
+
+            case RIGHT:
+			if(!checkempty(tempposition.getX()+1, tempposition.getY(), positions))
+				return RIGHT;
+			else
+				return 0;
+
+            case BOT:
+			if(!checkempty(tempposition.getX(), tempposition.getY()+1, positions))
+				return BOT;
+			else
+				return 0;
+            case LEFT:
+			if(!checkempty(tempposition.getX()-1, tempposition.getY(), positions))
+				return LEFT;
+			else
+				return 0;
+
+	}
+}
+
+
+int Addtile::followPath(std::vector<Tile>& tiles, std::vector<Position>& positions, Tile temptile, Position tempposition, bool& circle, Color FOLLOW_COLOR)
+{
+int horizontal_counter = 1;
+int vertical_counter = 1;
+int path_length_white = 0;
+int prevdirection = 0;
+Position startposition(tempposition.getX(), tempposition.getY());
+int direction;
+
+if(colorOutput(TOP, temptile) == FOLLOW_COLOR)
+		direction = TOP;
+	else if(colorOutput(RIGHT, temptile) == FOLLOW_COLOR)
+		direction = RIGHT;
+	else
+		direction = BOT;
+
+while(true)
+{
+	if(!direction)
+		break;
+	else if(direction == TOP)
+	{
+		tempposition.setY(tempposition.getY()-1);
+                getTileByPosition(tempposition.getX(), tempposition.getY(), tiles, positions, temptile);
+		if(startposition.getX() == tempposition.getX() && startposition.getY() == tempposition.getY())
+			circle = true;
+		vertical_counter++;
+                std::cout << "TOP" << std::endl;
+	}
+		
+	else if(direction == RIGHT)
+	{
+		tempposition.setX(tempposition.getX()+1);
+                getTileByPosition(tempposition.getX(), tempposition.getY(), tiles, positions, temptile);
+		if(startposition.getX() == tempposition.getX() && startposition.getY() == tempposition.getY())
+			circle = true;
+		horizontal_counter++;
+                std::cout << "RIGHT" << std::endl;
+	}
+	
+	else if(direction == BOT)
+	{
+		tempposition.setY(tempposition.getY()+1);
+                getTileByPosition(tempposition.getX(), tempposition.getY(), tiles, positions, temptile);
+		if(startposition.getX() == tempposition.getX() && startposition.getY() == tempposition.getY())
+			circle = true;
+		vertical_counter--;
+                std::cout << "BOT" << std::endl;
+	}
+	
+	else if(direction == LEFT)
+	{
+		tempposition.setX(tempposition.getX()-1);
+                getTileByPosition(tempposition.getX(), tempposition.getY(), tiles, positions, temptile);
+		if(startposition.getX() == tempposition.getX() && startposition.getY() == tempposition.getY())
+			circle = true;
+		horizontal_counter--;
+                std::cout << "LEFT" << std::endl;
+	}
+	prevdirection = direction;
+        direction = nextTile(tiles,positions, temptile, tempposition, prevdirection, FOLLOW_COLOR);
+        
+        if(circle)
+            break;
+
+}
+
+
+if(horizontal_counter > vertical_counter)
+	path_length_white =  horizontal_counter;
+else if (horizontal_counter < vertical_counter)
+	path_length_white = vertical_counter;
+else
+	path_length_white = horizontal_counter;
+
+return path_length_white;
+}
+
+bool Addtile::checkVictory(std::vector<Tile>& tiles, std::vector<Position>& positions, int aplayer)
+{
+	int counter = 0;
+	Tile temptile(Tile::TYPE_CROSS,COLOR_RED);
+	std::string active_string;
+        Position tempposition(0,0);
+	int path_length_white = 0;
+	int path_length_red = 0;
+	bool circle_red = false;
+	bool circle_white = false;
+        
+        if (aplayer == COLOR_WHITE)
+            active_string = "white";
+        else
+            active_string = "red";
+
+	for(counter; counter < tiles.size(); counter++)
+	{
+                temptile.setSide(tiles.at(counter).getSide());
+                temptile.setColor(tiles.at(counter).getColor());
+                tempposition.setX(positions.at(counter).getX());
+                tempposition.setY(positions.at(counter).getY());
+
+		path_length_red = followPath(tiles, positions, temptile, tempposition, circle_red, COLOR_RED);
+		path_length_white = followPath(tiles, positions, temptile, tempposition, circle_white, COLOR_WHITE);
+
+		std::cout << "r: " << path_length_red << std::endl;
+    std::cout << "l: " << path_length_white << std::endl; 
+                
+		if((path_length_red >= 8 && path_length_white >= 8 ) || (circle_white && circle_red))
+                {
+			std::cout << "Player " << active_string << " wins!" << std::endl; 
+                        return true;
+                }
+		else if(path_length_red >= 8 || circle_red)
+                {
+			std::cout << "Player red wins!" << std::endl; 
+                        return true;
+                }
+		else if(path_length_white >= 8 || circle_white)
+                {
+			std::cout << "Player white wins!" << std::endl; 
+                        return true;
+                }
+		else if(tiles.size() == 64)
+                {
+			std::cout << "No more tiles left. Game ends in a draw!" << std::endl; 
+                        return true;
+                }
+	}	
+
+	return false;
+}
+
 
 // ------------------------------------------------------------------------------
 
@@ -578,19 +766,13 @@ int Addtile::execute(std::vector<std::string> param,
   CheckVictory checkvictory;
   Tile         temptile(Tile::TYPE_CROSS, COLOR_WHITE);
   Position     tempposition(0, 0);
-
+  std::cout<< tiles.size() << std::endl;
   if (!tempposition.parse(param.at(0)))
   {
     std::cout << "Invalid parameters" << std::endl;
     return 1;
   }
 
-  if (tiles.size() == 0 && tempposition.getX() != 0 && tempposition.getY() != 0)
-  {
-    std::cout << "Invalid coordinates - first tile must be set on (0,0)" <<
-    std::endl;
-    return 1;
-  }
 
   if (param.at(1) == "+")
   {
@@ -607,6 +789,13 @@ int Addtile::execute(std::vector<std::string> param,
   else
   {
     std::cout << "Invalid parameters" << std::endl;
+    return 1;
+  }
+  
+    if (tiles.size() == 0 && (tempposition.getX() != 0 || tempposition.getY() != 0))
+  {
+    std::cout << "Invalid coordinates - first tile must be set on (0,0)" <<
+    std::endl;
     return 1;
   }
 
@@ -627,25 +816,36 @@ int Addtile::execute(std::vector<std::string> param,
 
     int counter;
 
-    // if(graphicon == true)
-    write.execute(tiles, positions, aplayer, "test");             // filename);
-//
+    if(graphicon == true)
+        write.execute(tiles, positions, aplayer, filename);             // filename);
+    
+    if(checkVictory(tiles, positions, aplayer))
+        return 2;
+
+
+
 //    if (checkvictory.sieg(tiles, positions, aplayer))
 //      return 2;
 //    
 //    std::vector<Tile> testtiles;
+//    std::vector<Position> testposition;
 //    int zahler = 0;
 //    
 //    for (zahler = 0; zahler < 65; zahler ++)
 //    {
 //        Tile tileee(Tile::TYPE_CROSS, COLOR_WHITE);
+//        Position posiii(0, zahler);
 //        testtiles.push_back(tileee);
+//        testposition.push_back(posiii);
+//        
 //    }
 //    
 //    std::cout << testtiles.size() << std::endl;
+//    
+
     
-    if (!checkvictory.unentschieden(tiles))
-        return 2; //draw
+//    if (!checkvictory.unentschieden(tiles))
+//        return 2; //draw
 
     
   }
