@@ -149,6 +149,12 @@ class Addtile : public Command
     //
     bool filltile(std::vector<Tile>& tiles, std::vector<Position>& positions);
 
+    void getTileByPosition(int x, int y, std::vector<Tile>& tiles, std::vector<Position>& positions, Tile& temptile);
+    int nextTile(std::vector<Tile>& tiles, std::vector<Position>& positions, Tile temptile, Position tempposition, int prevdirection, Color FOLLOW_COLOR);
+
+    int followPath(std::vector<Tile>& tiles, std::vector<Position>& positions, Tile temptile, Position tempposition, bool& circle, Color FOLLOW_COLOR);
+    bool checkVictory(std::vector<Tile>& tiles, std::vector<Position>& positions, int aplayer);
+    
   public:
     Addtile(std::string name);
     ~Addtile();
